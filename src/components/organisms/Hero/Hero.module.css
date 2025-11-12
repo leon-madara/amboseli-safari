@@ -1,0 +1,371 @@
+/* Hero Container */
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Height Variants */
+.full {
+  min-height: 100vh;
+}
+
+.large {
+  min-height: 85vh;
+}
+
+.medium {
+  min-height: 70vh;
+}
+
+/* Image Container with Ken Burns Effect */
+.imageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.kenBurns {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.backgroundImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Responsive Image Display */
+.desktopImage {
+  display: block;
+}
+
+.mobileImage {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktopImage {
+    display: none;
+  }
+
+  .mobileImage {
+    display: block;
+  }
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.overlay-light {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.overlay-medium {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+.overlay-dark {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+/* Logo Container */
+.logoContainer {
+  position: absolute;
+  top: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.logo {
+  width: auto;
+  height: auto;
+  max-width: 280px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* Content Wrapper */
+.contentWrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container-max-width-xl);
+  padding: 0 var(--space-container-padding);
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-text-inverse);
+}
+
+/* Typography */
+.subtitle {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-accent-gold);
+  margin-bottom: var(--space-4);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h1-size);
+  font-weight: var(--heading-h1-weight);
+  line-height: var(--heading-h1-line-height);
+  letter-spacing: var(--heading-h1-letter-spacing);
+  margin-bottom: var(--space-6);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  color: var(--color-text-inverse);
+}
+
+.description {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--body-large-line-height);
+  margin-bottom: var(--space-10);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* CTA Group */
+.ctaGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  align-items: center;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-button-padding-y) var(--space-button-padding-x);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  border-radius: var(--radius-button);
+  transition: var(--transition-all);
+  min-width: 180px;
+  height: var(--button-height-lg);
+  cursor: pointer;
+}
+
+.ctaPrimary {
+  background-color: var(--color-primary-terracotta);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-button);
+  border: 2px solid transparent;
+}
+
+.ctaPrimary:hover {
+  background-color: var(--color-primary-terracotta-dark);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-2px);
+}
+
+.ctaSecondary {
+  background-color: transparent;
+  color: var(--color-text-inverse);
+  border: 2px solid var(--color-text-inverse);
+}
+
+.ctaSecondary:hover {
+  background-color: var(--color-text-inverse);
+  color: var(--color-primary-terracotta);
+  transform: translateY(-2px);
+}
+
+/* Scroll Indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: var(--space-12);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+.scrollIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-inverse);
+  opacity: 0.8;
+}
+
+.scrollArrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .logo {
+    max-width: 220px;
+  }
+
+  .logoContainer {
+    top: var(--space-6);
+  }
+
+  .title {
+    font-size: var(--font-size-4xl);
+  }
+
+  .description {
+    font-size: var(--font-size-base);
+  }
+
+  .contentWrapper {
+    padding: 0 var(--space-container-padding-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    max-width: 180px;
+  }
+
+  .logoContainer {
+    top: var(--space-4);
+  }
+
+  .full,
+  .large {
+    min-height: 100vh;
+  }
+
+  .medium {
+    min-height: 80vh;
+  }
+
+  .subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .description {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-8);
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .scrollIndicator {
+    bottom: var(--space-8);
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    max-width: 150px;
+  }
+
+  .logoContainer {
+    top: var(--space-3);
+  }
+
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-xs);
+  }
+
+  .contentWrapper {
+    padding: 0 var(--space-4);
+  }
+}
+
+/* Accessibility - Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  .kenBurns {
+    animation: none;
+  }
+
+  .scrollIndicator {
+    animation: none;
+  }
+}

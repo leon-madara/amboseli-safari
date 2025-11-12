@@ -1,0 +1,244 @@
+@import '../styles/variables.css';
+@import '../styles/utilities.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+@layer base {
+  /* Box sizing reset */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Root element */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  /* Body styles */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-body);
+    font-size: var(--body-base-size);
+    line-height: var(--body-base-line-height);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary);
+  }
+
+  /* Heading defaults */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--heading-h1-size);
+    font-weight: var(--heading-h1-weight);
+    line-height: var(--heading-h1-line-height);
+    letter-spacing: var(--heading-h1-letter-spacing);
+  }
+
+  h2 {
+    font-size: var(--heading-h2-size);
+    font-weight: var(--heading-h2-weight);
+    line-height: var(--heading-h2-line-height);
+    letter-spacing: var(--heading-h2-letter-spacing);
+  }
+
+  h3 {
+    font-size: var(--heading-h3-size);
+    font-weight: var(--heading-h3-weight);
+    line-height: var(--heading-h3-line-height);
+    letter-spacing: var(--heading-h3-letter-spacing);
+  }
+
+  h4 {
+    font-size: var(--heading-h4-size);
+    font-weight: var(--heading-h4-weight);
+    line-height: var(--heading-h4-line-height);
+    letter-spacing: var(--heading-h4-letter-spacing);
+  }
+
+  /* Paragraph styles */
+  p {
+    margin: 0 0 var(--space-4);
+  }
+
+  /* Link styles */
+  a {
+    color: var(--color-text-link);
+    text-decoration: none;
+    transition: var(--transition-colors);
+  }
+
+  a:hover {
+    color: var(--color-text-link-hover);
+  }
+
+  a:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Image defaults */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Button reset */
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* Form element defaults */
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* Remove default focus outline, we'll add custom ones */
+  *:focus {
+    outline: none;
+  }
+
+  /* Add focus-visible styles for keyboard navigation */
+  *:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  /* List styles */
+  ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ============================================
+   CUSTOM COMPONENTS
+   ============================================ */
+
+@layer components {
+  /* Container */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-container-padding);
+    padding-right: var(--space-container-padding);
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding-left: var(--space-container-padding-md);
+      padding-right: var(--space-container-padding-md);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: var(--container-max-width-xl);
+      padding-left: var(--space-container-padding-lg);
+      padding-right: var(--space-container-padding-lg);
+    }
+  }
+
+  /* Section spacing */
+  .section {
+    padding-top: var(--space-section-md);
+    padding-bottom: var(--space-section-md);
+  }
+
+  .section-lg {
+    padding-top: var(--space-section-lg);
+    padding-bottom: var(--space-section-lg);
+  }
+
+  /* Skip to main content link (accessibility) */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--skip-link-bg);
+    color: var(--skip-link-text);
+    padding: var(--space-4);
+    text-decoration: none;
+    z-index: 9999;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+@layer utilities {
+  /* Visually hidden (for screen readers) */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Ken Burns animation class */
+  .ken-burns {
+    animation: kenBurns 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes kenBurns {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
+  /* Text balance for headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+}

@@ -1,0 +1,30 @@
+.link {
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.default {
+  color: var(--color-gray-700);
+}
+
+.default:hover {
+  color: var(--color-primary);
+}
+
+.primary {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.primary:hover {
+  color: var(--color-secondary);
+}
+
+.underline {
+  text-decoration: underline;
+  color: var(--color-gray-700);
+}
+
+.underline:hover {
+  color: var(--color-primary);
+}
