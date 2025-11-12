@@ -1,0 +1,163 @@
+/* Safari Chapter Container */
+.chapter {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Container */
+.backgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.backgroundLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.layerImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Time of Day Overlays */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Pre-Dawn: Deep blue-black */
+.overlay-pre-dawn {
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 29, 46, 0.7) 0%,
+    rgba(26, 29, 46, 0.5) 100%
+  );
+}
+
+/* Dawn: Purple to orange transition */
+.overlay-dawn {
+  background: linear-gradient(
+    to bottom,
+    rgba(138, 43, 226, 0.3) 0%,
+    rgba(255, 107, 53, 0.4) 100%
+  );
+}
+
+/* Morning: Warm golden light */
+.overlay-morning {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 168, 92, 0.2) 0%,
+    rgba(255, 204, 128, 0.3) 100%
+  );
+}
+
+/* Midday: Bright, minimal overlay */
+.overlay-midday {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(200, 200, 200, 0.15) 100%
+  );
+}
+
+/* Afternoon: Soft warm tones */
+.overlay-afternoon {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 179, 102, 0.25) 0%,
+    rgba(255, 153, 77, 0.35) 100%
+  );
+}
+
+/* Golden Hour: Rich golden overlay */
+.overlay-golden-hour {
+  background: linear-gradient(
+    to bottom,
+    rgba(212, 175, 55, 0.4) 0%,
+    rgba(255, 140, 0, 0.45) 100%
+  );
+}
+
+/* Sunset: Warm reds and oranges */
+.overlay-sunset {
+  background: linear-gradient(
+    to bottom,
+    rgba(232, 93, 84, 0.45) 0%,
+    rgba(255, 107, 53, 0.5) 100%
+  );
+}
+
+/* Dusk: Purple twilight */
+.overlay-dusk {
+  background: linear-gradient(
+    to bottom,
+    rgba(75, 0, 130, 0.5) 0%,
+    rgba(138, 43, 226, 0.55) 100%
+  );
+}
+
+/* Twilight: Deep blue */
+.overlay-twilight {
+  background: linear-gradient(
+    to bottom,
+    rgba(25, 25, 112, 0.6) 0%,
+    rgba(44, 62, 80, 0.65) 100%
+  );
+}
+
+/* Night: Dark with stars feeling */
+.overlay-night {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(15, 32, 39, 0.8) 100%
+  );
+}
+
+/* Content Container */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container-max-width-xl);
+  padding: var(--space-16) var(--space-container-padding);
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .content {
+    padding: var(--space-12) var(--space-container-padding-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: var(--space-10) var(--space-4);
+  }
+}
+
+/* Accessibility - Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  .chapter {
+    scroll-behavior: auto;
+  }
+}

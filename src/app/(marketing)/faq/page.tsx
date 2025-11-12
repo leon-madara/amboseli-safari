@@ -89,7 +89,7 @@ const faqs: FAQ[] = [
     id: 'safari-3',
     question: 'Will I see elephants and other wildlife?',
     answer:
-      'Amboseli is famous for its large elephant herds, and sightings are virtually guaranteed. You'll also commonly see zebras, wildebeest, giraffes, buffalo, and various antelope species. Lions, cheetahs, and hyenas are regularly spotted. Our guides know the best locations for wildlife viewing.',
+      "Amboseli is famous for its large elephant herds, and sightings are virtually guaranteed. You'll also commonly see zebras, wildebeest, giraffes, buffalo, and various antelope species. Lions, cheetahs, and hyenas are regularly spotted. Our guides know the best locations for wildlife viewing.",
     category: 'Safari Experiences',
   },
   {
