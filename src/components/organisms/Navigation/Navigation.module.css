@@ -1,15 +1,62 @@
-/* Navigation Container */
+/* Navigation Container - Locked Layout */
 .navigation {
-  background-color: transparent;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   z-index: var(--z-index-sticky);
-  transition: var(--transition-all);
+  background-color: var(--nav-bg, var(--color-primary-terracotta));
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform var(--duration-medium) var(--ease-out),
+              opacity var(--duration-medium) var(--ease-out);
 }
 
-/* Main Container */
+/* Scrolling State - Detached 4px, fully visible */
+.navigation.scrolling {
+  transform: translateY(4px);
+  opacity: 1;
+  will-change: transform, opacity;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Hidden State - Detached 4px, invisible */
+.navigation.hidden {
+  transform: translateY(4px);
+  opacity: 0;
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Update nav link colors for scrolling/hidden states */
+.navigation.scrolling .navLink,
+.navigation.hidden .navLink {
+  color: var(--color-text-primary);
+  text-shadow: none;
+}
+
+.navigation.scrolling .navLink:hover,
+.navigation.hidden .navLink:hover {
+  color: var(--color-primary-terracotta);
+}
+
+.navigation.scrolling .hamburger,
+.navigation.hidden .hamburger {
+  background-color: var(--color-text-primary);
+  box-shadow: none;
+}
+
+.navigation.scrolling .mobileToggle:hover .hamburger,
+.navigation.hidden .mobileToggle:hover .hamburger {
+  background-color: var(--color-primary-terracotta);
+}
+
+/* Main Container - Stable Layout */
 .container {
   max-width: var(--container-max-width-xl);
   margin: 0 auto;
@@ -19,6 +66,7 @@
   align-items: center;
   gap: var(--space-8);
   height: var(--nav-height-desktop);
+  /* No transitions on layout properties - stable from start */
 }
 
 /* Logo - Left */
@@ -256,6 +304,8 @@
   .mobileToggle {
     display: flex;
   }
+
+  /* Mobile - container stays stable, no layout changes */
 }
 
 @media (min-width: 1024px) {
@@ -274,6 +324,8 @@
   .mobileToggle {
     display: none;
   }
+
+  /* Desktop - container stays stable, no layout changes */
 }
 
 @media (min-width: 1280px) {
@@ -299,7 +351,10 @@
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .navigation,
+  .navigation {
+    transition: none;
+  }
+
   .logoLink,
   .navLink,
   .ctaButton,
@@ -316,5 +371,16 @@
   .mobileMenu,
   .mobileMenuContent {
     animation: none;
+  }
+
+  /* Instant state changes for reduced motion */
+  .navigation.scrolling {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+
+  .navigation.hidden {
+    transform: translateY(4px);
+    opacity: 0;
   }
 }
