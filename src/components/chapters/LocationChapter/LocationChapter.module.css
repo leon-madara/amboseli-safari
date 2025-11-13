@@ -1,0 +1,580 @@
+/* Chapter 10: Location & Access */
+.locationChapter {
+  position: relative;
+  min-height: 150vh;
+  background: linear-gradient(to bottom, #2c3e50, #3498db);
+  overflow: hidden;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.atmosphericOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(44, 62, 80, 0.7) 0%,
+    rgba(52, 152, 219, 0.5) 100%
+  );
+  z-index: 1;
+}
+
+.contentContainer {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sectionSubtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Map Section */
+.mapSection {
+  margin-bottom: 8rem;
+}
+
+.mapContainer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  background: white;
+}
+
+.mapImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mapImg {
+  object-fit: cover;
+}
+
+/* Location Marker */
+.locationMarker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.markerPulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.markerDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: #D4AF37;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+  z-index: 2;
+}
+
+.markerLabel {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.markerIcon {
+  font-size: 1.25rem;
+}
+
+.markerText {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+/* Coordinates Display */
+.coordinatesDisplay {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.coordinatesLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gray-600);
+}
+
+.coordinatesValue {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-900);
+  font-family: monospace;
+}
+
+/* Map Info */
+.mapInfo {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.mapDescription {
+  font-size: 1rem;
+  color: var(--color-gray-700);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Distance Section */
+.distanceSection {
+  margin-bottom: 8rem;
+}
+
+.distanceCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.distanceCard {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.distanceCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.distanceCardIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.distanceCardCity {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 1.5rem;
+}
+
+.distanceCardDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.distanceCardMetric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.distanceCardLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-600);
+}
+
+.distanceCardValue {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.distanceCardTransport {
+  margin-top: 0.5rem;
+}
+
+.transportBadge {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: #D4AF37;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
+}
+
+/* Transfer Section */
+.transferSection {
+  margin-bottom: 8rem;
+}
+
+.transferOptionsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.transferOptionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.transferOption {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.transferOption:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border-color: #D4AF37;
+}
+
+.transferOptionSelected {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.transferOptionIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.transferOptionName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+}
+
+.transferOptionDescription {
+  font-size: 0.9375rem;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.transferOptionDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.transferOptionMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transferOptionLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-600);
+}
+
+.transferOptionValue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.recommendedBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: #4CAF50;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
+}
+
+/* Airports Section */
+.airportsSection {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.airportsHeading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.airportsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.airportItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  transition: background 0.3s ease;
+}
+
+.airportItem:hover {
+  background: var(--color-gray-200);
+}
+
+.airportIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.airportInfo {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.airportName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.airportCode {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  font-family: monospace;
+}
+
+.airportDistance {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #D4AF37;
+}
+
+/* Contact CTA */
+.contactCTA {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.contactCTAText {
+  font-size: 1.125rem;
+  color: var(--color-gray-700);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.contactButton {
+  padding: 1rem 2.5rem;
+  background: #D4AF37;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.contactButton:hover {
+  background: #C09F2F;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+}
+
+.contactButton:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contentContainer {
+    padding: 4rem 1rem;
+  }
+
+  .mapWrapper {
+    height: 400px;
+  }
+
+  .markerLabel {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .distanceCardsGrid,
+  .transferOptionsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .distanceCardIcon,
+  .transferOptionIcon {
+    font-size: 2.5rem;
+  }
+
+  .airportInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentContainer {
+    padding: 3rem 0.5rem;
+  }
+
+  .mapWrapper {
+    height: 300px;
+    border-radius: var(--radius-md);
+  }
+
+  .coordinatesDisplay {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .distanceCard,
+  .transferOption {
+    padding: 1.5rem;
+  }
+
+  .contactCTA {
+    padding: 2rem 1rem;
+  }
+
+  .contactButton {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .markerPulse {
+    animation: none;
+  }
+
+  .distanceCard:hover,
+  .transferOption:hover,
+  .contactButton:hover {
+    transform: none;
+  }
+}

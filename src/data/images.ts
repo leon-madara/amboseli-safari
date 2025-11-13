@@ -67,6 +67,8 @@ export const CHAPTER_IMAGES = {
   location: {
     aerialView: 'https://images.unsplash.com/photo-1589553416260-f586c8f1514f?w=2400&q=80',
     map: 'https://images.unsplash.com/photo-1569163139394-de4798aa62b6?w=2400&q=80',
+    twilightSky: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=80',
+    kenyaMap: 'https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=800&q=80',
   },
 
   // Chapter 11: Safari Journal
