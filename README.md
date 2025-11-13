@@ -63,6 +63,9 @@ See [SETUP.md](./SETUP.md) for detailed project structure documentation.
 - `npm run lint` - Run ESLint
 - `npm run type-check` - Run TypeScript type checking
 - `npm run format` - Format code with Prettier
+- `npm run clean` - Clean Next.js cache and build artifacts
+- `npm run clean:full` - Full cleanup (removes node_modules and reinstalls)
+- `npm run rebuild` - Clean cache and rebuild project
 
 ## Agent OS Development Workflow
 
@@ -129,6 +132,49 @@ This project follows atomic design principles:
 - **Molecules:** Simple component combinations (Card, FormField, etc.)
 - **Organisms:** Complex components (Navigation, Hero, ContactForm, etc.)
 - **Templates:** Page-level layouts
+
+## Troubleshooting
+
+### Build Cache Errors
+
+If you encounter webpack caching errors during builds (such as "Can't resolve './vendor-chunks/...'"), run:
+
+```bash
+npm run clean
+```
+
+For persistent issues, perform a full cleanup:
+
+```bash
+npm run clean:full
+```
+
+These errors typically occur when:
+- Dependencies are updated but the cache isn't cleared
+- Switching between branches with different dependencies
+- The build cache becomes corrupted
+
+See [scripts/README.md](./scripts/README.md) for detailed troubleshooting information.
+
+### Other Common Issues
+
+**Port already in use:**
+```bash
+# Kill the process using port 3000
+lsof -ti:3000 | xargs kill -9  # macOS/Linux
+netstat -ano | findstr :3000   # Windows (find PID, then taskkill /PID <pid> /F)
+```
+
+**TypeScript errors:**
+```bash
+npm run type-check
+```
+
+**Dependency issues:**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
 
 ## Contributing
 

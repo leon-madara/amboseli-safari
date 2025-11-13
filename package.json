@@ -14,7 +14,10 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
+    "clean": "node scripts/clean-cache.js",
+    "clean:full": "npm run clean && rm -rf node_modules && npm install",
+    "rebuild": "npm run clean && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
