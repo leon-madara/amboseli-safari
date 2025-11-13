@@ -28,3 +28,12 @@
 .underline:hover {
   color: var(--color-primary);
 }
+
+.secondary {
+  color: var(--color-secondary);
+  font-weight: 500;
+}
+
+.secondary:hover {
+  color: var(--color-primary);
+}

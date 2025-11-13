@@ -15,6 +15,10 @@ const AccommodationsChapter = dynamic(() => import('@/components/chapters/Accomm
 const DiningChapter = dynamic(() => import('@/components/chapters/DiningChapter/DiningChapter'));
 const ExperiencesChapter = dynamic(() => import('@/components/chapters/ExperiencesChapter/ExperiencesChapter'));
 const WellnessChapter = dynamic(() => import('@/components/chapters/WellnessChapter/WellnessChapter'));
+const GuestStoriesChapter = dynamic(() => import('@/components/chapters/GuestStoriesChapter/GuestStoriesChapter'));
+const LocationChapter = dynamic(() => import('@/components/chapters/LocationChapter/LocationChapter'));
+const JournalChapter = dynamic(() => import('@/components/chapters/JournalChapter/JournalChapter'));
+const PlanSafariChapter = dynamic(() => import('@/components/chapters/PlanSafariChapter/PlanSafariChapter'));
 
 /**
  * Complete configuration for all 12 chapters
@@ -136,7 +140,7 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     heightVh: 200,
     startVh: 1250,
     endVh: 1450,
-    component: null as any,
+    component: GuestStoriesChapter,
     atmosphericEffects: {
       particles: 'fireflies',
       colorGradient: ['#ee9ca7', '#ffdde1'],
@@ -150,7 +154,7 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     heightVh: 150,
     startVh: 1450,
     endVh: 1600,
-    component: null as any,
+    component: LocationChapter,
     atmosphericEffects: {
       colorGradient: ['#2c3e50', '#3498db'],
     },
@@ -163,7 +167,7 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     heightVh: 150,
     startVh: 1600,
     endVh: 1750,
-    component: null as any,
+    component: JournalChapter,
     atmosphericEffects: {
       colorGradient: ['#34495e', '#2c3e50'],
     },
@@ -176,7 +180,7 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     heightVh: 150,
     startVh: 1750,
     endVh: 1900,
-    component: null as any,
+    component: PlanSafariChapter,
     atmosphericEffects: {
       particles: 'stars',
       colorGradient: ['#0f2027', '#203a43'],
