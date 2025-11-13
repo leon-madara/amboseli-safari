@@ -8,6 +8,7 @@ import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
 import ExperienceCard from '@/components/molecules/ExperienceCard';
 import ActivityTimeline from '@/components/molecules/ActivityTimeline';
+import { CHAPTER_IMAGES, EXPERIENCE_CARD_IMAGES } from '@/data/images';
 import styles from './ExperiencesChapter.module.css';
 
 export interface ExperiencePreview {
@@ -35,12 +36,12 @@ export interface ExperiencesChapterProps extends BaseChapterProps {
 export default function ExperiencesChapter({
   id,
   className = '',
-  backgroundImage = '/images/chapters/game-drive-golden-hour.jpg',
+  backgroundImage = CHAPTER_IMAGES.experiences.goldenHour,
   experiences = [
     {
       id: 'game-drive',
       title: 'Game Drive Safari',
-      image: '/images/chapters/game-drive.jpg',
+      image: EXPERIENCE_CARD_IMAGES.gameDrive,
       duration: '3-4 hours',
       difficulty: 'Easy',
       timeOfDay: 'Morning',
@@ -48,7 +49,7 @@ export default function ExperiencesChapter({
     {
       id: 'walking-safari',
       title: 'Guided Walking Safari',
-      image: '/images/chapters/walking-safari.jpg',
+      image: EXPERIENCE_CARD_IMAGES.walkingSafari,
       duration: '2-3 hours',
       difficulty: 'Moderate',
       timeOfDay: 'Morning',
@@ -56,7 +57,7 @@ export default function ExperiencesChapter({
     {
       id: 'bird-watching',
       title: 'Bird Watching Expedition',
-      image: '/images/chapters/bird-watching.jpg',
+      image: EXPERIENCE_CARD_IMAGES.birdWatching,
       duration: '2 hours',
       difficulty: 'Easy',
       timeOfDay: 'Morning',
@@ -64,7 +65,7 @@ export default function ExperiencesChapter({
     {
       id: 'sundowner',
       title: 'Sundowner Experience',
-      image: '/images/chapters/sundowner.jpg',
+      image: EXPERIENCE_CARD_IMAGES.sundowner,
       duration: '2 hours',
       difficulty: 'Easy',
       timeOfDay: 'Evening',

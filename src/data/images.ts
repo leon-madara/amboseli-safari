@@ -163,6 +163,36 @@ export const WILDLIFE_IMAGES = {
   cheetah: 'https://images.unsplash.com/photo-1591634844768-d5b175f92e4a?w=1200&q=80',
 };
 
+// Dining chapter dish imagery
+export const DINING_DISH_IMAGES = {
+  grilledBeef: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=1600&q=80',
+  tilapia: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80',
+  sunsetPlatter: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?w=1600&q=80',
+};
+
+// Experiences chapter preview imagery
+export const EXPERIENCE_CARD_IMAGES = {
+  gameDrive: 'https://images.unsplash.com/photo-1543248939-ff40856f65d4?w=1600&q=80',
+  walkingSafari: 'https://images.unsplash.com/photo-1527766833261-b09c3163a791?w=1600&q=80',
+  birdWatching: 'https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=1600&q=80',
+  sundowner: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1600&q=80',
+};
+
+// Property and accommodations imagery
+export const PROPERTY_IMAGES = {
+  exteriorSunset: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=2400&q=80',
+  bushBreakfast: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=2400&q=80',
+  campfireEvening: 'https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=2400&q=80',
+  lobbyReception: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=2400&q=80',
+};
+
+// Room imagery for accommodations listings
+export const ROOM_IMAGES = {
+  premiumRoom: 'https://images.unsplash.com/photo-1616594039964-2059c5f13c91?w=1920&q=80',
+  deluxeSuite: 'https://images.unsplash.com/photo-1600585154340-0ef3c08f11ff?w=1920&q=80',
+  familySuite: 'https://images.unsplash.com/photo-1582719478181-2cf4e7d55cde?w=1920&q=80',
+};
+
 /**
  * Helper function to get optimized image URL with custom parameters
  */

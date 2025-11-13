@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './WellnessChapter.module.css';
 
 export interface SpaService {
@@ -24,8 +25,8 @@ export interface WellnessChapterProps extends BaseChapterProps {
 export default function WellnessChapter({
   id,
   className = '',
-  backgroundImage = '/images/chapters/sunset-wellness.jpg',
-  yogaImage = '/images/chapters/yoga-silhouette.jpg',
+  backgroundImage = CHAPTER_IMAGES.wellness.spa,
+  yogaImage = CHAPTER_IMAGES.wellness.yogaSunset,
   spaServices = [
     {
       name: 'Savanna Stone Massage',
