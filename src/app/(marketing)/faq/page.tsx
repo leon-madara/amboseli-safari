@@ -215,7 +215,7 @@ export default function FAQPage() {
                 margin: '0 auto',
               }}
             >
-              Browse our frequently asked questions organized by topic. Can't find what you're
+              Browse our frequently asked questions organized by topic. Can&apos;t find what you&apos;re
               looking for? Feel free to{' '}
               <a
                 href="/contact"
@@ -292,7 +292,7 @@ export default function FAQPage() {
             }}
           >
             Our team is here to help you plan the perfect safari experience. Get in touch with us
-            and we'll answer any questions you may have.
+            and we&apos;ll answer any questions you may have.
           </p>
           <div
             style={{

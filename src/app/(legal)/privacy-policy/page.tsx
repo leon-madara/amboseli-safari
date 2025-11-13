@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
       <p className={styles.lastUpdated}>Last updated: {new Date().toLocaleDateString()}</p>
       <div className={styles.content}>
         <p>
-          This Privacy Policy describes how Amboseli Safari Club ("we", "us", or "our") collects,
+          This Privacy Policy describes how Amboseli Safari Club (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects,
           uses, and discloses your personal information when you visit our website, use our
           services, or otherwise communicate with us.
         </p>

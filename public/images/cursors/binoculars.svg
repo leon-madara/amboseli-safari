@@ -1,0 +1,24 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Binoculars icon for cursor -->
+  <g filter="url(#shadow)">
+    <!-- Left lens -->
+    <circle cx="10" cy="16" r="6" fill="#19547b" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="10" cy="16" r="3" fill="#87ceeb" opacity="0.6"/>
+    
+    <!-- Right lens -->
+    <circle cx="22" cy="16" r="6" fill="#19547b" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="22" cy="16" r="3" fill="#87ceeb" opacity="0.6"/>
+    
+    <!-- Bridge -->
+    <rect x="13" y="14" width="6" height="4" rx="1" fill="#19547b" stroke="#fff" stroke-width="1"/>
+    
+    <!-- Top bar -->
+    <rect x="8" y="9" width="16" height="2" rx="1" fill="#19547b" stroke="#fff" stroke-width="0.5"/>
+  </g>
+  
+  <defs>
+    <filter id="shadow" x="0" y="0" width="32" height="32" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+</svg>

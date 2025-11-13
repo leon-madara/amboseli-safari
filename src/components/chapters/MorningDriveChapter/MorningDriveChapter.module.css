@@ -1,0 +1,226 @@
+.morningDriveChapter {
+  position: relative;
+  min-height: 150vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: url('/images/cursors/binoculars.svg') 16 16, crosshair;
+}
+
+/* Background Container */
+.backgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  will-change: transform;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Bright morning light gradient overlay */
+.gradientOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 216, 155, 0.4) 0%,
+    rgba(25, 84, 123, 0.3) 100%
+  );
+  pointer-events: none;
+}
+
+/* Distance Counter */
+.distanceCounter {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  text-align: center;
+}
+
+.counterValue {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #19547b;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.counterLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Content Wrapper */
+.contentWrapper {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.heading {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 4rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Wildlife Grid - Staggered Layout */
+.wildlifeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.cardWrapper {
+  /* Staggered positioning for visual interest */
+  transform-origin: center;
+}
+
+.cardWrapper:nth-child(even) {
+  margin-top: 2rem;
+}
+
+/* CTA Container */
+.ctaContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+.ctaPrimary {
+  background: linear-gradient(135deg, #19547b 0%, #ffd89b 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(25, 84, 123, 0.3);
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(25, 84, 123, 0.4);
+}
+
+.ctaSecondary {
+  background: rgba(255, 255, 255, 0.95);
+  color: #19547b;
+  border: 2px solid #19547b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ctaSecondary:hover {
+  background: #19547b;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(25, 84, 123, 0.3);
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .heading {
+    font-size: 2.5rem;
+  }
+
+  .wildlifeGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .distanceCounter {
+    top: 8%;
+    right: 3%;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .counterValue {
+    font-size: 2.5rem;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .morningDriveChapter {
+    min-height: 100vh;
+    cursor: auto; /* Remove custom cursor on mobile */
+  }
+
+  .contentWrapper {
+    padding: 3rem 1.5rem;
+  }
+
+  .heading {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .wildlifeGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cardWrapper:nth-child(even) {
+    margin-top: 0;
+  }
+
+  .distanceCounter {
+    top: 5%;
+    right: 5%;
+    padding: 1rem 1.25rem;
+  }
+
+  .counterValue {
+    font-size: 2rem;
+  }
+
+  .counterLabel {
+    font-size: 0.75rem;
+  }
+
+  .cta {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,227 @@
+/* Chat Bubble Container */
+.chatBubble {
+  position: fixed;
+  z-index: var(--z-index-modal);
+  pointer-events: none;
+}
+
+/* Position variants */
+.chatBubble.bottom-right {
+  bottom: var(--space-6);
+  right: var(--space-6);
+}
+
+.chatBubble.bottom-left {
+  bottom: var(--space-6);
+  left: var(--space-6);
+}
+
+/* Chat Button */
+.button {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366; /* WhatsApp green */
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4),
+              0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: var(--transition-all);
+  pointer-events: auto;
+  animation: float 3s ease-in-out infinite;
+}
+
+.button:hover {
+  background-color: #20BA5A; /* Darker green on hover */
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.5),
+              0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-accent-gold);
+  outline-offset: 4px;
+}
+
+.button:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* WhatsApp Icon */
+.icon {
+  width: 32px;
+  height: 32px;
+  color: white;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Pulse Rings */
+.pulseRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border: 3px solid #25D366;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Pulsing state - triggered every 10 seconds */
+.chatBubble.pulsing .pulseRing:nth-child(2) {
+  animation: pulse 1s ease-out;
+}
+
+.chatBubble.pulsing .pulseRing:nth-child(3) {
+  animation: pulse 1s ease-out 0.3s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow-lg);
+  animation: tooltipFadeIn 0.2s ease-out;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Mobile Adaptations */
+@media (max-width: 767px) {
+  .chatBubble.bottom-right {
+    bottom: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .chatBubble.bottom-left {
+    bottom: var(--space-4);
+    left: var(--space-4);
+  }
+
+  .button {
+    width: 56px;
+    height: 56px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .tooltip {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Tablet Adaptations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chatBubble.bottom-right {
+    bottom: var(--space-5);
+    right: var(--space-5);
+  }
+
+  .chatBubble.bottom-left {
+    bottom: var(--space-5);
+    left: var(--space-5);
+  }
+}
+
+/* Desktop Enhancements */
+@media (min-width: 1024px) {
+  .button {
+    width: 64px;
+    height: 64px;
+  }
+
+  .icon {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    animation: none;
+    transition: background-color var(--duration-fast) ease;
+  }
+
+  .button:hover {
+    transform: none;
+  }
+
+  .pulseRing {
+    animation: none !important;
+  }
+
+  .tooltip {
+    animation: none;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .button {
+    border: 2px solid currentColor;
+  }
+
+  .tooltip {
+    border: 1px solid white;
+  }
+}
