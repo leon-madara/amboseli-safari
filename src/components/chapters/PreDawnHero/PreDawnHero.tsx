@@ -21,7 +21,7 @@ export default function PreDawnHero({
   id,
   className = '',
   backgroundImage = '/images/hero/Single Leading Bull Silhouette.jpg',
-  logo = '/images/hero/logos/mainLOGOAmboseli.svg',
+  logo = '/images/logos/mainLOGOAmboseli.svg',
   tagline = 'Welcome to the Wild',
   primaryCTA = {
     text: 'Begin Your Safari',

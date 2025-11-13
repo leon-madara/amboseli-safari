@@ -163,6 +163,22 @@ export const WILDLIFE_IMAGES = {
   cheetah: 'https://images.unsplash.com/photo-1591634844768-d5b175f92e4a?w=1200&q=80',
 };
 
+// Dining chapter dish imagery
+export const DINING_DISH_IMAGES = {
+  grilledBeef: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=1600&q=80',
+  tilapia: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80',
+  sunsetPlatter: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?w=1600&q=80',
+};
+
+// Experiences chapter preview imagery
+export const EXPERIENCE_CARD_IMAGES = {
+  gameDrive: 'https://images.unsplash.com/photo-1543248939-ff40856f65d4?w=1600&q=80',
+  walkingSafari: 'https://images.unsplash.com/photo-1527766833261-b09c3163a791?w=1600&q=80',
+  birdWatching: 'https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=1600&q=80',
+  sundowner: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1600&q=80',
+};
+
+
 /**
  * Helper function to get optimized image URL with custom parameters
  */

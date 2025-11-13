@@ -6,6 +6,7 @@ import { useRef, useState, useEffect } from 'react';
 import { BaseChapterProps } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './SunriseChapter.module.css';
 
 export interface SunriseChapterProps extends BaseChapterProps {
@@ -17,8 +18,8 @@ export interface SunriseChapterProps extends BaseChapterProps {
 export default function SunriseChapter({
   id,
   className = '',
-  backgroundImage = '/images/chapters/sunrise-background.jpg',
-  jeepImage = '/images/chapters/safari-jeep.png',
+  backgroundImage = CHAPTER_IMAGES.sunrise.sky,
+  jeepImage = CHAPTER_IMAGES.sunrise.jeep,
   message = 'Your adventure starts here',
 }: SunriseChapterProps) {
   // Parallax effect for jeep (0.5x speed)

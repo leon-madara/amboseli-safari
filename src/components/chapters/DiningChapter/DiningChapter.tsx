@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES, DINING_DISH_IMAGES } from '@/data/images';
 import styles from './DiningChapter.module.css';
 
 export interface DishPreview {
@@ -29,21 +30,21 @@ export interface DiningChapterProps extends BaseChapterProps {
 export default function DiningChapter({
   id,
   className = '',
-  backgroundImage = '/images/chapters/sundowner-deck.jpg',
+  backgroundImage = CHAPTER_IMAGES.dining.sundowner,
   dishes = [
     {
       name: 'Grilled Serengeti Beef',
-      image: '/images/chapters/grilled-beef.jpg',
+      image: DINING_DISH_IMAGES.grilledBeef,
       description: 'Prime cuts with wild herb butter',
     },
     {
       name: 'Lake Victoria Tilapia',
-      image: '/images/chapters/tilapia.jpg',
+      image: DINING_DISH_IMAGES.tilapia,
       description: 'Pan-seared with lemon & thyme',
     },
     {
       name: 'Savanna Sunset Platter',
-      image: '/images/chapters/sunset-platter.jpg',
+      image: DINING_DISH_IMAGES.sunsetPlatter,
       description: 'Chef\'s selection of local delicacies',
     },
   ],
