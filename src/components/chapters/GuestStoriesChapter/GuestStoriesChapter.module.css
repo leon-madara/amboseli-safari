@@ -1,0 +1,442 @@
+/**
+ * Guest Stories Chapter Styles
+ * Chapter 9: Dusk atmosphere with warm pink tones
+ */
+
+.guestStoriesChapter {
+  position: relative;
+  min-height: 200vh;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #ee9ca7, #ffdde1);
+}
+
+/* Background image */
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Atmospheric overlay for dusk effect */
+.atmosphericOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(238, 156, 167, 0.6) 0%,
+    rgba(255, 221, 225, 0.4) 100%
+  );
+  z-index: 1;
+}
+
+/* Main content container */
+.contentContainer {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 8rem 2rem;
+}
+
+/* Header section */
+.header {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 600;
+  color: #3a3633;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sectionSubtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  color: #6e6965;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: #3a3633;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Testimonial Section */
+.testimonialSection {
+  margin-bottom: 8rem;
+}
+
+.carousel {
+  /* Additional carousel container styling if needed */
+}
+
+/* Video Stories Section */
+.videoStoriesSection {
+  margin-bottom: 8rem;
+}
+
+.storyCirclesContainer {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.storyCircle {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.storyCircle:hover {
+  transform: scale(1.1);
+}
+
+.storyCircleRing {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: 24px; /* Account for name below */
+  border-radius: 50%;
+  background: linear-gradient(45deg, #d4af37, #e6a04e);
+  animation: storyPulse 2s infinite;
+  z-index: 0;
+}
+
+@keyframes storyPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+  }
+}
+
+.storyCircleImage {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  z-index: 1;
+  background: #f3e9d7;
+}
+
+.thumbnailImage {
+  object-fit: cover;
+}
+
+.playIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #3a3633;
+  z-index: 2;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.storyCircle:hover .playIcon {
+  opacity: 1;
+  background: rgba(255, 255, 255, 1);
+}
+
+.storyCircleName {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #3a3633;
+  text-align: center;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Photo Wall Section */
+.photoWallSection {
+  margin-bottom: 4rem;
+}
+
+.photoWallGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.photoCard {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.photoCard:hover {
+  transform: translateY(-5px);
+}
+
+.photoCardImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.photoImage {
+  object-fit: cover;
+}
+
+.photoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(58, 54, 51, 0.95) 0%,
+    rgba(58, 54, 51, 0.7) 50%,
+    rgba(58, 54, 51, 0) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  z-index: 2;
+}
+
+.photoOverlayContent {
+  width: 100%;
+}
+
+.photoCaption {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: #f3e9d7;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.photoMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  color: #e8d5c4;
+}
+
+.photoGuest {
+  font-weight: 600;
+}
+
+.photoLocation {
+  font-style: italic;
+}
+
+/* Video Modal */
+.videoModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.videoModalContent {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  background: #1a1f3a;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #f3e9d7;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.3s ease;
+}
+
+.modalCloseButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background: #000;
+}
+
+.videoIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.videoInfo {
+  padding: 1.5rem;
+  background: #0a0e27;
+  color: #f3e9d7;
+}
+
+.videoInfo h4 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.videoInfo p {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: #a8a39e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .contentContainer {
+    padding: 6rem 1.5rem;
+  }
+
+  .photoWallGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentContainer {
+    padding: 4rem 1rem;
+  }
+
+  .header {
+    margin-bottom: 4rem;
+  }
+
+  .testimonialSection,
+  .videoStoriesSection {
+    margin-bottom: 5rem;
+  }
+
+  .storyCirclesContainer {
+    gap: 1.5rem;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .storyCircleImage {
+    width: 100px;
+    height: 100px;
+  }
+
+  .playIcon {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .photoWallGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .videoModal {
+    padding: 1rem;
+  }
+
+  .videoModalContent {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .sectionHeading {
+    font-size: 1.5rem;
+  }
+
+  .photoWallGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .storyCircle,
+  .photoCard {
+    transition: none;
+  }
+
+  .storyCircleRing {
+    animation: none;
+  }
+
+  .playIcon {
+    opacity: 1;
+  }
+}

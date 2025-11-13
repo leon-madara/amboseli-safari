@@ -1,0 +1,317 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  padding: 3rem 1rem;
+}
+
+.carouselContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.testimonialWrapper {
+  flex: 1;
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonialContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Avatar */
+.avatarWrapper {
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #D4AF37;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.starFilled {
+  color: #D4AF37;
+}
+
+.starEmpty {
+  color: #E0E0E0;
+}
+
+/* Quote */
+.quote {
+  margin: 0 0 2rem 0;
+}
+
+.text {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--color-gray-800);
+  font-style: italic;
+  margin: 0;
+  max-width: 600px;
+}
+
+/* Guest Info */
+.guestInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.guestName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.guestLocation {
+  font-size: 0.9375rem;
+  color: var(--color-gray-600);
+}
+
+.tripType {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #A35A3D;
+  background-color: #D89080;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-top: 0.5rem;
+}
+
+/* Navigation Buttons */
+.navButton {
+  position: relative;
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: #D4AF37;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navButton:hover {
+  background: #D4AF37;
+  color: white;
+  border-color: #D4AF37;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.navButton:active {
+  transform: scale(0.95);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.navButton:disabled:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #D4AF37;
+  transform: scale(1);
+}
+
+.prevButton {
+  /* Additional styles if needed */
+}
+
+.nextButton {
+  /* Additional styles if needed */
+}
+
+/* Dot Indicators */
+.dotsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.dot:hover {
+  background: rgba(212, 175, 55, 0.5);
+  transform: scale(1.2);
+}
+
+.dotActive {
+  background: #D4AF37;
+  border-color: #D4AF37;
+  width: 32px;
+  border-radius: 6px;
+}
+
+.dotActive:hover {
+  background: #D4AF37;
+}
+
+/* Pause Indicator */
+.pauseIndicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  z-index: 20;
+}
+
+/* Empty State */
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-gray-600);
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .carousel {
+    padding: 2rem 0.5rem;
+  }
+
+  .carouselContainer {
+    gap: 1rem;
+  }
+
+  .testimonialWrapper {
+    min-height: 500px;
+  }
+
+  .testimonialContent {
+    padding: 1.5rem;
+  }
+
+  .navButton {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    z-index: 10;
+  }
+
+  .prevButton {
+    left: 0.5rem;
+  }
+
+  .nextButton {
+    right: 0.5rem;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel {
+    padding: 1.5rem 0.25rem;
+  }
+
+  .testimonialContent {
+    padding: 1rem;
+  }
+
+  .navButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .guestName {
+    font-size: 1rem;
+  }
+
+  .guestLocation {
+    font-size: 0.875rem;
+  }
+
+  .dotsContainer {
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dotActive {
+    width: 24px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .navButton,
+  .dot {
+    transition: none;
+  }
+
+  .navButton:hover,
+  .dot:hover {
+    transform: none;
+  }
+}
