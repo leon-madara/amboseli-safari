@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import RoomCard from '@/components/molecules/RoomCard';
 import RoomComparisonBar, { type ComparisonRoom } from '@/components/molecules/RoomComparisonBar';
 import RoomComparisonModal, { type ComparisonRoomDetails } from '@/components/molecules/RoomComparisonModal';
+import PriceFilter, { type PriceRange } from '@/components/molecules/PriceFilter';
 
 interface Room {
   title: string;
   description: string;
   image: string;
   imageAlt: string;
+  images?: string[];
   capacity: number;
   size: string;
   price: string;
@@ -30,6 +32,27 @@ interface RoomsSectionProps {
 export default function RoomsSection({ rooms }: RoomsSectionProps) {
   const [comparedRooms, setComparedRooms] = useState<string[]>([]);
   const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
+
+  // Extract price values for filtering
+  const prices = useMemo(() => {
+    return rooms.map((room) => parseInt(room.price.replace(/\D/g, '')));
+  }, [rooms]);
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const [priceRange, setPriceRange] = useState<PriceRange>({
+    min: minPrice,
+    max: maxPrice,
+  });
+
+  // Filter rooms by price
+  const filteredRooms = useMemo(() => {
+    return rooms.filter((room) => {
+      const roomPrice = parseInt(room.price.replace(/\D/g, ''));
+      return roomPrice >= priceRange.min && roomPrice <= priceRange.max;
+    });
+  }, [rooms, priceRange]);
 
   const handleCompareToggle = (slug: string, isSelected: boolean) => {
     if (isSelected) {
@@ -123,6 +146,30 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
             </p>
           </div>
 
+          {/* Price Filter */}
+          <div style={{ marginBottom: 'var(--space-8)', maxWidth: '400px' }}>
+            <PriceFilter
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              currentRange={priceRange}
+              onRangeChange={setPriceRange}
+              onReset={() => setPriceRange({ min: minPrice, max: maxPrice })}
+            />
+          </div>
+
+          {/* Room Count */}
+          <div style={{ marginBottom: 'var(--space-6)' }}>
+            <p
+              style={{
+                fontFamily: 'var(--font-family-body)',
+                fontSize: 'var(--font-size-base)',
+                color: 'var(--color-text-secondary)',
+              }}
+            >
+              Showing {filteredRooms.length} of {rooms.length} rooms
+            </p>
+          </div>
+
           <div
             style={{
               display: 'grid',
@@ -130,7 +177,7 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
               gap: 'var(--space-10)',
             }}
           >
-            {rooms.map((room, index) => (
+            {filteredRooms.map((room, index) => (
               <RoomCard
                 key={index}
                 {...room}
@@ -139,6 +186,21 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
               />
             ))}
           </div>
+
+          {/* No Results Message */}
+          {filteredRooms.length === 0 && (
+            <div style={{ textAlign: 'center', padding: 'var(--space-12) 0' }}>
+              <p
+                style={{
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-lg)',
+                  color: 'var(--color-text-secondary)',
+                }}
+              >
+                No rooms found in this price range. Try adjusting your filter.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

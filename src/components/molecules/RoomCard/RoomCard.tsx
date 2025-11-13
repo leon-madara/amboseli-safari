@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from '@/components/atoms/Link';
 import { motion } from 'framer-motion';
 import QuickBookingModal from '@/components/molecules/QuickBookingModal';
+import ImageCarousel from '@/components/molecules/ImageCarousel';
 import styles from './RoomCard.module.css';
 
 export interface RoomCardProps {
@@ -12,6 +13,7 @@ export interface RoomCardProps {
   description: string;
   image: string;
   imageAlt: string;
+  images?: string[]; // Multiple images for carousel
   capacity: number;
   size: string;
   price: string;
@@ -34,6 +36,7 @@ export default function RoomCard({
   description,
   image,
   imageAlt,
+  images,
   capacity,
   size,
   price,
@@ -54,6 +57,10 @@ export default function RoomCard({
   const displayedFeatures = isFeaturesExpanded ? features : features.slice(0, 4);
   const hasMoreFeatures = features.length > 4;
 
+  // Use carousel if multiple images provided, otherwise single image
+  const roomImages = images && images.length > 0 ? images : [image];
+  const hasMultipleImages = roomImages.length > 1;
+
   return (
     <>
       <motion.article
@@ -65,14 +72,20 @@ export default function RoomCard({
       >
         <Link href={`/accommodations/${slug}`} className={styles.imageLink}>
           <div className={styles.imageContainer}>
-            <Image
-              src={image}
-              alt={imageAlt}
-              fill
-              className={styles.image}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            <div className={styles.overlay} />
+            {hasMultipleImages ? (
+              <ImageCarousel images={roomImages} alt={title} />
+            ) : (
+              <>
+                <Image
+                  src={image}
+                  alt={imageAlt}
+                  fill
+                  className={styles.image}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className={styles.overlay} />
+              </>
+            )}
 
             {/* Trust & Urgency Badges */}
             <div className={styles.badgeContainer}>
