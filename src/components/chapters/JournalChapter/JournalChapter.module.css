@@ -1,0 +1,649 @@
+/* Chapter 11: Safari Journal */
+.journalChapter {
+  position: relative;
+  min-height: 150vh;
+  background: linear-gradient(to bottom, #34495e, #2c3e50);
+  overflow: hidden;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.atmosphericOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(52, 73, 94, 0.8) 0%,
+    rgba(44, 62, 80, 0.6) 100%
+  );
+  z-index: 1;
+}
+
+.contentContainer {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sectionSubtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Blog Section */
+.blogSection {
+  margin-bottom: 8rem;
+}
+
+.blogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blogCard {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.blogCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.blogCardImage {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.blogImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.blogCard:hover .blogImage {
+  transform: scale(1.05);
+}
+
+.blogCardCategory {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #D4AF37;
+  color: white;
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+.blogCardContent {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.blogCardMeta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+
+.blogCardDate::before {
+  content: '📅 ';
+}
+
+.blogCardReadTime::before {
+  content: '⏱ ';
+}
+
+.blogCardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.blogCardExcerpt {
+  font-size: 0.9375rem;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.blogCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.blogCardAuthor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+
+.authorIcon {
+  font-size: 1rem;
+}
+
+.authorName {
+  font-weight: 500;
+}
+
+.readMoreLink {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Conservation Section */
+.conservationSection {
+  margin-bottom: 8rem;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.metricCard {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-top: 4px solid #D4AF37;
+  transition: transform 0.3s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-5px);
+}
+
+.metricIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.metricValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+}
+
+.metricUnit {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-left: 0.25rem;
+  color: var(--color-gray-600);
+}
+
+.metricLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-gray-800);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metricDescription {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Migration Section */
+.migrationSection {
+  margin-bottom: 8rem;
+}
+
+.migrationTracker {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.trackerVisualization {
+  margin-bottom: 2rem;
+}
+
+.trackerMap {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  min-height: 300px;
+}
+
+.trackerOverlay {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 2;
+}
+
+.trackerTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.trackerSubtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.trackerChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 200px;
+  margin-top: 4rem;
+}
+
+.trackerBar {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  min-height: 20px;
+}
+
+.trackerBar:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.trackerBarActive {
+  background: rgba(212, 175, 55, 0.8);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+.trackerBarLabel {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.trackerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.trackerCurrentMonth {
+  text-align: center;
+}
+
+.trackerMonthName {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+}
+
+.trackerMonthStats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.trackerStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trackerStatIcon {
+  font-size: 2rem;
+}
+
+.trackerStatValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #D4AF37;
+}
+
+.trackerStatLabel {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+
+.trackerDots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.trackerDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-gray-300);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.trackerDot:hover {
+  background: var(--color-gray-400);
+  transform: scale(1.2);
+}
+
+.trackerDotActive {
+  background: #D4AF37;
+  width: 28px;
+  border-radius: 5px;
+}
+
+.trackerDescription {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-gray-200);
+  text-align: center;
+}
+
+.trackerDescription p {
+  font-size: 0.9375rem;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Newsletter Section */
+.newsletterSection {
+  margin-bottom: 4rem;
+}
+
+.newsletterContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.newsletterContent {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.newsletterIcon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.newsletterTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+}
+
+.newsletterDescription {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.newsletterForm {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.newsletterInputGroup {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.newsletterInput {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+}
+
+.newsletterInput:focus {
+  outline: none;
+  border-color: white;
+  background: white;
+}
+
+.newsletterInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.newsletterButton {
+  padding: 1rem 2rem;
+  background: white;
+  color: #667eea;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.newsletterButton:hover:not(:disabled) {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.newsletterButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.newsletterButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.newsletterSuccess {
+  padding: 1rem;
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.newsletterError {
+  padding: 1rem;
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.newsletterPrivacy {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contentContainer {
+    padding: 4rem 1rem;
+  }
+
+  .blogGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .metricsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .metricValue {
+    font-size: 2rem;
+  }
+
+  .migrationTracker {
+    padding: 1.5rem;
+  }
+
+  .trackerMap {
+    padding: 1.5rem;
+  }
+
+  .trackerMonthStats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .newsletterContent {
+    padding: 2rem 1.5rem;
+  }
+
+  .newsletterInputGroup {
+    flex-direction: column;
+  }
+
+  .newsletterButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentContainer {
+    padding: 3rem 0.5rem;
+  }
+
+  .blogCardContent {
+    padding: 1.25rem;
+  }
+
+  .metricCard {
+    padding: 1.5rem;
+  }
+
+  .trackerChart {
+    height: 150px;
+  }
+
+  .newsletterIcon {
+    font-size: 2.5rem;
+  }
+
+  .newsletterTitle {
+    font-size: 1.5rem;
+  }
+
+  .newsletterDescription {
+    font-size: 1rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .blogCard:hover,
+  .metricCard:hover,
+  .newsletterButton:hover,
+  .trackerBar,
+  .trackerDot {
+    transform: none;
+  }
+
+  .blogImage {
+    transition: none;
+  }
+}

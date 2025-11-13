@@ -123,3 +123,79 @@ export function getTotalImpactValue(): number {
     return total;
   }, 0);
 }
+
+// Migration Tracker Data
+export interface MigrationTrackerData {
+  description: string;
+  months: {
+    month: string;
+    elephantCount: number;
+    location: string;
+  }[];
+}
+
+export const MIGRATION_DATA: MigrationTrackerData = {
+  description: 'The elephant population in Amboseli fluctuates throughout the year based on seasonal migration patterns, water availability, and vegetation growth. Peak numbers occur during the dry season when elephants gather near permanent water sources.',
+  months: [
+    {
+      month: 'January',
+      elephantCount: 1400,
+      location: 'Central Plains',
+    },
+    {
+      month: 'February',
+      elephantCount: 1450,
+      location: 'Central Plains',
+    },
+    {
+      month: 'March',
+      elephantCount: 1200,
+      location: 'Southern Swamps',
+    },
+    {
+      month: 'April',
+      elephantCount: 900,
+      location: 'Southern Region',
+    },
+    {
+      month: 'May',
+      elephantCount: 850,
+      location: 'Southern Region',
+    },
+    {
+      month: 'June',
+      elephantCount: 950,
+      location: 'Western Corridor',
+    },
+    {
+      month: 'July',
+      elephantCount: 1100,
+      location: 'Western Corridor',
+    },
+    {
+      month: 'August',
+      elephantCount: 1250,
+      location: 'Northern Plains',
+    },
+    {
+      month: 'September',
+      elephantCount: 1350,
+      location: 'Northern Plains',
+    },
+    {
+      month: 'October',
+      elephantCount: 1400,
+      location: 'Central Plains',
+    },
+    {
+      month: 'November',
+      elephantCount: 1500,
+      location: 'Central Plains',
+    },
+    {
+      month: 'December',
+      elephantCount: 1480,
+      location: 'Central Plains',
+    },
+  ],
+};
