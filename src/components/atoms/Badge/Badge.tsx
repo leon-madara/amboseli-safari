@@ -3,7 +3,7 @@ import styles from './Badge.module.css';
 
 interface BadgeProps {
   children: ReactNode;
-  variant?: 'default' | 'success' | 'warning' | 'error';
+  variant?: 'default' | 'success' | 'warning' | 'error' | 'terracotta' | 'neutral';
   className?: string;
 }
 
