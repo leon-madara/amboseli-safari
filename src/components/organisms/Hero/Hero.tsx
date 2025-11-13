@@ -81,25 +81,6 @@ export default function Hero({
         <div className={`${styles.overlay} ${styles[`overlay-${overlay}`]}`} />
       </div>
 
-      {/* Logo */}
-      {logo && (
-        <motion.div
-          className={styles.logoContainer}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          <Image
-            src={logo}
-            alt={logoAlt}
-            width={280}
-            height={100}
-            className={styles.logo}
-            priority
-          />
-        </motion.div>
-      )}
-
       {/* Content */}
       <div className={styles.contentWrapper}>
         <div className={styles.content}>

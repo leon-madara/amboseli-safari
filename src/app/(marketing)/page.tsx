@@ -2,6 +2,7 @@ import { CinematicJourney } from '@/components/organisms/CinematicJourney';
 import { ScrollProgressIndicator } from '@/components/molecules/ScrollProgressIndicator';
 import { StickyNavigation } from '@/components/molecules/StickyNavigation';
 import { WhatsAppChatBubble } from '@/components/molecules/WhatsAppChatBubble';
+import { ScrollProgress } from '@/components/organisms/ScrollProgress';
 
 /**
  * HomePage Component
@@ -24,6 +25,7 @@ export default function HomePage() {
       <CinematicJourney />
 
       {/* Persistent UI elements */}
+      <ScrollProgress />
       <ScrollProgressIndicator position="right" />
       <StickyNavigation showAfterVh={100} />
       <WhatsAppChatBubble

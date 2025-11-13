@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import { SmoothScrollProvider } from '@/providers/SmoothScrollProvider';
 import { SafariProgressProvider } from '@/providers/SafariProgressProvider';
-import { ScrollProgress } from '@/components/organisms/ScrollProgress';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -88,7 +87,6 @@ export default function RootLayout({
       <body>
         <SmoothScrollProvider>
           <SafariProgressProvider>
-            <ScrollProgress />
             {children}
           </SafariProgressProvider>
         </SmoothScrollProvider>

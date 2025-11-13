@@ -16,7 +16,7 @@
 .container {
   max-width: var(--container-max-width-xl);
   margin: 0 auto;
-  padding: var(--space-6) var(--space-container-padding);
+  padding: var(--space-4) var(--space-container-padding);
   display: grid;
   grid-template-columns: 200px 1fr 200px;
   align-items: center;
