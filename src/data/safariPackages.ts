@@ -161,7 +161,8 @@ export interface ContactMethod {
   value: string;
   label: string;
   icon: string; // emoji
-  displayValue: string; // Formatted for display
+  displayValue?: string; // Formatted for display
+  link: string; // Clickable link (tel:, mailto:, https://)
   primary?: boolean;
 }
 
@@ -169,19 +170,21 @@ export const CONTACT_METHODS: ContactMethod[] = [
   {
     id: 'whatsapp',
     type: 'whatsapp',
-    value: '254712345678',
-    label: 'WhatsApp Us',
+    value: '+254 712 345 678',
+    label: 'Chat on WhatsApp',
     icon: '💬',
     displayValue: '+254 712 345 678',
+    link: 'https://wa.me/254712345678',
     primary: true,
   },
   {
     id: 'phone',
     type: 'phone',
-    value: '+254712345678',
+    value: '+254 712 345 678',
     label: 'Call Us',
     icon: '📞',
     displayValue: '+254 712 345 678',
+    link: 'tel:+254712345678',
   },
   {
     id: 'email',
@@ -190,6 +193,7 @@ export const CONTACT_METHODS: ContactMethod[] = [
     label: 'Email Us',
     icon: '📧',
     displayValue: 'reservations@amboselisafariclub.com',
+    link: 'mailto:reservations@amboselisafariclub.com',
   },
 ];
 
