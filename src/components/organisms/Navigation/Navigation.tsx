@@ -17,8 +17,8 @@ export default function Navigation() {
           <Image
             src="/images/logos/mainLOGOAmboseli.svg"
             alt="Amboseli Safari Club"
-            width={180}
-            height={60}
+            width={120}
+            height={40}
             className={styles.logo}
             priority
           />
