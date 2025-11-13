@@ -1,0 +1,271 @@
+/* Page Container */
+.main {
+  min-height: 100vh;
+}
+
+/* Section Styles */
+.section {
+  padding: var(--space-section-lg) var(--space-container-padding);
+}
+
+.sectionAlt {
+  padding: var(--space-section-xl) var(--space-container-padding);
+  background-color: var(--color-neutral-cream);
+}
+
+.container {
+  max-width: var(--container-max-width-xl);
+  margin: 0 auto;
+}
+
+.containerLarge {
+  max-width: var(--container-max-width-xl);
+  margin: 0 auto;
+}
+
+/* Section Header */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.heading {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Grid Layouts */
+.restaurantsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-10);
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-8);
+}
+
+.experiencesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-8);
+}
+
+/* Dietary Section */
+.dietarySection {
+  padding: var(--space-section-lg) var(--space-container-padding);
+  background-color: var(--color-neutral-cream);
+}
+
+.dietaryContainer {
+  max-width: var(--container-max-width-lg);
+  margin: 0 auto;
+}
+
+.dietaryCard {
+  padding: var(--space-12);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-2xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.dietaryHeading {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h3-size);
+  font-weight: var(--heading-h3-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.dietaryDescription {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.dietaryOptions {
+  display: flex;
+  gap: var(--space-6);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+}
+
+.dietaryBadge {
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-neutral-cream);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-terracotta);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.dietaryBadge:hover {
+  background-color: var(--color-primary-terracotta);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: var(--space-section-xl) var(--space-container-padding);
+  text-align: center;
+}
+
+.ctaContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaHeading {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.ctaDescription {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.ctaButtons {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-button);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 200px;
+}
+
+.ctaPrimary {
+  color: var(--color-text-inverse);
+  background-color: var(--color-primary-terracotta);
+  box-shadow: var(--shadow-button);
+}
+
+.ctaPrimary:hover {
+  background-color: var(--color-primary-rust);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaSecondary {
+  color: var(--color-primary-terracotta);
+  background-color: transparent;
+  border: 2px solid var(--color-primary-terracotta);
+}
+
+.ctaSecondary:hover {
+  background-color: var(--color-primary-terracotta);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .restaurantsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .menuGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .experiencesGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .dietaryCard {
+    padding: var(--space-8);
+  }
+
+  .dietaryOptions {
+    gap: var(--space-4);
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section,
+  .sectionAlt {
+    padding: var(--space-section-md) var(--space-4);
+  }
+
+  .heading {
+    font-size: var(--heading-h3-size);
+  }
+
+  .subtitle,
+  .dietaryDescription,
+  .ctaDescription {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dietaryBadge,
+  .ctaPrimary,
+  .ctaSecondary {
+    transition: none;
+  }
+
+  .dietaryBadge:hover,
+  .ctaPrimary:hover,
+  .ctaSecondary:hover {
+    transform: none;
+  }
+}
