@@ -94,6 +94,93 @@ export default function ContactPage() {
         priority={true}
       />
 
+      {/* Quick Stats Section */}
+      <section
+        style={{
+          padding: 'var(--space-section-md) var(--space-container-padding)',
+          backgroundColor: 'var(--color-bg-secondary)',
+          borderBottom: '1px solid var(--color-border-light)',
+        }}
+      >
+        <div style={{ maxWidth: 'var(--container-max-width-lg)', margin: '0 auto' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: 'var(--space-8)',
+              textAlign: 'center',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-3xl)',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--color-primary-terracotta)',
+                  fontFamily: 'var(--font-family-display)',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                &lt; 24hrs
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-base)',
+                  color: 'var(--color-text-secondary)',
+                  fontFamily: 'var(--font-family-body)',
+                }}
+              >
+                Average Response Time
+              </div>
+            </div>
+            <div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-3xl)',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--color-primary-terracotta)',
+                  fontFamily: 'var(--font-family-display)',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                24/7
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-base)',
+                  color: 'var(--color-text-secondary)',
+                  fontFamily: 'var(--font-family-body)',
+                }}
+              >
+                Available for Guests
+              </div>
+            </div>
+            <div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-3xl)',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--color-primary-terracotta)',
+                  fontFamily: 'var(--font-family-display)',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                100%
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-base)',
+                  color: 'var(--color-text-secondary)',
+                  fontFamily: 'var(--font-family-body)',
+                }}
+              >
+                Guest Satisfaction
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Information Section */}
       <section
         style={{
@@ -103,6 +190,21 @@ export default function ContactPage() {
       >
         <div style={{ maxWidth: 'var(--container-max-width-xl)', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 'var(--space-16)' }}>
+            <div
+              style={{
+                display: 'inline-block',
+                padding: 'var(--space-2) var(--space-4)',
+                backgroundColor: 'var(--color-primary-sand)',
+                color: 'var(--color-primary-terracotta-dark)',
+                borderRadius: 'var(--radius-full)',
+                fontSize: 'var(--font-size-sm)',
+                fontWeight: 'var(--font-weight-semibold)',
+                marginBottom: 'var(--space-4)',
+                fontFamily: 'var(--font-family-body)',
+              }}
+            >
+              Multiple Ways to Connect
+            </div>
             <h2
               style={{
                 fontFamily: 'var(--font-family-display)',
@@ -144,15 +246,44 @@ export default function ContactPage() {
                   backgroundColor: 'var(--color-bg-secondary)',
                   borderRadius: 'var(--radius-xl)',
                   textAlign: 'center',
-                  transition: 'var(--transition-all)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  cursor: info.link ? 'pointer' : 'default',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  borderTop: '3px solid var(--color-primary-terracotta)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                  const icon = e.currentTarget.querySelector('[data-icon]') as HTMLElement;
+                  if (icon) {
+                    icon.style.transform = 'scale(1.1) rotate(5deg)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                  const icon = e.currentTarget.querySelector('[data-icon]') as HTMLElement;
+                  if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                  }
                 }}
               >
                 <div
+                  data-icon
                   style={{
-                    width: '64px',
-                    height: '64px',
+                    width: '72px',
+                    height: '72px',
                     margin: '0 auto var(--space-6)',
+                    padding: 'var(--space-4)',
+                    backgroundColor: 'var(--color-neutral-cream)',
+                    borderRadius: 'var(--radius-full)',
                     color: 'var(--color-primary-terracotta)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   }}
                 >
                   {info.icon}
@@ -177,7 +308,14 @@ export default function ContactPage() {
                       lineHeight: 'var(--line-height-relaxed)',
                       color: 'var(--color-primary-terracotta)',
                       textDecoration: 'none',
+                      fontWeight: 'var(--font-weight-medium)',
                       transition: 'var(--transition-color)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = 'var(--color-primary-terracotta-dark)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = 'var(--color-primary-terracotta)';
                     }}
                   >
                     {info.value}
@@ -205,10 +343,29 @@ export default function ContactPage() {
       <section
         style={{
           padding: 'var(--space-section-xl) var(--space-container-padding)',
+          backgroundColor: 'var(--color-bg-secondary)',
         }}
       >
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--space-2)',
+                padding: 'var(--space-2) var(--space-4)',
+                backgroundColor: 'var(--color-success-light)',
+                color: 'var(--color-success-dark)',
+                borderRadius: 'var(--radius-full)',
+                fontSize: 'var(--font-size-sm)',
+                fontWeight: 'var(--font-weight-semibold)',
+                marginBottom: 'var(--space-4)',
+                fontFamily: 'var(--font-family-body)',
+              }}
+            >
+              <span style={{ fontSize: '1.2em' }}>✓</span>
+              Quick Response Guaranteed
+            </div>
             <h2
               style={{
                 fontFamily: 'var(--font-family-display)',
@@ -228,19 +385,128 @@ export default function ContactPage() {
                 color: 'var(--color-text-secondary)',
               }}
             >
-              Fill out the form below and we&apos;ll get back to you within 24 hours.
+              Fill out the form below and we&apos;ll get back to you within 24 hours. Our dedicated
+              team is here to help plan your perfect safari experience.
             </p>
           </div>
 
           <div
             style={{
-              backgroundColor: 'var(--color-bg-secondary)',
+              backgroundColor: 'var(--color-neutral-cream)',
               padding: 'var(--space-12)',
               borderRadius: 'var(--radius-2xl)',
-              boxShadow: 'var(--shadow-lg)',
+              boxShadow: 'var(--shadow-xl)',
+              border: '1px solid var(--color-border-light)',
             }}
           >
             <ContactForm />
+          </div>
+
+          {/* Additional Contact Options */}
+          <div
+            style={{
+              marginTop: 'var(--space-12)',
+              padding: 'var(--space-8)',
+              backgroundColor: 'var(--color-primary-sand-light)',
+              borderRadius: 'var(--radius-xl)',
+              borderLeft: '4px solid var(--color-primary-terracotta)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-6)',
+              flexWrap: 'wrap',
+            }}
+          >
+            <div style={{ flex: '1', minWidth: '250px' }}>
+              <h3
+                style={{
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-lg)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-primary)',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                Prefer to Talk?
+              </h3>
+              <p
+                style={{
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  color: 'var(--color-text-secondary)',
+                  margin: 0,
+                }}
+              >
+                Our safari experts are available to discuss your travel plans and answer any
+                questions you may have.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
+              <a
+                href="tel:+254123456789"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  padding: 'var(--space-3) var(--space-6)',
+                  backgroundColor: 'var(--color-primary-terracotta)',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: 'var(--radius-lg)',
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  transition: 'var(--transition-all)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-primary-terracotta-dark)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-primary-terracotta)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                }}
+              >
+                <span style={{ fontSize: '1.2em' }}>📞</span>
+                Call Us Now
+              </a>
+              <a
+                href="mailto:info@amboselisafariclub.com"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  padding: 'var(--space-3) var(--space-6)',
+                  backgroundColor: 'var(--color-bg-secondary)',
+                  color: 'var(--color-primary-terracotta)',
+                  textDecoration: 'none',
+                  borderRadius: 'var(--radius-lg)',
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  transition: 'var(--transition-all)',
+                  border: '2px solid var(--color-primary-terracotta)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-primary-terracotta)';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)';
+                  e.currentTarget.style.color = 'var(--color-primary-terracotta)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                }}
+              >
+                <span style={{ fontSize: '1.2em' }}>✉️</span>
+                Email Us
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -253,7 +519,22 @@ export default function ContactPage() {
           textAlign: 'center',
         }}
       >
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div
+            style={{
+              display: 'inline-block',
+              padding: 'var(--space-2) var(--space-4)',
+              backgroundColor: 'var(--color-accent-amber-light)',
+              color: 'var(--color-accent-amber-dark)',
+              borderRadius: 'var(--radius-full)',
+              fontSize: 'var(--font-size-sm)',
+              fontWeight: 'var(--font-weight-semibold)',
+              marginBottom: 'var(--space-4)',
+              fontFamily: 'var(--font-family-body)',
+            }}
+          >
+            Stay Connected
+          </div>
           <h2
             style={{
               fontFamily: 'var(--font-family-display)',
@@ -272,13 +553,23 @@ export default function ContactPage() {
               lineHeight: 'var(--line-height-relaxed)',
               color: 'var(--color-text-secondary)',
               marginBottom: 'var(--space-8)',
+              maxWidth: '650px',
+              margin: '0 auto var(--space-8)',
             }}
           >
             Follow us on social media for the latest updates, safari tips, and breathtaking photos
             from Amboseli.
           </p>
 
-          <div style={{ marginBottom: 'var(--space-10)' }}>
+          <div
+            style={{
+              marginBottom: 'var(--space-12)',
+              padding: 'var(--space-8)',
+              backgroundColor: 'var(--color-bg-secondary)',
+              borderRadius: 'var(--radius-xl)',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+          >
             <SocialLinks
               facebook="https://facebook.com/amboselisafariclub"
               instagram="https://instagram.com/amboselisafariclub"
@@ -289,65 +580,110 @@ export default function ContactPage() {
 
           <div
             style={{
-              marginTop: 'var(--space-12)',
-              padding: 'var(--space-8)',
-              backgroundColor: 'var(--color-bg-secondary)',
-              borderRadius: 'var(--radius-xl)',
-              borderLeft: '4px solid var(--color-primary-terracotta)',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 'var(--space-6)',
+              textAlign: 'left',
             }}
           >
-            <h3
+            <div
               style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--font-size-lg)',
-                fontWeight: 'var(--font-weight-semibold)',
-                color: 'var(--color-text-primary)',
-                marginBottom: 'var(--space-3)',
+                padding: 'var(--space-8)',
+                backgroundColor: 'var(--color-bg-secondary)',
+                borderRadius: 'var(--radius-xl)',
+                borderTop: '3px solid var(--color-accent-gold)',
               }}
             >
-              Planning Your Visit?
-            </h3>
-            <p
+              <div style={{ fontSize: '2rem', marginBottom: 'var(--space-3)' }}>📚</div>
+              <h3
+                style={{
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-lg)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-primary)',
+                  marginBottom: 'var(--space-3)',
+                }}
+              >
+                Planning Your Visit?
+              </h3>
+              <p
+                style={{
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  lineHeight: 'var(--line-height-relaxed)',
+                  color: 'var(--color-text-secondary)',
+                  margin: 0,
+                }}
+              >
+                Check out our{' '}
+                <a
+                  href="/faq"
+                  style={{
+                    color: 'var(--color-primary-terracotta)',
+                    textDecoration: 'underline',
+                    fontWeight: 'var(--font-weight-medium)',
+                  }}
+                >
+                  FAQ page
+                </a>{' '}
+                for answers to common questions.
+              </p>
+            </div>
+
+            <div
               style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--font-size-base)',
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'var(--color-text-secondary)',
-                margin: 0,
+                padding: 'var(--space-8)',
+                backgroundColor: 'var(--color-bg-secondary)',
+                borderRadius: 'var(--radius-xl)',
+                borderTop: '3px solid var(--color-secondary-sage)',
               }}
             >
-              Check out our{' '}
-              <a
-                href="/faq"
+              <div style={{ fontSize: '2rem', marginBottom: 'var(--space-3)' }}>🏕️</div>
+              <h3
                 style={{
-                  color: 'var(--color-primary-terracotta)',
-                  textDecoration: 'underline',
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-lg)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-primary)',
+                  marginBottom: 'var(--space-3)',
                 }}
               >
-                FAQ page
-              </a>{' '}
-              for answers to common questions, or browse our{' '}
-              <a
-                href="/accommodations"
+                Explore Our Offerings
+              </h3>
+              <p
                 style={{
-                  color: 'var(--color-primary-terracotta)',
-                  textDecoration: 'underline',
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  lineHeight: 'var(--line-height-relaxed)',
+                  color: 'var(--color-text-secondary)',
+                  margin: 0,
                 }}
               >
-                accommodations
-              </a>{' '}
-              and{' '}
-              <a
-                href="/experiences"
-                style={{
-                  color: 'var(--color-primary-terracotta)',
-                  textDecoration: 'underline',
-                }}
-              >
-                experiences
-              </a>{' '}
-              to learn more about what we offer.
-            </p>
+                Browse our{' '}
+                <a
+                  href="/accommodations"
+                  style={{
+                    color: 'var(--color-primary-terracotta)',
+                    textDecoration: 'underline',
+                    fontWeight: 'var(--font-weight-medium)',
+                  }}
+                >
+                  accommodations
+                </a>{' '}
+                and{' '}
+                <a
+                  href="/experiences"
+                  style={{
+                    color: 'var(--color-primary-terracotta)',
+                    textDecoration: 'underline',
+                    fontWeight: 'var(--font-weight-medium)',
+                  }}
+                >
+                  experiences
+                </a>
+                .
+              </p>
+            </div>
           </div>
         </div>
       </section>
