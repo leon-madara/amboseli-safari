@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
-import RoomCard from '@/components/molecules/RoomCard';
+import RoomsSection from '@/components/organisms/RoomsSection';
 import Link from '@/components/atoms/Link';
 import { PROPERTY_IMAGES, ROOM_IMAGES } from '@/data/images';
 
@@ -17,6 +17,12 @@ const rooms = [
       'Intimate luxury with panoramic savannah views. Perfect for couples seeking an authentic safari experience with modern comforts.',
     image: ROOM_IMAGES.premiumRoom,
     imageAlt: 'Premium Room with Mount Kilimanjaro view',
+    images: [
+      '/images/rooms/premium-room/room-1.jpg',
+      '/images/rooms/premium-room/room-2.jpg',
+      '/images/rooms/premium-room/room-3.jpg',
+      '/images/rooms/premium-room/room-4.jpg',
+    ],
     capacity: 2,
     size: '45 m²',
     price: '$450',
@@ -42,6 +48,13 @@ const rooms = [
       'Spacious elegance with separate living area. Indulge in refined comfort with premium amenities and spectacular wildlife viewing opportunities.',
     image: ROOM_IMAGES.deluxeSuite,
     imageAlt: 'Deluxe Suite with separate living area',
+    images: [
+      '/images/rooms/deluxe-suite/suite-1.jpg',
+      '/images/rooms/deluxe-suite/suite-2.jpg',
+      '/images/rooms/deluxe-suite/suite-3.jpg',
+      '/images/rooms/deluxe-suite/suite-4.jpg',
+      '/images/rooms/deluxe-suite/suite-5.jpg',
+    ],
     capacity: 2,
     size: '65 m²',
     price: '$650',
@@ -68,6 +81,12 @@ const rooms = [
       'Generous space for the entire family. Two bedrooms with connecting door, perfect for creating unforgettable safari memories together.',
     image: ROOM_IMAGES.familySuite,
     imageAlt: 'Family Suite with two bedrooms',
+    images: [
+      '/images/rooms/family-suite/family-1.jpg',
+      '/images/rooms/family-suite/family-2.jpg',
+      '/images/rooms/family-suite/family-3.jpg',
+      '/images/rooms/family-suite/family-4.jpg',
+    ],
     capacity: 4,
     size: '85 m²',
     price: '$850',
@@ -197,49 +216,8 @@ export default function AccommodationsPage() {
         priority={true}
       />
 
-      {/* Rooms Section */}
-      <section style={{ padding: 'var(--space-section-lg) var(--space-container-padding)' }}>
-        <div style={{ maxWidth: 'var(--container-max-width-xl)', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-16)' }}>
-            <h2
-              style={{
-                fontFamily: 'var(--font-family-display)',
-                fontSize: 'var(--heading-h2-size)',
-                fontWeight: 'var(--heading-h2-weight)',
-                color: 'var(--color-text-primary)',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              Our Accommodations
-            </h2>
-            <p
-              style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--body-large-size)',
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'var(--color-text-secondary)',
-                maxWidth: '700px',
-                margin: '0 auto',
-              }}
-            >
-              Each accommodation type is carefully designed to provide the ultimate safari
-              experience, combining modern luxury with authentic African charm.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-              gap: 'var(--space-10)',
-            }}
-          >
-            {rooms.map((room, index) => (
-              <RoomCard key={index} {...room} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Rooms Section with Comparison */}
+      <RoomsSection rooms={rooms} />
 
       {/* Amenities Section */}
       <section
