@@ -195,6 +195,7 @@ export default function AccommodationsPage() {
         height="medium"
         overlay="medium"
         priority={true}
+        logo=""
       />
 
       {/* Rooms Section */}
