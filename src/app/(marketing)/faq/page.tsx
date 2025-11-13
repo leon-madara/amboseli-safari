@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
+import { PROPERTY_IMAGES } from '@/data/images';
 import AccordionGroup from '@/components/organisms/AccordionGroup';
 import { FAQ } from '@/types/faq';
 
@@ -190,7 +191,7 @@ export default function FAQPage() {
         title="Frequently Asked Questions"
         subtitle="Everything You Need to Know"
         description="Find answers to common questions about planning your luxury safari adventure at Amboseli Safari Club"
-        backgroundImage="/images/property/exterior-sunset.jpg"
+        backgroundImage={PROPERTY_IMAGES.exteriorSunset}
         backgroundImageAlt="Amboseli Safari Club at sunset"
         height="medium"
         overlay="medium"

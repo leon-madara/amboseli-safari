@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import RoomCard from '@/components/molecules/RoomCard';
 import Link from '@/components/atoms/Link';
+import { PROPERTY_IMAGES, ROOM_IMAGES } from '@/data/images';
 
 export const metadata: Metadata = {
   title: 'Luxury Accommodations',
@@ -14,7 +15,7 @@ const rooms = [
     title: 'Premium Room',
     description:
       'Intimate luxury with panoramic savannah views. Perfect for couples seeking an authentic safari experience with modern comforts.',
-    image: '/images/rooms/premium-room/room-1.jpg',
+    image: ROOM_IMAGES.premiumRoom,
     imageAlt: 'Premium Room with Mount Kilimanjaro view',
     capacity: 2,
     size: '45 m²',
@@ -39,7 +40,7 @@ const rooms = [
     title: 'Deluxe Suite',
     description:
       'Spacious elegance with separate living area. Indulge in refined comfort with premium amenities and spectacular wildlife viewing opportunities.',
-    image: '/images/rooms/deluxe-suite/suite-1.jpg',
+    image: ROOM_IMAGES.deluxeSuite,
     imageAlt: 'Deluxe Suite with separate living area',
     capacity: 2,
     size: '65 m²',
@@ -65,7 +66,7 @@ const rooms = [
     title: 'Family Suite',
     description:
       'Generous space for the entire family. Two bedrooms with connecting door, perfect for creating unforgettable safari memories together.',
-    image: '/images/rooms/family-suite/family-1.jpg',
+    image: ROOM_IMAGES.familySuite,
     imageAlt: 'Family Suite with two bedrooms',
     capacity: 4,
     size: '85 m²',
@@ -189,7 +190,7 @@ export default function AccommodationsPage() {
         title="Luxury Safari Accommodations"
         subtitle="Where Comfort Meets Wilderness"
         description="Experience the perfect blend of luxury and nature in our thoughtfully designed accommodations, each offering stunning views of Mount Kilimanjaro and the African savannah"
-        backgroundImage="/images/property/exterior-sunset.jpg"
+        backgroundImage={PROPERTY_IMAGES.exteriorSunset}
         backgroundImageAlt="Amboseli Safari Club luxury accommodations"
         height="medium"
         overlay="medium"

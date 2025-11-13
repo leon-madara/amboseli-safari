@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './BushBreakfastChapter.module.css';
 
 export interface BushBreakfastChapterProps extends BaseChapterProps {
@@ -18,8 +19,8 @@ export interface BushBreakfastChapterProps extends BaseChapterProps {
 export default function BushBreakfastChapter({
   id,
   className = '',
-  backgroundImage = '/images/chapters/acacia-tree-background.jpg',
-  tableImage = '/images/chapters/bush-breakfast-table.jpg',
+  backgroundImage = CHAPTER_IMAGES.bushBreakfast.dining,
+  tableImage = CHAPTER_IMAGES.bushBreakfast.elegantDining,
   menuItems = [
     'Freshly Baked Pastries & Breads',
     'Tropical Fruit Platter',

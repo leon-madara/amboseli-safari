@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES, ROOM_IMAGES } from '@/data/images';
 import styles from './AccommodationsChapter.module.css';
 
 export interface RoomPreview {
@@ -29,24 +30,24 @@ export default function AccommodationsChapter({
     {
       id: 'luxury-tent',
       name: 'Luxury Safari Tent',
-      image: '/images/chapters/luxury-tent.jpg',
-      viewImage: '/images/chapters/tent-view.jpg',
+      image: CHAPTER_IMAGES.accommodations.lodgeExterior,
+      viewImage: CHAPTER_IMAGES.accommodations.roomInterior,
       tagline: 'Canvas walls, endless views',
       price: 'From $450/night',
     },
     {
       id: 'family-suite',
       name: 'Family Suite',
-      image: '/images/chapters/family-suite.jpg',
-      viewImage: '/images/chapters/suite-view.jpg',
+      image: ROOM_IMAGES.familySuite,
+      viewImage: CHAPTER_IMAGES.accommodations.lodgeExterior,
       tagline: 'Space for memories',
       price: 'From $650/night',
     },
     {
       id: 'presidential-villa',
       name: 'Presidential Villa',
-      image: '/images/chapters/presidential-villa.jpg',
-      viewImage: '/images/chapters/villa-view.jpg',
+      image: ROOM_IMAGES.deluxeSuite,
+      viewImage: ROOM_IMAGES.premiumRoom,
       tagline: 'Ultimate luxury in the wild',
       price: 'From $950/night',
     },

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import ContactForm from '@/components/organisms/ContactForm';
 import SocialLinks from '@/components/molecules/SocialLinks';
+import { PROPERTY_IMAGES } from '@/data/images';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -86,7 +87,7 @@ export default function ContactPage() {
         title="Get in Touch"
         subtitle="We're Here to Help"
         description="Have questions about your safari adventure? Our team is ready to assist you with reservations, inquiries, and special requests"
-        backgroundImage="/images/property/lobby-reception.jpg"
+        backgroundImage={PROPERTY_IMAGES.lobbyReception}
         backgroundImageAlt="Amboseli Safari Club reception area"
         height="medium"
         overlay="medium"

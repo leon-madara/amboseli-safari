@@ -39,7 +39,7 @@ export default function Hero({
   backgroundImage,
   backgroundImageAlt,
   mobileBackgroundImage,
-  logo = '/images/hero/logos/mainLOGOAmboseli.svg',
+  logo = '/images/logos/mainLOGOAmboseli.svg',
   logoAlt = 'Amboseli Safari Club',
   height = 'full',
   overlay = 'medium',
