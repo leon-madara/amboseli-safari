@@ -124,7 +124,7 @@ export default function AboutPage() {
               <p className={styles.storyText}>
                 Amboseli Safari Club was founded on a simple yet profound belief: that luxury travel
                 and conservation can not only coexist but strengthen one another. Nestled at the
-                foot of Africa's highest peak, Mount Kilimanjaro, our lodge represents years of
+                foot of Africa&apos;s highest peak, Mount Kilimanjaro, our lodge represents years of
                 careful planning, sustainable design, and a deep commitment to the land and people
                 of this remarkable region.
               </p>
@@ -132,7 +132,7 @@ export default function AboutPage() {
                 Our journey began with a vision to create a sanctuary where guests could experience
                 the raw beauty of the African wilderness without compromising on comfort, and where
                 every stay would contribute positively to wildlife conservation and community
-                development. Today, we're proud to welcome travelers from around the world who share
+                development. Today, we&apos;re proud to welcome travelers from around the world who share
                 our passion for responsible tourism.
               </p>
               <p className={styles.storyText}>
@@ -162,7 +162,7 @@ export default function AboutPage() {
             <div className={styles.missionVisionCard}>
               <h2 className={styles.missionVisionTitle}>Our Vision</h2>
               <p className={styles.missionVisionText}>
-                To be East Africa's leading example of sustainable luxury tourism, where every guest
+                To be East Africa&apos;s leading example of sustainable luxury tourism, where every guest
                 becomes an ambassador for conservation, and where tourism serves as a powerful force
                 for protecting wildlife and empowering communities.
               </p>
@@ -262,7 +262,7 @@ export default function AboutPage() {
             <Link href="/contact" variant="primary">
               Plan Your Visit
             </Link>
-            <Link href="/accommodations" variant="secondary">
+            <Link href="/accommodations" variant="underline">
               View Accommodations
             </Link>
           </div>

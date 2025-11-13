@@ -1,28 +1,34 @@
-import Hero from '@/components/organisms/Hero';
+import { CinematicJourney } from '@/components/organisms/CinematicJourney';
+import { ScrollProgressIndicator } from '@/components/molecules/ScrollProgressIndicator';
+import { StickyNavigation } from '@/components/molecules/StickyNavigation';
+import { WhatsAppChatBubble } from '@/components/molecules/WhatsAppChatBubble';
 
+/**
+ * HomePage Component
+ * 
+ * The main landing page featuring the cinematic safari journey experience.
+ * Integrates all 12 chapters with persistent navigation and progress tracking.
+ * 
+ * Features:
+ * - CinematicJourney: 12-chapter scroll-driven storytelling experience
+ * - ScrollProgressIndicator: Visual progress bar with chapter navigation
+ * - StickyNavigation: Auto-hiding navigation bar after hero section
+ * - WhatsAppChatBubble: Instant communication channel
+ * 
+ * Requirements: 1.1, 1.4, 1.5, 15.1, 15.2, 15.3, 15.4, 15.5
+ */
 export default function HomePage() {
   return (
     <main>
-      <Hero
-        title="Experience the Ultimate Safari"
-        subtitle="Opening December 2025"
-        description="Discover luxury accommodations with breathtaking Mount Kilimanjaro views and unforgettable wildlife encounters in the heart of Amboseli National Park"
-        backgroundImage="/images/hero/hero mockup.png"
-        backgroundImageAlt="Amboseli Safari Club with Mount Kilimanjaro backdrop"
-        mobileBackgroundImage="/images/hero/single leading bull silhouette.jpg"
-        logo="/images/hero/logos/mainLOGOAmboseli.svg"
-        logoAlt="Amboseli Safari Club"
-        primaryCTA={{
-          text: "Book Your Stay",
-          href: "/contact"
-        }}
-        secondaryCTA={{
-          text: "Explore Accommodations",
-          href: "/accommodations"
-        }}
-        height="full"
-        overlay="medium"
-        priority={true}
+      {/* Main cinematic journey with all 12 chapters */}
+      <CinematicJourney />
+
+      {/* Persistent UI elements */}
+      <ScrollProgressIndicator position="right" />
+      <StickyNavigation showAfterVh={100} />
+      <WhatsAppChatBubble
+        phoneNumber="254712345678"
+        message="Hi! I'd like to inquire about safari experiences at Amboseli Safari Club."
       />
     </main>
   );

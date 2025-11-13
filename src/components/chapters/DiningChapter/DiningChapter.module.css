@@ -1,0 +1,477 @@
+/* DiningChapter Styles */
+
+.diningChapter {
+  position: relative;
+  min-height: 150vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Container with Parallax */
+.backgroundContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.backgroundImageWrapper {
+  position: absolute;
+  inset: -10%;
+  will-change: transform;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Afternoon golden light gradient overlay */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 165, 0, 0.4) 0%,
+    rgba(255, 140, 0, 0.5) 25%,
+    rgba(255, 99, 71, 0.4) 50%,
+    rgba(255, 69, 0, 0.3) 100%
+  );
+  z-index: 1;
+}
+
+/* Content Wrapper */
+.contentWrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* Header Section */
+.headerSection {
+  text-align: center;
+  color: #ffffff;
+}
+
+.heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  color: #fff8dc;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  font-style: italic;
+  text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Dishes Section - Carousel */
+.dishesSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselContainer {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.carouselButton {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 2rem;
+  color: #ff6347;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.carouselButton:hover {
+  background: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.carouselButton:active {
+  transform: scale(0.95);
+}
+
+/* Dish Card */
+.dishCard {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+}
+
+.dishImageContainer {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+}
+
+.dishImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.dishCard:hover .dishImage {
+  transform: scale(1.05);
+}
+
+.dishInfo {
+  padding: 2rem;
+  text-align: center;
+}
+
+.dishName {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #1a1f3a;
+  margin: 0 0 0.75rem 0;
+}
+
+.dishDescription {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #5a6c7d;
+  font-style: italic;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Carousel Indicators */
+.carouselIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
+}
+
+.indicatorActive {
+  background: #ffffff;
+  transform: scale(1.3);
+}
+
+/* Wine Pairings Section */
+.winePairingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.winePairingsHeading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.winePairingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.pairingCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.pairingCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.pairingIcon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.pairingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.wineName {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a1f3a;
+  margin: 0;
+}
+
+.pairingDish {
+  font-size: 0.95rem;
+  color: #5a6c7d;
+  font-style: italic;
+  margin: 0;
+}
+
+/* CTA Section */
+.ctaSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.timeSlotsPreview {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.timeSlotsLabel {
+  font-size: 1rem;
+  color: #5a6c7d;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+
+.timeSlots {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.timeSlot {
+  background: linear-gradient(135deg, #ff8c00, #ff6347);
+  color: #ffffff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(255, 99, 71, 0.3);
+}
+
+.cta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 3rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ctaPrimary {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(255, 107, 53, 0.5);
+}
+
+.ctaSecondary {
+  background: white;
+  color: #1a1f3a;
+  border: 2px solid #1a1f3a;
+}
+
+.ctaSecondary:hover {
+  background: #1a1f3a;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .diningChapter {
+    min-height: 120vh;
+  }
+
+  .contentWrapper {
+    padding: 3rem 1.5rem;
+    gap: 3rem;
+  }
+
+  .carousel {
+    gap: 1rem;
+  }
+
+  .carouselButton {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .dishImageContainer {
+    height: 250px;
+  }
+
+  .dishInfo {
+    padding: 1.5rem;
+  }
+
+  .winePairingsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .timeSlotsPreview {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .timeSlots {
+    gap: 0.75rem;
+  }
+
+  .timeSlot {
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .carouselButton {
+    width: 35px;
+    height: 35px;
+    font-size: 1.25rem;
+  }
+
+  .dishImageContainer {
+    height: 200px;
+  }
+
+  .cta {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dishImageContainer {
+    height: 400px;
+  }
+
+  .winePairingsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  .contentWrapper {
+    padding: 6rem 3rem;
+    gap: 5rem;
+  }
+
+  .dishImageContainer {
+    height: 400px;
+  }
+
+  .winePairingsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .backgroundImageWrapper {
+    transform: none !important;
+  }
+
+  .carouselButton,
+  .pairingCard,
+  .cta {
+    transition: none;
+  }
+
+  .carouselButton:hover,
+  .pairingCard:hover,
+  .cta:hover {
+    transform: none;
+  }
+
+  .dishImage {
+    transition: none;
+  }
+
+  .dishCard:hover .dishImage {
+    transform: none;
+  }
+}

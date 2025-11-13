@@ -13,7 +13,7 @@ export default function TermsConditionsPage() {
       <p className={styles.lastUpdated}>Last updated: {new Date().toLocaleDateString()}</p>
       <div className={styles.content}>
         <p>
-          These Terms and Conditions ("Terms") govern your use of the Amboseli Safari Club website
+          These Terms and Conditions (&quot;Terms&quot;) govern your use of the Amboseli Safari Club website
           and services. By accessing our website or making a booking, you agree to be bound by
           these Terms.
         </p>
@@ -62,14 +62,14 @@ export default function TermsConditionsPage() {
             Amboseli National Park.
           </li>
           <li>
-            Amboseli Safari Club is not responsible for any loss, theft, or damage to guests'
+            Amboseli Safari Club is not responsible for any loss, theft, or damage to guests&apos;
             personal belongings.
           </li>
         </ul>
 
         <h2>5. Liability</h2>
         <p>
-          Participation in safari activities and other experiences is at the guest's own risk.
+          Participation in safari activities and other experiences is at the guest&apos;s own risk.
           Amboseli Safari Club, its employees, and its agents shall not be liable for any injury,
           death, loss, or damage to person or property arising from any act or omission of the
           company or its employees.

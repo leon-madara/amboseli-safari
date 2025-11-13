@@ -1,0 +1,188 @@
+.experiencesChapter {
+  position: relative;
+  min-height: 250vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Container */
+.backgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.backgroundImageWrapper {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  will-change: transform;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Golden hour lighting gradient overlay */
+.gradientOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 140, 0, 0.3) 0%,
+    rgba(255, 69, 0, 0.4) 100%
+  );
+  pointer-events: none;
+}
+
+/* Content Wrapper */
+.contentWrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* Header Section */
+.headerSection {
+  text-align: center;
+  color: white;
+}
+
+.heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  opacity: 0.95;
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Experiences Grid */
+.experiencesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.experienceCardWrapper {
+  width: 100%;
+}
+
+/* Timeline Section */
+.timelineSection {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* CTA Section */
+.ctaSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ctaPrimary {
+  background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+  color: white;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+}
+
+.ctaSecondary {
+  background: white;
+  color: #ff8c00;
+  border: 2px solid #ff8c00;
+}
+
+.ctaSecondary:hover {
+  background: #ff8c00;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .experiencesChapter {
+    min-height: 150vh;
+  }
+
+  .contentWrapper {
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  .experiencesGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .timelineSection {
+    padding: 2rem 1rem;
+  }
+
+  .tempTimelineGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cta {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .tempCardImage {
+    height: 200px;
+  }
+}

@@ -1,0 +1,168 @@
+/* Container */
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Progress Bar */
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.progressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-gold) 0%,
+    var(--color-primary-terracotta) 50%,
+    var(--color-accent-gold) 100%
+  );
+  transition: width 0.1s ease-out;
+}
+
+/* Markers Container */
+.markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  pointer-events: auto;
+}
+
+/* Individual Marker */
+.marker {
+  position: absolute;
+  top: -2px;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.marker:hover {
+  transform: translateX(-50%) scale(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.marker:hover .markerLabel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Marker States */
+.marker.active {
+  background-color: var(--color-primary-terracotta);
+  border-color: var(--color-primary-terracotta-dark);
+  transform: translateX(-50%) scale(1.3);
+  box-shadow: 0 4px 16px rgba(232, 93, 84, 0.4);
+}
+
+.marker.passed {
+  background-color: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+}
+
+/* Marker Icon */
+.markerIcon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Marker Label (tooltip) */
+.markerLabel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 11;
+}
+
+.markerLabel::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .marker {
+    width: 24px;
+    height: 24px;
+  }
+
+  .markerIcon {
+    font-size: 12px;
+  }
+
+  .markerLabel {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* Hide labels on mobile, show only on tap */
+  .marker:active .markerLabel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility - Focus States */
+.marker:focus {
+  outline: 2px solid var(--color-primary-terracotta);
+  outline-offset: 2px;
+}
+
+.marker:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  .marker,
+  .progressFill,
+  .markerLabel {
+    transition: none;
+  }
+}

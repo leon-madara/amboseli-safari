@@ -1,0 +1,230 @@
+/* Progress Indicator Container */
+.progressIndicator {
+  position: fixed;
+  z-index: var(--z-index-sticky);
+  pointer-events: none;
+}
+
+/* Position variants */
+.progressIndicator.right {
+  top: 50%;
+  right: var(--space-6);
+  transform: translateY(-50%);
+}
+
+.progressIndicator.left {
+  top: 50%;
+  left: var(--space-6);
+  transform: translateY(-50%);
+}
+
+/* Progress Track */
+.progressTrack {
+  position: relative;
+  width: 4px;
+  height: 40vh;
+  min-height: 300px;
+  max-height: 500px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+/* Progress Fill */
+.progressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent-gold),
+    var(--color-primary-terracotta)
+  );
+  border-radius: var(--radius-full);
+  transition: height 0.2s ease-out;
+}
+
+/* Chapter Markers Container */
+.chapterMarkers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Individual Chapter Marker */
+.chapterMarker {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-transform);
+  pointer-events: auto;
+}
+
+.chapterMarker:hover {
+  transform: translateX(-50%) scale(1.2);
+}
+
+.chapterMarker:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 4px;
+  border-radius: var(--radius-full);
+}
+
+/* Marker Dot */
+.markerDot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-full);
+  transition: var(--transition-all);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Active Chapter Marker */
+.chapterMarker.active .markerDot {
+  background-color: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+}
+
+/* Complete Chapter Marker */
+.chapterMarker.complete .markerDot {
+  background-color: var(--color-primary-terracotta);
+  border-color: var(--color-primary-terracotta);
+}
+
+/* Hover state for marker dot */
+.chapterMarker:hover .markerDot {
+  background-color: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  right: calc(100% + 16px);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: var(--color-text-inverse);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  box-shadow: var(--shadow-lg);
+  animation: tooltipFadeIn 0.2s ease-out;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: rgba(0, 0, 0, 0.9);
+}
+
+.tooltipNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-accent-gold);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.tooltipText {
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+/* Screen Reader Only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Mobile Adaptations */
+@media (max-width: 767px) {
+  .progressIndicator {
+    display: none; /* Hide on mobile to reduce clutter */
+  }
+}
+
+/* Tablet Adaptations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .progressIndicator.right {
+    right: var(--space-4);
+  }
+
+  .progressIndicator.left {
+    left: var(--space-4);
+  }
+
+  .progressTrack {
+    height: 35vh;
+    min-height: 250px;
+  }
+
+  .tooltip {
+    font-size: var(--font-size-2xs);
+    padding: var(--space-1) var(--space-2);
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .progressFill,
+  .chapterMarker,
+  .markerDot {
+    transition: none;
+  }
+
+  .tooltip {
+    animation: none;
+  }
+}
