@@ -24,6 +24,9 @@ export interface RoomCardProps {
   recentlyBooked?: boolean;
   specialOffer?: string;
   includedItems?: string[];
+  // Comparison props
+  isComparing?: boolean;
+  onCompareToggle?: (slug: string, isSelected: boolean) => void;
 }
 
 export default function RoomCard({
@@ -42,8 +45,14 @@ export default function RoomCard({
   recentlyBooked = false,
   specialOffer,
   includedItems = ['Breakfast', '2 game drives', 'Park fees', 'Airport transfer'],
+  isComparing = false,
+  onCompareToggle,
 }: RoomCardProps) {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
+
+  const displayedFeatures = isFeaturesExpanded ? features : features.slice(0, 4);
+  const hasMoreFeatures = features.length > 4;
 
   return (
     <>
@@ -83,6 +92,19 @@ export default function RoomCard({
                 </span>
               )}
             </div>
+
+            {/* Compare Checkbox */}
+            {onCompareToggle && (
+              <label className={styles.compareCheckbox}>
+                <input
+                  type="checkbox"
+                  checked={isComparing}
+                  onChange={(e) => onCompareToggle(slug, e.target.checked)}
+                  aria-label={`Compare ${title}`}
+                />
+                <span className={styles.compareLabel}>Compare</span>
+              </label>
+            )}
           </div>
         </Link>
 
@@ -116,16 +138,30 @@ export default function RoomCard({
             </div>
           </div>
 
-          <ul className={styles.features}>
-            {features.slice(0, 4).map((feature, index) => (
-              <li key={index} className={styles.feature}>
-                <svg className={styles.checkIcon} viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                {feature}
-              </li>
-            ))}
-          </ul>
+          <div className={styles.featuresSection}>
+            <ul className={styles.features}>
+              {displayedFeatures.map((feature, index) => (
+                <li key={index} className={styles.feature}>
+                  <svg className={styles.checkIcon} viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            {hasMoreFeatures && (
+              <button
+                onClick={() => setIsFeaturesExpanded(!isFeaturesExpanded)}
+                className={styles.expandButton}
+              >
+                {isFeaturesExpanded
+                  ? 'Show less'
+                  : `+${features.length - 4} more amenities`
+                }
+              </button>
+            )}
+          </div>
 
           {/* Value Proposition */}
           {includedItems && includedItems.length > 0 && (
