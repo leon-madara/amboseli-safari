@@ -5,8 +5,14 @@ import type { DiningExperience } from '@/data/dining';
 import styles from './ExperienceCard.module.css';
 
 interface ExperienceCardProps {
-  experience: DiningExperience;
-  index: number;
+  experience?: DiningExperience;
+  index?: number;
+  id?: string;
+  title?: string;
+  image?: string;
+  duration?: string;
+  difficulty?: string;
+  timeOfDay?: string;
 }
 
 const timeIcons: Record<string, string> = {
@@ -14,10 +20,26 @@ const timeIcons: Record<string, string> = {
   'Evening': '🌆',
   'By Arrangement': '📅',
   'By Reservation': '🍴',
+  'Morning': '🌅',
+  'Afternoon': '☀️',
 };
 
-export default function ExperienceCard({ experience, index }: ExperienceCardProps) {
-  const icon = timeIcons[experience.time] || '✨';
+export default function ExperienceCard({
+  experience,
+  index = 0,
+  id,
+  title,
+  image,
+  duration,
+  difficulty,
+  timeOfDay
+}: ExperienceCardProps) {
+  // Handle both dining experience and safari experience formats
+  const displayTime = experience?.time || timeOfDay || 'By Arrangement';
+  const displayTitle = experience?.title || title || 'Experience';
+  const displayDescription = experience?.description || `${duration || ''} ${difficulty || ''}`.trim();
+
+  const icon = timeIcons[displayTime] || '✨';
 
   return (
     <motion.div
@@ -46,11 +68,11 @@ export default function ExperienceCard({ experience, index }: ExperienceCardProp
       </motion.div>
 
       <div className={styles.content}>
-        <div className={styles.badge}>{experience.time}</div>
+        <div className={styles.badge}>{displayTime}</div>
 
-        <h3 className={styles.title}>{experience.title}</h3>
+        <h3 className={styles.title}>{displayTitle}</h3>
 
-        <p className={styles.description}>{experience.description}</p>
+        <p className={styles.description}>{displayDescription}</p>
       </div>
     </motion.div>
   );

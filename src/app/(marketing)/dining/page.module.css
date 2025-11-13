@@ -3,14 +3,20 @@
   min-height: 100vh;
 }
 
-/* Section Styles */
+/* Section Styles - Material 3 */
 .section {
   padding: var(--space-section-lg) var(--space-container-padding);
+  background-color: var(--color-bg-primary);
 }
 
 .sectionAlt {
-  padding: var(--space-section-xl) var(--space-container-padding);
-  background-color: var(--color-neutral-cream);
+  padding: var(--space-section-lg) var(--space-container-padding);
+  background: linear-gradient(
+    180deg,
+    rgba(243, 233, 215, 0.3) 0%,
+    rgba(243, 233, 215, 0.5) 50%,
+    rgba(243, 233, 215, 0.3) 100%
+  );
 }
 
 .container {
@@ -23,10 +29,12 @@
   margin: 0 auto;
 }
 
-/* Section Header */
+/* Section Header - Material 3 Typography */
 .sectionHeader {
   text-align: center;
   margin-bottom: var(--space-16);
+  padding-bottom: var(--space-4);
+  position: relative;
 }
 
 .heading {
@@ -34,8 +42,9 @@
   font-size: var(--heading-h2-size);
   font-weight: var(--heading-h2-weight);
   color: var(--color-text-primary);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -47,29 +56,38 @@
   margin: 0 auto;
 }
 
-/* Grid Layouts */
+/* Grid Layouts - Material 3 Uniform Spacing */
 .restaurantsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--space-10);
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--space-8);
+  /* Align items to stretch for uniform height */
+  align-items: stretch;
 }
 
 .menuGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--space-8);
+  align-items: stretch;
 }
 
 .experiencesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-8);
+  align-items: stretch;
 }
 
-/* Dietary Section */
+/* Dietary Section - Material 3 Filled Container */
 .dietarySection {
   padding: var(--space-section-lg) var(--space-container-padding);
-  background-color: var(--color-neutral-cream);
+  background: linear-gradient(
+    180deg,
+    rgba(243, 233, 215, 0.3) 0%,
+    rgba(243, 233, 215, 0.5) 50%,
+    rgba(243, 233, 215, 0.3) 100%
+  );
 }
 
 .dietaryContainer {
@@ -80,9 +98,13 @@
 .dietaryCard {
   padding: var(--space-12);
   background: var(--color-bg-secondary);
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-3xl);
   text-align: center;
-  box-shadow: var(--shadow-lg);
+  /* Material 3 Elevation Level 1 */
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(200, 111, 77, 0.08);
 }
 
 .dietaryHeading {
@@ -91,6 +113,7 @@
   font-weight: var(--heading-h3-weight);
   color: var(--color-text-primary);
   margin-bottom: var(--space-6);
+  letter-spacing: -0.01em;
 }
 
 .dietaryDescription {
@@ -103,7 +126,7 @@
 
 .dietaryOptions {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-4);
   justify-content: center;
   flex-wrap: wrap;
   margin-top: var(--space-8);
@@ -111,21 +134,25 @@
 
 .dietaryBadge {
   padding: var(--space-3) var(--space-6);
-  background-color: var(--color-neutral-cream);
+  background: linear-gradient(135deg, rgba(200, 111, 77, 0.1) 0%, rgba(232, 160, 78, 0.1) 100%);
+  border: 2px solid rgba(200, 111, 77, 0.3);
   border-radius: var(--radius-full);
   font-family: var(--font-family-body);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-terracotta);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
   cursor: default;
 }
 
 .dietaryBadge:hover {
-  background-color: var(--color-primary-terracotta);
+  background: linear-gradient(135deg, var(--color-primary-terracotta) 0%, var(--color-primary-ochre) 100%);
   color: var(--color-text-inverse);
+  border-color: var(--color-primary-terracotta);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    0 4px 8px 0 rgba(200, 111, 77, 0.25),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* CTA Section */
@@ -202,11 +229,15 @@
   box-shadow: var(--shadow-md);
 }
 
-/* Responsive Design */
+/* Responsive Design - Material 3 */
 @media (max-width: 768px) {
+  .sectionHeader {
+    margin-bottom: var(--space-12);
+  }
+
   .restaurantsGrid {
     grid-template-columns: 1fr;
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
 
   .menuGrid {
@@ -224,7 +255,12 @@
   }
 
   .dietaryOptions {
-    gap: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .dietaryBadge {
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--font-size-xs);
   }
 
   .ctaButtons {
