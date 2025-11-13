@@ -28,6 +28,12 @@ const rooms = [
       'Minibar',
     ],
     slug: 'premium-room',
+    // Enhanced conversion features
+    rating: 4.8,
+    reviewCount: 127,
+    availability: 'available' as const,
+    recentlyBooked: true,
+    includedItems: ['Full breakfast', '2 game drives daily', 'Park fees', 'Airport transfer'],
   },
   {
     title: 'Deluxe Suite',
@@ -47,6 +53,13 @@ const rooms = [
       'Premium minibar',
     ],
     slug: 'deluxe-suite',
+    // Enhanced conversion features
+    rating: 4.9,
+    reviewCount: 94,
+    availability: 'limited' as const,
+    recentlyBooked: false,
+    specialOffer: 'Save 15% for 3+ nights',
+    includedItems: ['Full breakfast', '2 game drives daily', 'Park fees', 'Butler service'],
   },
   {
     title: 'Family Suite',
@@ -66,6 +79,12 @@ const rooms = [
       'Kids amenities',
     ],
     slug: 'family-suite',
+    // Enhanced conversion features
+    rating: 4.9,
+    reviewCount: 83,
+    availability: 'available' as const,
+    recentlyBooked: true,
+    includedItems: ['Full breakfast', '2 game drives daily', 'Park fees', 'Kids activities'],
   },
 ];
 
