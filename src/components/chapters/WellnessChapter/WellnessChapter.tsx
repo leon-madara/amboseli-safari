@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './WellnessChapter.module.css';
 
 export interface SpaService {
@@ -21,34 +22,35 @@ export interface WellnessChapterProps extends BaseChapterProps {
   ctaButton?: CTAButton;
 }
 
-export default function WellnessChapter({
-  id,
-  className = '',
-  backgroundImage = '/images/chapters/sunset-wellness.jpg',
-  yogaImage = '/images/chapters/yoga-silhouette.jpg',
-  spaServices = [
-    {
-      name: 'Savanna Stone Massage',
-      duration: '60 minutes',
-      description: 'Hot stone therapy with indigenous oils',
+export default function WellnessChapter(props: WellnessChapterProps) {
+  const {
+    id,
+    className = '',
+    backgroundImage = CHAPTER_IMAGES.wellness.yogaSunset,
+    yogaImage = CHAPTER_IMAGES.wellness.spa,
+    spaServices = [
+      {
+        name: 'Savanna Stone Massage',
+        duration: '60 minutes',
+        description: 'Hot stone therapy with indigenous oils',
+      },
+      {
+        name: 'Sunset Meditation',
+        duration: '45 minutes',
+        description: 'Guided mindfulness with nature sounds',
+      },
+      {
+        name: 'African Aromatherapy',
+        duration: '90 minutes',
+        description: 'Full body treatment with local botanicals',
+      },
+    ],
+    ctaButton = {
+      text: 'Explore Wellness',
+      href: '/wellness',
+      variant: 'primary',
     },
-    {
-      name: 'Sunset Meditation',
-      duration: '45 minutes',
-      description: 'Guided mindfulness with nature sounds',
-    },
-    {
-      name: 'African Aromatherapy',
-      duration: '90 minutes',
-      description: 'Full body treatment with local botanicals',
-    },
-  ],
-  ctaButton = {
-    text: 'Explore Wellness',
-    href: '/wellness',
-    variant: 'primary',
-  },
-}: WellnessChapterProps) {
+  } = props;
   // Parallax effect for yoga silhouette (0.4x speed)
   const yogaRef = useRef<HTMLDivElement>(null);
   const yogaParallaxOffset = useParallax(yogaRef, { speed: 0.4, direction: 'down' });

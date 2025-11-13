@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './BushBreakfastChapter.module.css';
 
 export interface BushBreakfastChapterProps extends BaseChapterProps {
@@ -15,24 +16,25 @@ export interface BushBreakfastChapterProps extends BaseChapterProps {
   ctaButton?: CTAButton;
 }
 
-export default function BushBreakfastChapter({
-  id,
-  className = '',
-  backgroundImage = '/images/chapters/acacia-tree-background.jpg',
-  tableImage = '/images/chapters/bush-breakfast-table.jpg',
-  menuItems = [
-    'Freshly Baked Pastries & Breads',
-    'Tropical Fruit Platter',
-    'Farm-Fresh Eggs Your Way',
-    'Kenyan Coffee & Premium Teas',
-    'Homemade Preserves & Honey',
-  ],
-  ctaButton = {
-    text: 'Discover Our Cuisine',
-    href: '/dining',
-    variant: 'primary',
-  },
-}: BushBreakfastChapterProps) {
+export default function BushBreakfastChapter(props: BushBreakfastChapterProps) {
+  const {
+    id,
+    className = '',
+    backgroundImage = CHAPTER_IMAGES.bushBreakfast.dining,
+    tableImage = CHAPTER_IMAGES.bushBreakfast.elegantDining,
+    menuItems = [
+      'Freshly Baked Pastries & Breads',
+      'Tropical Fruit Platter',
+      'Farm-Fresh Eggs Your Way',
+      'Kenyan Coffee & Premium Teas',
+      'Homemade Preserves & Honey',
+    ],
+    ctaButton = {
+      text: 'Discover Our Cuisine',
+      href: '/dining',
+      variant: 'primary',
+    },
+  } = props;
   // Parallax effect for table image (0.6x speed)
   const tableRef = useRef<HTMLDivElement>(null);
   const tableParallaxOffset = useParallax(tableRef, { speed: 0.6, direction: 'down' });

@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './AccommodationsChapter.module.css';
 
 export interface RoomPreview {
@@ -22,41 +23,42 @@ export interface AccommodationsChapterProps extends BaseChapterProps {
   ctaButton?: CTAButton;
 }
 
-export default function AccommodationsChapter({
-  id,
-  className = '',
-  rooms = [
-    {
-      id: 'luxury-tent',
-      name: 'Luxury Safari Tent',
-      image: '/images/chapters/luxury-tent.jpg',
-      viewImage: '/images/chapters/tent-view.jpg',
-      tagline: 'Canvas walls, endless views',
-      price: 'From $450/night',
+export default function AccommodationsChapter(props: AccommodationsChapterProps) {
+  const {
+    id,
+    className = '',
+    rooms = [
+      {
+        id: 'luxury-tent',
+        name: 'Luxury Safari Tent',
+        image: CHAPTER_IMAGES.accommodations.lodgeExterior,
+        viewImage: CHAPTER_IMAGES.location.aerialView,
+        tagline: 'Canvas walls, endless views',
+        price: 'From $450/night',
+      },
+      {
+        id: 'family-suite',
+        name: 'Family Suite',
+        image: CHAPTER_IMAGES.accommodations.roomInterior,
+        viewImage: CHAPTER_IMAGES.location.map,
+        tagline: 'Space for memories',
+        price: 'From $650/night',
+      },
+      {
+        id: 'presidential-villa',
+        name: 'Presidential Villa',
+        image: CHAPTER_IMAGES.planSafari.nightCampfire,
+        viewImage: CHAPTER_IMAGES.planSafari.starryNight,
+        tagline: 'Ultimate luxury in the wild',
+        price: 'From $950/night',
+      },
+    ],
+    ctaButton = {
+      text: 'View All Rooms',
+      href: '/accommodations',
+      variant: 'primary',
     },
-    {
-      id: 'family-suite',
-      name: 'Family Suite',
-      image: '/images/chapters/family-suite.jpg',
-      viewImage: '/images/chapters/suite-view.jpg',
-      tagline: 'Space for memories',
-      price: 'From $650/night',
-    },
-    {
-      id: 'presidential-villa',
-      name: 'Presidential Villa',
-      image: '/images/chapters/presidential-villa.jpg',
-      viewImage: '/images/chapters/villa-view.jpg',
-      tagline: 'Ultimate luxury in the wild',
-      price: 'From $950/night',
-    },
-  ],
-  ctaButton = {
-    text: 'View All Rooms',
-    href: '/accommodations',
-    variant: 'primary',
-  },
-}: AccommodationsChapterProps) {
+  } = props;
   const [hoveredRoom, setHoveredRoom] = useState<string | null>(null);
   
   // Track chapter progress

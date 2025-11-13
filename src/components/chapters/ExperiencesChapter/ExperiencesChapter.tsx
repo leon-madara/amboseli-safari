@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import ExperienceCard from '@/components/molecules/ExperienceCard';
 import ActivityTimeline from '@/components/molecules/ActivityTimeline';
 import styles from './ExperiencesChapter.module.css';
@@ -32,55 +33,56 @@ export interface ExperiencesChapterProps extends BaseChapterProps {
   ctaButton?: CTAButton;
 }
 
-export default function ExperiencesChapter({
-  id,
-  className = '',
-  backgroundImage = '/images/chapters/game-drive-golden-hour.jpg',
-  experiences = [
-    {
-      id: 'game-drive',
-      title: 'Game Drive Safari',
-      image: '/images/chapters/game-drive.jpg',
-      duration: '3-4 hours',
-      difficulty: 'Easy',
-      timeOfDay: 'Morning',
+export default function ExperiencesChapter(props: ExperiencesChapterProps) {
+  const {
+    id,
+    className = '',
+    backgroundImage = CHAPTER_IMAGES.experiences.goldenHour,
+    experiences = [
+      {
+        id: 'game-drive',
+        title: 'Game Drive Safari',
+        image: CHAPTER_IMAGES.experiences.jeepAction,
+        duration: '3-4 hours',
+        difficulty: 'Easy',
+        timeOfDay: 'Morning',
+      },
+      {
+        id: 'walking-safari',
+        title: 'Guided Walking Safari',
+        image: CHAPTER_IMAGES.morningDrive.acaciaTrees,
+        duration: '2-3 hours',
+        difficulty: 'Moderate',
+        timeOfDay: 'Morning',
+      },
+      {
+        id: 'bird-watching',
+        title: 'Bird Watching Expedition',
+        image: CHAPTER_IMAGES.morningDrive.elephantHerd,
+        duration: '2 hours',
+        difficulty: 'Easy',
+        timeOfDay: 'Morning',
+      },
+      {
+        id: 'sundowner',
+        title: 'Sundowner Experience',
+        image: CHAPTER_IMAGES.dining.sundowner,
+        duration: '2 hours',
+        difficulty: 'Easy',
+        timeOfDay: 'Evening',
+      },
+    ],
+    timeline = {
+      morning: ['Game Drive', 'Walking Safari', 'Bird Watching'],
+      afternoon: ['Bush Lunch', 'Photography Workshop', 'Cultural Visit'],
+      evening: ['Sundowner', 'Night Drive', 'Stargazing'],
     },
-    {
-      id: 'walking-safari',
-      title: 'Guided Walking Safari',
-      image: '/images/chapters/walking-safari.jpg',
-      duration: '2-3 hours',
-      difficulty: 'Moderate',
-      timeOfDay: 'Morning',
+    ctaButton = {
+      text: 'Plan Your Safari',
+      href: '/experiences',
+      variant: 'primary',
     },
-    {
-      id: 'bird-watching',
-      title: 'Bird Watching Expedition',
-      image: '/images/chapters/bird-watching.jpg',
-      duration: '2 hours',
-      difficulty: 'Easy',
-      timeOfDay: 'Morning',
-    },
-    {
-      id: 'sundowner',
-      title: 'Sundowner Experience',
-      image: '/images/chapters/sundowner.jpg',
-      duration: '2 hours',
-      difficulty: 'Easy',
-      timeOfDay: 'Evening',
-    },
-  ],
-  timeline = {
-    morning: ['Game Drive', 'Walking Safari', 'Bird Watching'],
-    afternoon: ['Bush Lunch', 'Photography Workshop', 'Cultural Visit'],
-    evening: ['Sundowner', 'Night Drive', 'Stargazing'],
-  },
-  ctaButton = {
-    text: 'Plan Your Safari',
-    href: '/experiences',
-    variant: 'primary',
-  },
-}: ExperiencesChapterProps) {
+  } = props;
   // Parallax effect for background (0.3x speed)
   const backgroundRef = useRef<HTMLDivElement>(null);
   const backgroundParallaxOffset = useParallax(backgroundRef, { speed: 0.3, direction: 'down' });

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from './ImageGallery.module.css';
 
 interface ImageGalleryProps {
@@ -13,7 +14,18 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
   return (
     <div className={styles.gallery}>
       <div className={styles.mainImage}>
-        <img src={images[selectedIndex]} alt={`Gallery image ${selectedIndex + 1}`} />
+        <Image 
+          src={images[selectedIndex]} 
+          alt={`Gallery image ${selectedIndex + 1}`}
+          width={800}
+          height={600}
+          style={{
+            width: '100%',
+            height: 'auto',
+            objectFit: 'cover'
+          }}
+          priority
+        />
       </div>
       <div className={styles.thumbnails}>
         {images.map((image, index) => (
@@ -22,7 +34,17 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
             className={`${styles.thumbnail} ${index === selectedIndex ? styles.active : ''}`}
             onClick={() => setSelectedIndex(index)}
           >
-            <img src={image} alt={`Thumbnail ${index + 1}`} />
+            <Image 
+              src={image} 
+              alt={`Thumbnail ${index + 1}`}
+              width={100}
+              height={75}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
           </button>
         ))}
       </div>

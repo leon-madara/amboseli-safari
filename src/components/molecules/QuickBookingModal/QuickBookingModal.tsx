@@ -140,7 +140,7 @@ export default function QuickBookingModal({
                   </svg>
                 </div>
                 <h3>Booking Inquiry Sent!</h3>
-                <p>We'll get back to you within 24 hours with availability and details.</p>
+                <p>We&apos;ll get back to you within 24 hours with availability and details.</p>
               </motion.div>
             ) : (
               <>

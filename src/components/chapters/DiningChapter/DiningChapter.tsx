@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './DiningChapter.module.css';
 
 export interface DishPreview {
@@ -26,38 +27,39 @@ export interface DiningChapterProps extends BaseChapterProps {
   ctaButton?: CTAButton;
 }
 
-export default function DiningChapter({
-  id,
-  className = '',
-  backgroundImage = '/images/chapters/sundowner-deck.jpg',
-  dishes = [
-    {
-      name: 'Grilled Serengeti Beef',
-      image: '/images/chapters/grilled-beef.jpg',
-      description: 'Prime cuts with wild herb butter',
+export default function DiningChapter(props: DiningChapterProps) {
+  const {
+    id,
+    className = '',
+    backgroundImage = CHAPTER_IMAGES.dining.sundowner,
+    dishes = [
+      {
+        name: 'Grilled Serengeti Beef',
+        image: CHAPTER_IMAGES.bushBreakfast.dining,
+        description: 'Prime cuts with wild herb butter',
+      },
+      {
+        name: 'Lake Victoria Tilapia',
+        image: CHAPTER_IMAGES.dining.tableSetting,
+        description: 'Pan-seared with lemon & thyme',
+      },
+      {
+        name: 'Savanna Sunset Platter',
+        image: CHAPTER_IMAGES.bushBreakfast.elegantDining,
+        description: 'Chef\'s selection of local delicacies',
+      },
+    ],
+    winePairings = [
+      { wine: 'Sauvignon Blanc', dish: 'Lake Victoria Tilapia' },
+      { wine: 'Cabernet Sauvignon', dish: 'Grilled Serengeti Beef' },
+      { wine: 'Rosé', dish: 'Savanna Sunset Platter' },
+    ],
+    ctaButton = {
+      text: 'See Full Menu',
+      href: '/dining',
+      variant: 'primary',
     },
-    {
-      name: 'Lake Victoria Tilapia',
-      image: '/images/chapters/tilapia.jpg',
-      description: 'Pan-seared with lemon & thyme',
-    },
-    {
-      name: 'Savanna Sunset Platter',
-      image: '/images/chapters/sunset-platter.jpg',
-      description: 'Chef\'s selection of local delicacies',
-    },
-  ],
-  winePairings = [
-    { wine: 'Sauvignon Blanc', dish: 'Lake Victoria Tilapia' },
-    { wine: 'Cabernet Sauvignon', dish: 'Grilled Serengeti Beef' },
-    { wine: 'Rosé', dish: 'Savanna Sunset Platter' },
-  ],
-  ctaButton = {
-    text: 'See Full Menu',
-    href: '/dining',
-    variant: 'primary',
-  },
-}: DiningChapterProps) {
+  } = props;
   const [currentDishIndex, setCurrentDishIndex] = useState(0);
 
   // Parallax effect for background (0.5x speed)

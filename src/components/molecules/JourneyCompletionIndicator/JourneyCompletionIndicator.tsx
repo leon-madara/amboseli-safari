@@ -121,7 +121,7 @@ export function JourneyCompletionIndicator({
             <h3 className={styles.title}>Your Journey So Far</h3>
             
             <p className={styles.description}>
-              You've explored {completedChapters} chapters of the Amboseli Safari experience
+              You&apos;ve explored {completedChapters} chapters of the Amboseli Safari experience
             </p>
 
             <div className={styles.highlights}>

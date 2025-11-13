@@ -80,7 +80,7 @@ export default function PlanSafariChapter({ id }: PlanSafariChapterProps) {
             <div className={styles.completionIcon}>✨</div>
             <div className={styles.completionText}>Journey Complete</div>
             <div className={styles.completionSubtext}>
-              You've experienced a full day at Amboseli Safari Club
+              You&apos;ve experienced a full day at Amboseli Safari Club
             </div>
           </motion.div>
 
@@ -176,7 +176,7 @@ function PackageCards({ packages, inView }: PackageCardsProps) {
           <div className={styles.packageHeader}>
             <h4 className={styles.packageName}>{pkg.name}</h4>
             <div className={styles.packageDuration}>{pkg.duration}</div>
-            <div className={styles.packagePrice}>{pkg.priceRange}</div>
+            <div className={styles.pricingNote}>*Rates are per person, per night</div>
           </div>
 
           <div className={styles.packageHighlights}>
@@ -192,7 +192,7 @@ function PackageCards({ packages, inView }: PackageCardsProps) {
           </div>
 
           <div className={styles.packageIncludes}>
-            <div className={styles.includesTitle}>What's Included</div>
+            <div className={styles.includesTitle}>What&apos;s Included</div>
             <ul className={styles.includesList}>
               {pkg.includes.map((item, idx) => (
                 <li key={idx} className={styles.includeItem}>{item}</li>
@@ -384,7 +384,7 @@ function ContactForm({ inView }: ContactFormProps) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Thank you! We'll get back to you within 24 hours.
+            Thank you! We&apos;ll get back to you within 24 hours.
           </motion.div>
         )}
       </form>

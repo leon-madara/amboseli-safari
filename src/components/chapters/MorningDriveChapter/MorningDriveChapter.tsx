@@ -6,6 +6,7 @@ import { useRef, useState, useEffect } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { CHAPTER_IMAGES, WILDLIFE_IMAGES } from '@/data/images';
 import WildlifeCard from '@/components/molecules/WildlifeCard/WildlifeCard';
 import styles from './MorningDriveChapter.module.css';
 
@@ -23,46 +24,51 @@ export interface MorningDriveChapterProps extends BaseChapterProps {
   ctaButton?: CTAButton;
 }
 
-export default function MorningDriveChapter({
-  id,
-  className = '',
-  backgroundImage = '/images/hero/Single Leading Bull Silhouette.jpg',
-  wildlifeCards = [
-    {
-      id: 'elephant',
-      name: 'African Elephant',
-      image: '/images/hero/Single Leading Bull Silhouette.jpg',
-      funFact: 'Elephants can communicate using infrasound, which travels through the ground and can be detected by other elephants up to 10 miles away.',
-      scientificName: 'Loxodonta africana',
+export default function MorningDriveChapter(props: MorningDriveChapterProps) {
+  const {
+    id,
+    className = '',
+    backgroundImage = CHAPTER_IMAGES.morningDrive.savannah,
+    wildlifeCards = [
+      {
+        id: 'elephant',
+        name: 'African Elephant',
+        image: WILDLIFE_IMAGES.elephant,
+        funFact:
+          'Elephants can communicate using infrasound, which travels through the ground and can be detected by other elephants up to 10 miles away.',
+        scientificName: 'Loxodonta africana',
+      },
+      {
+        id: 'lion',
+        name: 'African Lion',
+        image: WILDLIFE_IMAGES.lion,
+        funFact:
+          "A lion's roar can be heard from up to 5 miles away, making it one of the loudest calls in the animal kingdom.",
+        scientificName: 'Panthera leo',
+      },
+      {
+        id: 'giraffe',
+        name: 'Masai Giraffe',
+        image: WILDLIFE_IMAGES.giraffe,
+        funFact:
+          'Despite their long necks, giraffes have the same number of neck vertebrae as humans - just seven!',
+        scientificName: 'Giraffa tippelskirchi',
+      },
+      {
+        id: 'zebra',
+        name: 'Plains Zebra',
+        image: WILDLIFE_IMAGES.zebra,
+        funFact:
+          'Each zebra has a unique stripe pattern, like a fingerprint, which helps them recognize each other.',
+        scientificName: 'Equus quagga',
+      },
+    ],
+    ctaButton = {
+      text: 'Explore Wildlife Experiences',
+      href: '/experiences',
+      variant: 'primary',
     },
-    {
-      id: 'lion',
-      name: 'African Lion',
-      image: '/images/hero/Single Leading Bull Silhouette.jpg',
-      funFact: 'A lion\'s roar can be heard from up to 5 miles away, making it one of the loudest calls in the animal kingdom.',
-      scientificName: 'Panthera leo',
-    },
-    {
-      id: 'giraffe',
-      name: 'Masai Giraffe',
-      image: '/images/hero/Single Leading Bull Silhouette.jpg',
-      funFact: 'Despite their long necks, giraffes have the same number of neck vertebrae as humans - just seven!',
-      scientificName: 'Giraffa tippelskirchi',
-    },
-    {
-      id: 'zebra',
-      name: 'Plains Zebra',
-      image: '/images/hero/Single Leading Bull Silhouette.jpg',
-      funFact: 'Each zebra has a unique stripe pattern, like a fingerprint, which helps them recognize each other.',
-      scientificName: 'Equus quagga',
-    },
-  ],
-  ctaButton = {
-    text: 'Explore Wildlife Experiences',
-    href: '/experiences',
-    variant: 'primary',
-  },
-}: MorningDriveChapterProps) {
+  } = props;
   // Parallax effect for grassland background (0.3x speed)
   const backgroundRef = useRef<HTMLDivElement>(null);
   const backgroundParallaxOffset = useParallax(backgroundRef, { speed: 0.3, direction: 'down' });
