@@ -7,11 +7,11 @@ import { WhatsAppChatBubble } from '@/components/molecules/WhatsAppChatBubble';
  * HomePage Component
  *
  * The main landing page featuring the cinematic safari journey experience.
- * Integrates all 8 chapters with persistent navigation and progress tracking.
- * Streamlined to ~1,100vh for optimal engagement and conversion.
+ * Integrates all 9 chapters with persistent navigation and progress tracking.
+ * Optimized to 1,100vh for engagement and conversion.
  *
  * Features:
- * - CinematicJourney: 8-chapter scroll-driven storytelling experience
+ * - CinematicJourney: 9-chapter scroll-driven storytelling experience
  * - ScrollProgressIndicator: Visual progress bar with chapter navigation
  * - StickyNavigation: Auto-hiding navigation bar after hero section
  * - WhatsAppChatBubble: Instant communication channel
@@ -21,7 +21,7 @@ import { WhatsAppChatBubble } from '@/components/molecules/WhatsAppChatBubble';
 export default function HomePage() {
   return (
     <main>
-      {/* Streamlined 8-chapter cinematic journey (1,100vh total) */}
+      {/* 9-chapter cinematic journey (1,100vh) - brief & conversion-focused */}
       <CinematicJourney />
 
       {/* Persistent UI elements */}
