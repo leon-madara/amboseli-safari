@@ -1,6 +1,7 @@
 /**
  * Chapter Configuration Data
- * Defines all 12 chapters of the cinematic safari homepage
+ * Streamlined 9-chapter cinematic safari homepage
+ * Optimized for engagement, conversion, and mobile experience
  */
 
 import { ChapterConfig } from '@/types/chapter';
@@ -14,52 +15,53 @@ const BushBreakfastChapter = dynamic(() => import('@/components/chapters/BushBre
 const AccommodationsChapter = dynamic(() => import('@/components/chapters/AccommodationsChapter/AccommodationsChapter'));
 const DiningChapter = dynamic(() => import('@/components/chapters/DiningChapter/DiningChapter'));
 const ExperiencesChapter = dynamic(() => import('@/components/chapters/ExperiencesChapter/ExperiencesChapter'));
-const WellnessChapter = dynamic(() => import('@/components/chapters/WellnessChapter/WellnessChapter'));
-const GuestStoriesChapter = dynamic(() => import('@/components/chapters/GuestStoriesChapter/GuestStoriesChapter'));
 const LocationChapter = dynamic(() => import('@/components/chapters/LocationChapter/LocationChapter'));
-const JournalChapter = dynamic(() => import('@/components/chapters/JournalChapter/JournalChapter'));
 const PlanSafariChapter = dynamic(() => import('@/components/chapters/PlanSafariChapter/PlanSafariChapter'));
 
 /**
- * Complete configuration for all 12 chapters
- * Each chapter represents a phase of the safari day experience
+ * Streamlined 9-chapter configuration
+ * Optimized for brevity, conversion, and mobile experience
+ * Total: ~960vh (reduced from 1,820vh for better engagement)
  */
 export const CHAPTER_CONFIGS: ChapterConfig[] = [
+  // Chapter 1: Opening December 2025 (80vh)
   {
     id: 'pre-dawn',
     number: 1,
-    title: 'Pre-Dawn Hero',
+    title: 'Opening December 2025',
     timeOfDay: 'pre-dawn',
-    heightVh: 100,
+    heightVh: 80,
     startVh: 0,
-    endVh: 100,
+    endVh: 80,
     component: PreDawnHero,
     atmosphericEffects: {
       particles: 'stars',
       colorGradient: ['#0a0e27', '#1a1f3a'],
     },
   },
+  // Chapter 2: Our Vision (90vh)
   {
     id: 'sunrise',
     number: 2,
-    title: 'Sunrise',
+    title: 'Our Vision',
     timeOfDay: 'dawn',
-    heightVh: 120,
-    startVh: 100,
-    endVh: 220,
+    heightVh: 90,
+    startVh: 80,
+    endVh: 170,
     component: SunriseChapter,
     atmosphericEffects: {
       colorGradient: ['#ff6b35', '#f7931e'],
     },
   },
+  // Chapter 3: Wildlife Experience (110vh)
   {
     id: 'morning-drive',
     number: 3,
-    title: 'Morning Drive',
+    title: 'Wildlife Experience',
     timeOfDay: 'morning',
-    heightVh: 150,
-    startVh: 220,
-    endVh: 370,
+    heightVh: 110,
+    startVh: 170,
+    endVh: 280,
     component: MorningDriveChapter,
     atmosphericEffects: {
       particles: 'dust',
@@ -67,119 +69,85 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
       cursor: 'binoculars',
     },
   },
+  // Chapter 4: Bush Breakfast (110vh) - USER PRIORITY: Keep storytelling
   {
     id: 'bush-breakfast',
     number: 4,
     title: 'Bush Breakfast',
     timeOfDay: 'morning',
-    heightVh: 150,
-    startVh: 370,
-    endVh: 520,
+    heightVh: 110,
+    startVh: 280,
+    endVh: 390,
     component: BushBreakfastChapter,
     atmosphericEffects: {
       colorGradient: ['#f5af19', '#f12711'],
     },
   },
+  // Chapter 5: Your Rooms (120vh)
   {
     id: 'accommodations',
     number: 5,
-    title: 'Accommodations',
+    title: 'Your Rooms',
     timeOfDay: 'midday',
-    heightVh: 180,
-    startVh: 520,
-    endVh: 700,
+    heightVh: 120,
+    startVh: 390,
+    endVh: 510,
     component: AccommodationsChapter,
     atmosphericEffects: {
       colorGradient: ['#87ceeb', '#f0e68c'],
     },
   },
+  // Chapter 6: Dining & Pool (120vh) - Combined amenities
   {
     id: 'dining',
     number: 6,
-    title: 'Dining Experience',
+    title: 'Dining & Pool',
     timeOfDay: 'afternoon',
-    heightVh: 150,
-    startVh: 700,
-    endVh: 850,
+    heightVh: 120,
+    startVh: 510,
+    endVh: 630,
     component: DiningChapter,
     atmosphericEffects: {
       colorGradient: ['#ffa500', '#ff6347'],
     },
   },
+  // Chapter 7: Safari Adventures (120vh)
   {
     id: 'experiences',
     number: 7,
-    title: 'Safari Experiences',
+    title: 'Safari Adventures',
     timeOfDay: 'golden-hour',
-    heightVh: 220,
-    startVh: 850,
-    endVh: 1070,
+    heightVh: 120,
+    startVh: 630,
+    endVh: 750,
     component: ExperiencesChapter,
     atmosphericEffects: {
       colorGradient: ['#ff8c00', '#ff4500'],
     },
   },
-  {
-    id: 'wellness',
-    number: 8,
-    title: 'Wellness Moment',
-    timeOfDay: 'sunset',
-    heightVh: 120,
-    startVh: 1070,
-    endVh: 1190,
-    component: WellnessChapter,
-    atmosphericEffects: {
-      colorGradient: ['#ff7e5f', '#feb47b'],
-    },
-  },
-  {
-    id: 'guest-stories',
-    number: 9,
-    title: 'Guest Stories',
-    timeOfDay: 'dusk',
-    heightVh: 200,
-    startVh: 1190,
-    endVh: 1390,
-    component: GuestStoriesChapter,
-    atmosphericEffects: {
-      particles: 'fireflies',
-      colorGradient: ['#ee9ca7', '#ffdde1'],
-    },
-  },
+  // Chapter 8: Getting Here (90vh)
   {
     id: 'location',
-    number: 10,
-    title: 'Location & Access',
+    number: 8,
+    title: 'Getting Here',
     timeOfDay: 'twilight',
-    heightVh: 150,
-    startVh: 1390,
-    endVh: 1540,
+    heightVh: 90,
+    startVh: 750,
+    endVh: 840,
     component: LocationChapter,
     atmosphericEffects: {
       colorGradient: ['#2c3e50', '#3498db'],
     },
   },
-  {
-    id: 'journal',
-    number: 11,
-    title: 'Safari Journal',
-    timeOfDay: 'twilight',
-    heightVh: 100,
-    startVh: 1540,
-    endVh: 1640,
-    component: JournalChapter,
-    atmosphericEffects: {
-      colorGradient: ['#34495e', '#2c3e50'],
-    },
-  },
+  // Chapter 9: Reserve Your Stay (120vh) - Conversion focus
   {
     id: 'plan-safari',
-    number: 12,
-    title: 'Plan Your Safari',
+    number: 9,
+    title: 'Reserve Your Stay',
     timeOfDay: 'night',
-    heightVh: 180,
-    startVh: 1640,
-    endVh: 1820,
+    heightVh: 120,
+    startVh: 840,
+    endVh: 960,
     component: PlanSafariChapter,
     atmosphericEffects: {
       particles: 'stars',
@@ -228,5 +196,6 @@ export function getPreviousChapter(currentId: string): ChapterConfig | undefined
 
 /**
  * Total height of all chapters in vh
+ * Optimized from 1,820vh to 960vh (47% reduction)
  */
-export const TOTAL_JOURNEY_HEIGHT_VH = 1820;
+export const TOTAL_JOURNEY_HEIGHT_VH = 960;

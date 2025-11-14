@@ -1,9 +1,9 @@
-/* PreDawnHero Chapter - Full Viewport Hero Section */
+/* PreDawnHero Chapter - Optimized 80vh Hero Section */
 .preDawnHero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 80vh;
+  height: 80vh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -67,10 +67,10 @@
   z-index: 2;
 }
 
-/* Logo Container */
+/* Logo Container - Optimized for 80vh */
 .logoContainer {
   position: absolute;
-  top: var(--space-8);
+  top: var(--space-6);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -79,7 +79,7 @@
 .logo {
   width: auto;
   height: auto;
-  max-width: 280px;
+  max-width: 240px;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
@@ -99,17 +99,34 @@
   color: var(--color-text-inverse);
 }
 
-/* Tagline with Typing Effect */
+/* Tagline with Typing Effect - Tighter spacing for 80vh */
 .tagline {
   font-family: var(--font-family-display);
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   letter-spacing: 0.02em;
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-4);
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
   color: var(--color-text-inverse);
   position: relative;
+}
+
+/* Subtitle */
+.subtitle {
+  font-family: var(--font-family-body);
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: var(--space-6);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+}
+
+/* Countdown Wrapper */
+.countdownWrapper {
+  margin-bottom: var(--space-6);
 }
 
 /* Typing Cursor */
@@ -129,13 +146,14 @@
   }
 }
 
-/* CTA Group */
+/* CTA Group - Tighter spacing */
 .ctaGroup {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: var(--space-3);
   justify-content: center;
   align-items: center;
+  margin-bottom: var(--space-4);
 }
 
 .cta {
@@ -183,10 +201,31 @@
   transform: translateY(-2px);
 }
 
-/* Scroll Indicator with Pulse Animation */
+/* Trust Badge */
+.trustBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.trustIcon {
+  font-size: var(--font-size-lg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+.trustText {
+  letter-spacing: 0.05em;
+}
+
+/* Scroll Indicator with Pulse Animation - Reduced bottom spacing for 80vh */
 .scrollIndicator {
   position: absolute;
-  bottom: var(--space-12);
+  bottom: var(--space-8);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -238,16 +277,25 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .logo {
-    max-width: 220px;
+    max-width: 200px;
   }
 
   .logoContainer {
-    top: var(--space-6);
+    top: var(--space-4);
   }
 
   .tagline {
-    font-size: clamp(2rem, 5vw, 4rem);
-    margin-bottom: var(--space-10);
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    margin-bottom: var(--space-3);
+  }
+
+  .subtitle {
+    font-size: clamp(0.8rem, 1.25vw, 1rem);
+    margin-bottom: var(--space-5);
+  }
+
+  .countdownWrapper {
+    margin-bottom: var(--space-5);
   }
 
   .contentWrapper {
@@ -257,35 +305,56 @@
 
 @media (max-width: 768px) {
   .preDawnHero {
-    min-height: 100vh;
+    min-height: 80vh;
   }
 
   .logo {
-    max-width: 180px;
+    max-width: 160px;
   }
 
   .logoContainer {
-    top: var(--space-4);
+    top: var(--space-3);
   }
 
   .tagline {
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    margin-bottom: var(--space-8);
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    margin-bottom: var(--space-2);
+  }
+
+  .subtitle {
+    font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .countdownWrapper {
+    margin-bottom: var(--space-4);
   }
 
   .ctaGroup {
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
   }
 
   .cta {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     min-width: unset;
+    height: var(--button-height-md);
+  }
+
+  .trustBadge {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .trustText {
+    font-size: var(--font-size-2xs);
+    text-align: center;
   }
 
   .scrollIndicator {
-    bottom: var(--space-8);
+    bottom: var(--space-6);
   }
 
   .scrollText {
@@ -295,24 +364,39 @@
 
 @media (max-width: 480px) {
   .logo {
-    max-width: 150px;
+    max-width: 140px;
   }
 
   .logoContainer {
-    top: var(--space-3);
+    top: var(--space-2);
   }
 
   .tagline {
-    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: var(--space-2);
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .countdownWrapper {
+    margin-bottom: var(--space-3);
   }
 
   .contentWrapper {
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-3);
   }
 
   .cta {
     font-size: var(--font-size-sm);
-    padding: var(--space-3) var(--space-6);
+    padding: var(--space-2) var(--space-5);
+    max-width: 280px;
+  }
+
+  .trustIcon {
+    font-size: var(--font-size-md);
   }
 }
 
