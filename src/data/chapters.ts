@@ -44,9 +44,9 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     number: 2,
     title: 'Sunrise',
     timeOfDay: 'dawn',
-    heightVh: 100,
+    heightVh: 120,
     startVh: 100,
-    endVh: 200,
+    endVh: 220,
     component: SunriseChapter,
     atmosphericEffects: {
       colorGradient: ['#ff6b35', '#f7931e'],
@@ -58,8 +58,8 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     title: 'Morning Drive',
     timeOfDay: 'morning',
     heightVh: 150,
-    startVh: 200,
-    endVh: 350,
+    startVh: 220,
+    endVh: 370,
     component: MorningDriveChapter,
     atmosphericEffects: {
       particles: 'dust',
@@ -73,8 +73,8 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     title: 'Bush Breakfast',
     timeOfDay: 'morning',
     heightVh: 150,
-    startVh: 350,
-    endVh: 500,
+    startVh: 370,
+    endVh: 520,
     component: BushBreakfastChapter,
     atmosphericEffects: {
       colorGradient: ['#f5af19', '#f12711'],
@@ -85,8 +85,8 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     number: 5,
     title: 'Accommodations',
     timeOfDay: 'midday',
-    heightVh: 200,
-    startVh: 500,
+    heightVh: 180,
+    startVh: 520,
     endVh: 700,
     component: AccommodationsChapter,
     atmosphericEffects: {
@@ -111,9 +111,9 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     number: 7,
     title: 'Safari Experiences',
     timeOfDay: 'golden-hour',
-    heightVh: 250,
+    heightVh: 220,
     startVh: 850,
-    endVh: 1100,
+    endVh: 1070,
     component: ExperiencesChapter,
     atmosphericEffects: {
       colorGradient: ['#ff8c00', '#ff4500'],
@@ -124,9 +124,9 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     number: 8,
     title: 'Wellness Moment',
     timeOfDay: 'sunset',
-    heightVh: 150,
-    startVh: 1100,
-    endVh: 1250,
+    heightVh: 120,
+    startVh: 1070,
+    endVh: 1190,
     component: WellnessChapter,
     atmosphericEffects: {
       colorGradient: ['#ff7e5f', '#feb47b'],
@@ -138,8 +138,8 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     title: 'Guest Stories',
     timeOfDay: 'dusk',
     heightVh: 200,
-    startVh: 1250,
-    endVh: 1450,
+    startVh: 1190,
+    endVh: 1390,
     component: GuestStoriesChapter,
     atmosphericEffects: {
       particles: 'fireflies',
@@ -152,8 +152,8 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     title: 'Location & Access',
     timeOfDay: 'twilight',
     heightVh: 150,
-    startVh: 1450,
-    endVh: 1600,
+    startVh: 1390,
+    endVh: 1540,
     component: LocationChapter,
     atmosphericEffects: {
       colorGradient: ['#2c3e50', '#3498db'],
@@ -164,9 +164,9 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     number: 11,
     title: 'Safari Journal',
     timeOfDay: 'twilight',
-    heightVh: 150,
-    startVh: 1600,
-    endVh: 1750,
+    heightVh: 100,
+    startVh: 1540,
+    endVh: 1640,
     component: JournalChapter,
     atmosphericEffects: {
       colorGradient: ['#34495e', '#2c3e50'],
@@ -177,9 +177,9 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     number: 12,
     title: 'Plan Your Safari',
     timeOfDay: 'night',
-    heightVh: 150,
-    startVh: 1750,
-    endVh: 1900,
+    heightVh: 180,
+    startVh: 1640,
+    endVh: 1820,
     component: PlanSafariChapter,
     atmosphericEffects: {
       particles: 'stars',
@@ -229,4 +229,4 @@ export function getPreviousChapter(currentId: string): ChapterConfig | undefined
 /**
  * Total height of all chapters in vh
  */
-export const TOTAL_JOURNEY_HEIGHT_VH = 1900;
+export const TOTAL_JOURNEY_HEIGHT_VH = 1820;
