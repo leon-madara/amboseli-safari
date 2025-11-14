@@ -39,7 +39,7 @@ export default function Hero({
   backgroundImage,
   backgroundImageAlt,
   mobileBackgroundImage,
-  logo = '/images/logos/mainLOGOAmboseli.svg',
+  logo,
   logoAlt = 'Amboseli Safari Club',
   height = 'full',
   overlay = 'medium',
@@ -81,7 +81,7 @@ export default function Hero({
         <div className={`${styles.overlay} ${styles[`overlay-${overlay}`]}`} />
       </div>
 
-      {/* Logo */}
+      {/* Logo - only render if explicitly provided */}
       {logo && (
         <motion.div
           className={styles.logoContainer}

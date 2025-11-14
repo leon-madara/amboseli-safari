@@ -346,7 +346,7 @@
 
   /* Navigation */
   --nav-height-mobile: 64px;
-  --nav-height-desktop: 80px;
+  --nav-height-desktop: 40px;
   --nav-bg: var(--color-bg-secondary);
   --nav-bg-scroll: rgba(255, 255, 255, 0.95);
   --nav-link-color: var(--color-text-primary);

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from '@/components/atoms/Link';
 import MobileMenu from './MobileMenu';
@@ -8,9 +9,50 @@ import styles from './Navigation.module.css';
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const pathname = usePathname();
+  const lastScrollY = useRef(0);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Only show blurry background on home page
+  const isHomePage = pathname === '/';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Clear existing timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      // Hide on scroll down, show on scroll up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      // Show after 1 second of no scrolling
+      scrollTimeout.current = setTimeout(() => {
+        setIsVisible(true);
+      }, 1000);
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, []);
 
   return (
-    <nav className={styles.navigation}>
+    <nav className={`${styles.navigation} ${isHomePage ? styles.blurryBg : ''} ${isVisible ? styles.visible : styles.hidden}`}>
       <div className={styles.container}>
         {/* Logo - Left */}
         <Link href="/" className={styles.logoLink}>

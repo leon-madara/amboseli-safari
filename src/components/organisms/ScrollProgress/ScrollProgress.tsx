@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useSafariProgress, SAFARI_CHAPTERS } from '@/providers/SafariProgressProvider';
 import { useSmoothScroll } from '@/providers/SmoothScrollProvider';
 import styles from './ScrollProgress.module.css';
@@ -18,8 +19,14 @@ const TIME_OF_DAY_ICONS: Record<string, string> = {
 };
 
 export function ScrollProgress() {
+  const pathname = usePathname();
   const { scrollProgress, currentChapterNumber } = useSafariProgress();
   const { scrollTo } = useSmoothScroll();
+
+  // Only show on home page
+  if (pathname !== '/') {
+    return null;
+  }
 
   const handleChapterClick = (chapterId: string) => {
     scrollTo(`#${chapterId}`, { duration: 1.5 });

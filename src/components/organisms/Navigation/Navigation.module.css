@@ -1,22 +1,38 @@
 /* Navigation Container */
 .navigation {
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-index-sticky);
-  transition: var(--transition-all);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: translateY(0);
+}
+
+/* Blurry background - only on home page */
+.navigation.blurryBg {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Visibility states */
+.navigation.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.navigation.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
 }
 
 /* Main Container */
 .container {
   max-width: var(--container-max-width-xl);
   margin: 0 auto;
-  padding: var(--space-6) var(--space-container-padding);
+  padding: var(--space-3) var(--space-container-padding);
   display: grid;
   grid-template-columns: 200px 1fr 200px;
   align-items: center;
@@ -38,7 +54,7 @@
 
 .logo {
   width: auto;
-  height: auto;
+  height: 24px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
@@ -263,7 +279,7 @@
 
 @media (min-width: 1024px) {
   .container {
-    padding: var(--space-6) var(--space-container-padding-md);
+    padding: var(--space-3) var(--space-container-padding-md);
   }
 
   .desktop {
@@ -281,7 +297,7 @@
 
 @media (min-width: 1280px) {
   .container {
-    padding: var(--space-6) var(--space-container-padding-lg);
+    padding: var(--space-3) var(--space-container-padding-lg);
     grid-template-columns: 220px 1fr 220px;
     gap: var(--space-12);
   }
