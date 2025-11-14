@@ -1,0 +1,307 @@
+/* Page Container */
+.main {
+  min-height: 100vh;
+}
+
+/* Section Styles - Material 3 */
+.section {
+  padding: var(--space-section-lg) var(--space-container-padding);
+  background-color: var(--color-bg-primary);
+}
+
+.sectionAlt {
+  padding: var(--space-section-lg) var(--space-container-padding);
+  background: linear-gradient(
+    180deg,
+    rgba(243, 233, 215, 0.3) 0%,
+    rgba(243, 233, 215, 0.5) 50%,
+    rgba(243, 233, 215, 0.3) 100%
+  );
+}
+
+.container {
+  max-width: var(--container-max-width-xl);
+  margin: 0 auto;
+}
+
+.containerLarge {
+  max-width: var(--container-max-width-xl);
+  margin: 0 auto;
+}
+
+/* Section Header - Material 3 Typography */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--space-16);
+  padding-bottom: var(--space-4);
+  position: relative;
+}
+
+.heading {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Grid Layouts - Material 3 Uniform Spacing */
+.restaurantsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--space-8);
+  /* Align items to stretch for uniform height */
+  align-items: stretch;
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-8);
+  align-items: stretch;
+}
+
+.experiencesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-8);
+  align-items: stretch;
+}
+
+/* Dietary Section - Material 3 Filled Container */
+.dietarySection {
+  padding: var(--space-section-lg) var(--space-container-padding);
+  background: linear-gradient(
+    180deg,
+    rgba(243, 233, 215, 0.3) 0%,
+    rgba(243, 233, 215, 0.5) 50%,
+    rgba(243, 233, 215, 0.3) 100%
+  );
+}
+
+.dietaryContainer {
+  max-width: var(--container-max-width-lg);
+  margin: 0 auto;
+}
+
+.dietaryCard {
+  padding: var(--space-12);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-3xl);
+  text-align: center;
+  /* Material 3 Elevation Level 1 */
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(200, 111, 77, 0.08);
+}
+
+.dietaryHeading {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h3-size);
+  font-weight: var(--heading-h3-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.01em;
+}
+
+.dietaryDescription {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.dietaryOptions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+}
+
+.dietaryBadge {
+  padding: var(--space-3) var(--space-6);
+  background: linear-gradient(135deg, rgba(200, 111, 77, 0.1) 0%, rgba(232, 160, 78, 0.1) 100%);
+  border: 2px solid rgba(200, 111, 77, 0.3);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-terracotta);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  cursor: default;
+}
+
+.dietaryBadge:hover {
+  background: linear-gradient(135deg, var(--color-primary-terracotta) 0%, var(--color-primary-ochre) 100%);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-terracotta);
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px 0 rgba(200, 111, 77, 0.25),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: var(--space-section-xl) var(--space-container-padding);
+  text-align: center;
+}
+
+.ctaContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaHeading {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.ctaDescription {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.ctaButtons {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-button);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 200px;
+}
+
+.ctaPrimary {
+  color: var(--color-text-inverse);
+  background-color: var(--color-primary-terracotta);
+  box-shadow: var(--shadow-button);
+}
+
+.ctaPrimary:hover {
+  background-color: var(--color-primary-rust);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaSecondary {
+  color: var(--color-primary-terracotta);
+  background-color: transparent;
+  border: 2px solid var(--color-primary-terracotta);
+}
+
+.ctaSecondary:hover {
+  background-color: var(--color-primary-terracotta);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive Design - Material 3 */
+@media (max-width: 768px) {
+  .sectionHeader {
+    margin-bottom: var(--space-12);
+  }
+
+  .restaurantsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .menuGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .experiencesGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .dietaryCard {
+    padding: var(--space-8);
+  }
+
+  .dietaryOptions {
+    gap: var(--space-3);
+  }
+
+  .dietaryBadge {
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--font-size-xs);
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section,
+  .sectionAlt {
+    padding: var(--space-section-md) var(--space-4);
+  }
+
+  .heading {
+    font-size: var(--heading-h3-size);
+  }
+
+  .subtitle,
+  .dietaryDescription,
+  .ctaDescription {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dietaryBadge,
+  .ctaPrimary,
+  .ctaSecondary {
+    transition: none;
+  }
+
+  .dietaryBadge:hover,
+  .ctaPrimary:hover,
+  .ctaSecondary:hover {
+    transform: none;
+  }
+}

@@ -1,72 +1,43 @@
-/* Navigation Container - Locked Layout */
+/* Navigation Container */
 .navigation {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
   z-index: var(--z-index-sticky);
-  background-color: var(--nav-bg, var(--color-primary-terracotta));
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: translateY(0);
+}
+
+/* Blurry background - only on home page */
+.navigation.blurryBg {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Visibility states */
+.navigation.visible {
   transform: translateY(0);
   opacity: 1;
-  transition: transform var(--duration-medium) var(--ease-out),
-              opacity var(--duration-medium) var(--ease-out);
 }
 
-/* Scrolling State - Detached 4px, fully visible */
-.navigation.scrolling {
-  transform: translateY(4px);
-  opacity: 1;
-  will-change: transform, opacity;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Hidden State - Detached 4px, invisible */
 .navigation.hidden {
-  transform: translateY(4px);
+  transform: translateY(-100%);
   opacity: 0;
-  pointer-events: none;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Update nav link colors for scrolling/hidden states */
-.navigation.scrolling .navLink,
-.navigation.hidden .navLink {
-  color: var(--color-text-primary);
-  text-shadow: none;
-}
-
-.navigation.scrolling .navLink:hover,
-.navigation.hidden .navLink:hover {
-  color: var(--color-primary-terracotta);
-}
-
-.navigation.scrolling .hamburger,
-.navigation.hidden .hamburger {
-  background-color: var(--color-text-primary);
-  box-shadow: none;
-}
-
-.navigation.scrolling .mobileToggle:hover .hamburger,
-.navigation.hidden .mobileToggle:hover .hamburger {
-  background-color: var(--color-primary-terracotta);
-}
-
-/* Main Container - Stable Layout */
+/* Main Container */
 .container {
   max-width: var(--container-max-width-xl);
   margin: 0 auto;
-  padding: var(--space-6) var(--space-container-padding);
+  padding: var(--space-3) var(--space-container-padding);
   display: grid;
   grid-template-columns: 200px 1fr 200px;
   align-items: center;
   gap: var(--space-8);
   height: var(--nav-height-desktop);
-  /* No transitions on layout properties - stable from start */
 }
 
 /* Logo - Left */
@@ -83,7 +54,7 @@
 
 .logo {
   width: auto;
-  height: auto;
+  height: 24px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
@@ -304,13 +275,11 @@
   .mobileToggle {
     display: flex;
   }
-
-  /* Mobile - container stays stable, no layout changes */
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: var(--space-6) var(--space-container-padding-md);
+    padding: var(--space-3) var(--space-container-padding-md);
   }
 
   .desktop {
@@ -324,13 +293,11 @@
   .mobileToggle {
     display: none;
   }
-
-  /* Desktop - container stays stable, no layout changes */
 }
 
 @media (min-width: 1280px) {
   .container {
-    padding: var(--space-6) var(--space-container-padding-lg);
+    padding: var(--space-3) var(--space-container-padding-lg);
     grid-template-columns: 220px 1fr 220px;
     gap: var(--space-12);
   }
@@ -351,10 +318,7 @@
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .navigation {
-    transition: none;
-  }
-
+  .navigation,
   .logoLink,
   .navLink,
   .ctaButton,
@@ -371,16 +335,5 @@
   .mobileMenu,
   .mobileMenuContent {
     animation: none;
-  }
-
-  /* Instant state changes for reduced motion */
-  .navigation.scrolling {
-    transform: translateY(4px);
-    opacity: 1;
-  }
-
-  .navigation.hidden {
-    transform: translateY(4px);
-    opacity: 0;
   }
 }

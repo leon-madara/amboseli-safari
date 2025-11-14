@@ -7,111 +7,60 @@ import Link from '@/components/atoms/Link';
 import MobileMenu from './MobileMenu';
 import styles from './Navigation.module.css';
 
-// Page-specific color mapping
-const pageColors: Record<string, string> = {
-  '/': 'var(--color-primary-terracotta)',
-  '/accommodations': 'var(--color-secondary-deep-green)',
-  '/experiences': 'var(--color-primary-ochre)',
-  '/dining': 'var(--color-accent-amber)',
-  '/wellness': 'var(--color-secondary-sage)',
-  '/location': 'var(--color-primary-sand-dark)',
-  '/about': 'var(--color-neutral-charcoal)',
-  '/faq': 'var(--color-primary-terracotta-light)',
-  '/contact': 'var(--color-secondary-grass-dark)',
-};
-
-type NavState = 'idle' | 'scrolling' | 'hidden';
-
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [navState, setNavState] = useState<NavState>('idle');
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const rafRef = useRef<number | null>(null);
+  const [isVisible, setIsVisible] = useState(true);
   const pathname = usePathname();
-  const navBgColor = pageColors[pathname] || pageColors['/'];
+  const lastScrollY = useRef(0);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Only show blurry background on home page
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      // Cancel any pending animation frame
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
+      const currentScrollY = window.scrollY;
+
+      // Clear existing timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
       }
 
-      // Throttle scroll handling with requestAnimationFrame
-      rafRef.current = requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
+      // Hide on scroll down, show on scroll up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
 
-        // Clear existing hide timeout
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-          scrollTimeoutRef.current = null;
-        }
+      // Show after 1 second of no scrolling
+      scrollTimeout.current = setTimeout(() => {
+        setIsVisible(true);
+      }, 1000);
 
-        if (scrollY === 0) {
-          // At top of page - return to idle
-          setNavState('idle');
-        } else {
-          // Scrolling - set to scrolling state
-          setNavState('scrolling');
-
-          // Start 1-second timeout to hide after scroll stops
-          scrollTimeoutRef.current = setTimeout(() => {
-            setNavState('hidden');
-            scrollTimeoutRef.current = null;
-          }, 1000);
-        }
-      });
+      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Initialize state based on current scroll position
-    if (window.scrollY === 0) {
-      setNavState('idle');
-    } else {
-      setNavState('scrolling');
-      scrollTimeoutRef.current = setTimeout(() => {
-        setNavState('hidden');
-      }, 1000);
-    }
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-      }
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
       }
     };
   }, []);
 
-  // Map state to CSS class
-  const navStateClass =
-    navState === 'idle'
-      ? ''
-      : navState === 'scrolling'
-        ? styles.scrolling
-        : styles.hidden;
-
   return (
-    <nav
-      className={`${styles.navigation} ${navStateClass}`}
-      data-state={navState}
-      style={
-        {
-          '--nav-bg': navBgColor,
-        } as React.CSSProperties
-      }
-    >
+    <nav className={`${styles.navigation} ${isHomePage ? styles.blurryBg : ''} ${isVisible ? styles.visible : styles.hidden}`}>
       <div className={styles.container}>
         {/* Logo - Left */}
         <Link href="/" className={styles.logoLink}>
           <Image
             src="/images/logos/mainLOGOAmboseli.svg"
             alt="Amboseli Safari Club"
-            width={90}
-            height={30}
+            width={120}
+            height={40}
             className={styles.logo}
             priority
           />
