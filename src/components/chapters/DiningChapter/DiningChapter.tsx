@@ -33,19 +33,19 @@ export default function DiningChapter({
   backgroundImage = CHAPTER_IMAGES.dining.sundowner,
   dishes = [
     {
-      name: 'Grilled Serengeti Beef',
+      name: 'Kenyan Grilled Meats',
       image: DINING_DISH_IMAGES.grilledBeef,
-      description: 'Prime cuts with wild herb butter',
+      description: 'Nyama choma and local specialties for groups',
     },
     {
-      name: 'Lake Victoria Tilapia',
+      name: 'Fresh Lake Fish',
       image: DINING_DISH_IMAGES.tilapia,
-      description: 'Pan-seared with lemon & thyme',
+      description: 'Lake Victoria tilapia, family-style portions',
     },
     {
-      name: 'Savanna Sunset Platter',
+      name: 'International Buffet',
       image: DINING_DISH_IMAGES.sunsetPlatter,
-      description: 'Chef\'s selection of local delicacies',
+      description: 'Mix of Kenyan and international cuisines',
     },
   ],
   winePairings = [
@@ -116,10 +116,10 @@ export default function DiningChapter({
           transition={{ duration: 0.8 }}
         >
           <h2 id="dining-heading" className={styles.heading}>
-            Culinary Excellence
+            Group-Friendly Dining
           </h2>
           <p className={styles.subtitle}>
-            Where flavors meet the African sunset
+            Delicious meals for families and groups of all sizes
           </p>
         </motion.div>
 
@@ -226,11 +226,11 @@ export default function DiningChapter({
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <div className={styles.timeSlotsPreview}>
-            <p className={styles.timeSlotsLabel}>Available dining times:</p>
+            <p className={styles.timeSlotsLabel}>Perfect for tour groups, families & events</p>
             <div className={styles.timeSlots}>
-              <span className={styles.timeSlot}>7:00 AM</span>
-              <span className={styles.timeSlot}>12:30 PM</span>
-              <span className={styles.timeSlot}>7:30 PM</span>
+              <span className={styles.timeSlot}>Breakfast Buffet</span>
+              <span className={styles.timeSlot}>Lunch Service</span>
+              <span className={styles.timeSlot}>Dinner Options</span>
             </div>
           </div>
 

@@ -66,7 +66,7 @@ export default function LocationChapter({ id }: LocationChapterProps) {
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Your Gateway to Amboseli
+            Prime Location Near Kimana Gate
           </motion.h2>
           <motion.p
             className={styles.sectionSubtitle}
@@ -74,7 +74,7 @@ export default function LocationChapter({ id }: LocationChapterProps) {
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Discover how to reach your safari adventure
+            Perfect access to Amboseli National Park - Just 3-4 hours from Nairobi
           </motion.p>
         </div>
 
@@ -89,7 +89,7 @@ export default function LocationChapter({ id }: LocationChapterProps) {
 
         {/* Distance Cards */}
         <div className={styles.distanceSection}>
-          <h3 className={styles.sectionHeading}>Travel Times from Major Cities</h3>
+          <h3 className={styles.sectionHeading}>Easy Access from Major Cities</h3>
           <DistanceCards
             distances={CITY_DISTANCES}
             inView={inView}
@@ -168,7 +168,8 @@ function AnimatedMap({ coordinates, inView }: AnimatedMapProps) {
       {/* Map info */}
       <div className={styles.mapInfo}>
         <p className={styles.mapDescription}>
-          Located in the heart of Amboseli National Park, with stunning views of Mount Kilimanjaro
+          Located near Kimana Gate of Amboseli National Park, with stunning views of Mount Kilimanjaro.
+          Perfect base for exploring Kenya's elephant capital.
         </p>
       </div>
     </motion.div>

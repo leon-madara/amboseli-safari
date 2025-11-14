@@ -9,16 +9,16 @@ import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
 import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './WellnessChapter.module.css';
 
-export interface SpaService {
+export interface PoolAmenity {
   name: string;
-  duration: string;
+  icon: string;
   description: string;
 }
 
 export interface WellnessChapterProps extends BaseChapterProps {
   backgroundImage?: string;
-  yogaImage?: string;
-  spaServices?: SpaService[];
+  poolImage?: string;
+  poolAmenities?: PoolAmenity[];
   ctaButton?: CTAButton;
 }
 
@@ -26,27 +26,27 @@ export default function WellnessChapter({
   id,
   className = '',
   backgroundImage = CHAPTER_IMAGES.wellness.spa,
-  yogaImage = CHAPTER_IMAGES.wellness.yogaSunset,
-  spaServices = [
+  poolImage = CHAPTER_IMAGES.wellness.yogaSunset,
+  poolAmenities = [
     {
-      name: 'Savanna Stone Massage',
-      duration: '60 minutes',
-      description: 'Hot stone therapy with indigenous oils',
+      name: 'Large Swimming Pool',
+      icon: '🏊',
+      description: 'Refreshing escape from the Amboseli heat',
     },
     {
-      name: 'Sunset Meditation',
-      duration: '45 minutes',
-      description: 'Guided mindfulness with nature sounds',
+      name: 'Poolside Dining',
+      icon: '🍽️',
+      description: 'Enjoy meals and drinks by the water',
     },
     {
-      name: 'African Aromatherapy',
-      duration: '90 minutes',
-      description: 'Full body treatment with local botanicals',
+      name: 'Family Friendly',
+      icon: '👨‍👩‍👧‍👦',
+      description: 'Safe shallow areas perfect for children',
     },
   ],
   ctaButton = {
-    text: 'Explore Wellness',
-    href: '/wellness',
+    text: 'View Our Facilities',
+    href: '/accommodations',
     variant: 'primary',
   },
 }: WellnessChapterProps) {
@@ -81,7 +81,7 @@ export default function WellnessChapter({
         <div className={styles.gradientOverlay} />
       </div>
 
-      {/* Yoga Silhouette with Parallax */}
+      {/* Pool Image with Parallax */}
       <div
         ref={yogaRef}
         className={styles.yogaSilhouetteContainer}
@@ -95,8 +95,8 @@ export default function WellnessChapter({
           transition={{ duration: 1.2, ease: 'easeOut' }}
         >
           <Image
-            src={yogaImage}
-            alt="Yoga silhouette at sunset"
+            src={poolImage}
+            alt="Swimming pool with Mt. Kilimanjaro views"
             fill
             sizes="(max-width: 768px) 80vw, 600px"
             className={styles.yogaImage}
@@ -115,14 +115,14 @@ export default function WellnessChapter({
           transition={{ duration: 0.8 }}
         >
           <h2 id="wellness-heading" className={styles.heading}>
-            Wellness & Rejuvenation
+            Pool & Relaxation
           </h2>
           <p className={styles.subtitle}>
-            Find your inner peace in the wild
+            Your refreshing oasis between safari adventures
           </p>
         </motion.div>
 
-        {/* Breathing Circle Animation */}
+        {/* Pool Features Description */}
         <motion.div
           className={styles.breathingSection}
           initial={{ opacity: 0 }}
@@ -132,11 +132,11 @@ export default function WellnessChapter({
         >
           <div className={styles.breathingCircle}>
             <div className={styles.breathingCircleInner} />
-            <p className={styles.breathingText}>Breathe</p>
+            <p className={styles.breathingText}>Relax</p>
           </div>
         </motion.div>
 
-        {/* Spa Services with Staggered Appearance */}
+        {/* Pool Amenities with Staggered Appearance */}
         <div className={styles.spaServicesSection}>
           <motion.h3
             className={styles.spaServicesHeading}
@@ -145,11 +145,11 @@ export default function WellnessChapter({
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Spa Treatments
+            Pool Amenities
           </motion.h3>
 
           <div className={styles.spaServicesGrid}>
-            {spaServices.map((service, index) => (
+            {poolAmenities.map((amenity, index) => (
               <motion.div
                 key={index}
                 className={styles.serviceCard}
@@ -158,10 +158,9 @@ export default function WellnessChapter({
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.8, delay: 0.4 + index * 0.2 }}
               >
-                <div className={styles.serviceIcon}>✨</div>
-                <h4 className={styles.serviceName}>{service.name}</h4>
-                <p className={styles.serviceDuration}>{service.duration}</p>
-                <p className={styles.serviceDescription}>{service.description}</p>
+                <div className={styles.serviceIcon}>{amenity.icon}</div>
+                <h4 className={styles.serviceName}>{amenity.name}</h4>
+                <p className={styles.serviceDescription}>{amenity.description}</p>
               </motion.div>
             ))}
           </div>

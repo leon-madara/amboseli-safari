@@ -28,28 +28,28 @@ export default function AccommodationsChapter({
   className = '',
   rooms = [
     {
-      id: 'luxury-tent',
-      name: 'Luxury Safari Tent',
+      id: 'safari-view-room',
+      name: 'Safari View Room',
       image: CHAPTER_IMAGES.accommodations.lodgeExterior,
       viewImage: CHAPTER_IMAGES.accommodations.roomInterior,
-      tagline: 'Canvas walls, endless views',
-      price: 'From $450/night',
+      tagline: 'Modern comfort, wilderness views',
+      price: 'From $220/night',
     },
     {
-      id: 'family-suite',
-      name: 'Family Suite',
+      id: 'family-apartment',
+      name: 'Family Apartment',
       image: ROOM_IMAGES.familySuite,
       viewImage: CHAPTER_IMAGES.accommodations.lodgeExterior,
-      tagline: 'Space for memories',
-      price: 'From $650/night',
+      tagline: 'Perfect for groups and families',
+      price: 'From $380/night',
     },
     {
-      id: 'presidential-villa',
-      name: 'Presidential Villa',
+      id: 'deluxe-room',
+      name: 'Deluxe Safari Room',
       image: ROOM_IMAGES.deluxeSuite,
       viewImage: ROOM_IMAGES.premiumRoom,
-      tagline: 'Ultimate luxury in the wild',
-      price: 'From $950/night',
+      tagline: 'Enhanced space and amenities',
+      price: 'From $280/night',
     },
   ],
   ctaButton = {
@@ -87,10 +87,10 @@ export default function AccommodationsChapter({
           transition={{ duration: 0.8 }}
         >
           <h2 id="accommodations-heading" className={styles.heading}>
-            Your Home in the Wild
+            Comfortable Safari Accommodations
           </h2>
           <p className={styles.subtitle}>
-            Where comfort meets adventure
+            Modern rooms designed for families and groups
           </p>
         </motion.div>
 

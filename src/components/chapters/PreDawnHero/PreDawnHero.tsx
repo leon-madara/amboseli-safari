@@ -22,14 +22,14 @@ export default function PreDawnHero({
   className = '',
   backgroundImage = '/images/hero/Single Leading Bull Silhouette.jpg',
   logo = '/images/logos/mainLOGOAmboseli.svg',
-  tagline = 'Welcome to the Wild',
+  tagline = 'Modern Comfort Meets Authentic Safari',
   primaryCTA = {
-    text: 'Begin Your Safari',
-    href: '/experiences',
+    text: 'Explore Our Rooms',
+    href: '/accommodations',
     variant: 'primary',
   },
   secondaryCTA = {
-    text: 'Book Your Stay',
+    text: 'Request Group Quote',
     href: '/contact',
     variant: 'secondary',
   },

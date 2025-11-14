@@ -5,18 +5,18 @@ import Link from '@/components/atoms/Link';
 import { PROPERTY_IMAGES, ROOM_IMAGES } from '@/data/images';
 
 export const metadata: Metadata = {
-  title: 'Luxury Accommodations',
+  title: 'Safari Accommodations | Amboseli Safari Club',
   description:
-    'Experience ultimate comfort in our luxury safari accommodations. From intimate premium rooms to spacious family suites, each offering breathtaking Mount Kilimanjaro views.',
+    'Modern, comfortable accommodations perfect for families and groups. Spacious rooms with Mount Kilimanjaro views, pool access, and easy access to Amboseli National Park.',
 };
 
 const rooms = [
   {
-    title: 'Premium Room',
+    title: 'Safari View Room',
     description:
-      'Intimate luxury with panoramic savannah views. Perfect for couples seeking an authentic safari experience with modern comforts.',
+      'Comfortable modern room with wilderness views. Perfect for couples or solo travelers seeking authentic safari experiences with contemporary amenities.',
     image: ROOM_IMAGES.premiumRoom,
-    imageAlt: 'Premium Room with Mount Kilimanjaro view',
+    imageAlt: 'Safari View Room with savannah views',
     images: [
       '/images/rooms/premium-room/room-1.jpg',
       '/images/rooms/premium-room/room-2.jpg',
@@ -24,30 +24,30 @@ const rooms = [
       '/images/rooms/premium-room/room-4.jpg',
     ],
     capacity: 2,
-    size: '45 m²',
-    price: '$450',
+    size: '35 m²',
+    price: '$220',
     features: [
-      'King-size bed',
-      'Private veranda',
-      'Rainfall shower',
-      'Kilimanjaro views',
+      'Queen or twin beds',
+      'Modern bathroom',
+      'Air conditioning',
+      'Savannah views',
       'Wi-Fi access',
-      'Minibar',
+      'Pool access',
     ],
-    slug: 'premium-room',
+    slug: 'safari-view-room',
     // Enhanced conversion features
-    rating: 4.8,
-    reviewCount: 127,
+    rating: 4.7,
+    reviewCount: 89,
     availability: 'available' as const,
     recentlyBooked: true,
-    includedItems: ['Full breakfast', '2 game drives daily', 'Park fees', 'Airport transfer'],
+    includedItems: ['Breakfast buffet', 'Pool access', 'Wi-Fi', 'Parking'],
   },
   {
-    title: 'Deluxe Suite',
+    title: 'Deluxe Safari Room',
     description:
-      'Spacious elegance with separate living area. Indulge in refined comfort with premium amenities and spectacular wildlife viewing opportunities.',
+      'Enhanced space with modern amenities. More room to relax between game drives, with comfortable furnishings and great views of the surrounding landscape.',
     image: ROOM_IMAGES.deluxeSuite,
-    imageAlt: 'Deluxe Suite with separate living area',
+    imageAlt: 'Deluxe Safari Room with enhanced space',
     images: [
       '/images/rooms/deluxe-suite/suite-1.jpg',
       '/images/rooms/deluxe-suite/suite-2.jpg',
@@ -56,31 +56,31 @@ const rooms = [
       '/images/rooms/deluxe-suite/suite-5.jpg',
     ],
     capacity: 2,
-    size: '65 m²',
-    price: '$650',
+    size: '45 m²',
+    price: '$280',
     features: [
       'King-size bed',
-      'Living room',
-      'Bathtub & shower',
-      'Private deck',
-      'Butler service',
-      'Premium minibar',
+      'Sitting area',
+      'Premium bathroom',
+      'Private balcony',
+      'Coffee maker',
+      'Pool access',
     ],
-    slug: 'deluxe-suite',
+    slug: 'deluxe-safari-room',
     // Enhanced conversion features
-    rating: 4.9,
-    reviewCount: 94,
+    rating: 4.8,
+    reviewCount: 64,
     availability: 'limited' as const,
     recentlyBooked: false,
-    specialOffer: 'Save 15% for 3+ nights',
-    includedItems: ['Full breakfast', '2 game drives daily', 'Park fees', 'Butler service'],
+    specialOffer: 'Group discounts available',
+    includedItems: ['Breakfast buffet', 'Pool access', 'Wi-Fi', 'Welcome drink'],
   },
   {
-    title: 'Family Suite',
+    title: 'Family Apartment',
     description:
-      'Generous space for the entire family. Two bedrooms with connecting door, perfect for creating unforgettable safari memories together.',
+      'Spacious two-bedroom accommodation perfect for families and groups. Self-contained with full amenities, ideal for extended stays and creating safari memories together.',
     image: ROOM_IMAGES.familySuite,
-    imageAlt: 'Family Suite with two bedrooms',
+    imageAlt: 'Family Apartment with two bedrooms',
     images: [
       '/images/rooms/family-suite/family-1.jpg',
       '/images/rooms/family-suite/family-2.jpg',
@@ -88,23 +88,23 @@ const rooms = [
       '/images/rooms/family-suite/family-4.jpg',
     ],
     capacity: 4,
-    size: '85 m²',
-    price: '$850',
+    size: '70 m²',
+    price: '$380',
     features: [
       'Two bedrooms',
-      'Connecting door',
-      'Family bathroom',
-      'Large veranda',
-      'Game viewing',
-      'Kids amenities',
+      'Kitchenette',
+      'Living area',
+      'Two bathrooms',
+      'Large balcony',
+      'Kids welcome',
     ],
-    slug: 'family-suite',
+    slug: 'family-apartment',
     // Enhanced conversion features
     rating: 4.9,
-    reviewCount: 83,
+    reviewCount: 72,
     availability: 'available' as const,
     recentlyBooked: true,
-    includedItems: ['Full breakfast', '2 game drives daily', 'Park fees', 'Kids activities'],
+    includedItems: ['Breakfast buffet', 'Pool access', 'Wi-Fi', 'Kids play area'],
   },
 ];
 
@@ -120,9 +120,9 @@ const amenities = [
         />
       </svg>
     ),
-    title: 'Luxury Amenities',
+    title: 'Modern Comfort',
     description:
-      'Premium linens, organic toiletries, and thoughtful touches throughout your accommodation.',
+      'Clean linens, quality toiletries, air conditioning, and all essential amenities for a comfortable stay.',
   },
   {
     icon: (
@@ -135,9 +135,9 @@ const amenities = [
         />
       </svg>
     ),
-    title: '24/7 Concierge',
+    title: 'Helpful Staff',
     description:
-      'Dedicated staff ready to assist with safari arrangements, dining reservations, and special requests.',
+      'Friendly team ready to assist with safari bookings, restaurant recommendations, and local information.',
   },
   {
     icon: (
@@ -180,9 +180,9 @@ const amenities = [
         />
       </svg>
     ),
-    title: 'Gourmet Dining',
+    title: 'Group-Friendly Dining',
     description:
-      'Farm-to-table cuisine featuring local ingredients and international flavors at our restaurants.',
+      'Restaurant accommodates large parties with mix of Kenyan and international cuisine. Buffet and a la carte options.',
   },
   {
     icon: (
@@ -206,11 +206,11 @@ export default function AccommodationsPage() {
     <main>
       {/* Page Hero */}
       <Hero
-        title="Luxury Safari Accommodations"
-        subtitle="Where Comfort Meets Wilderness"
-        description="Experience the perfect blend of luxury and nature in our thoughtfully designed accommodations, each offering stunning views of Mount Kilimanjaro and the African savannah"
+        title="Modern Safari Accommodations"
+        subtitle="Comfortable Rooms for Families & Groups"
+        description="Contemporary hotel-style rooms near Kimana Gate, Amboseli National Park. Perfect for families, groups, and safari enthusiasts seeking comfort and convenience"
         backgroundImage={PROPERTY_IMAGES.exteriorSunset}
-        backgroundImageAlt="Amboseli Safari Club luxury accommodations"
+        backgroundImageAlt="Amboseli Safari Club modern accommodations"
         height="medium"
         overlay="medium"
         priority={true}
