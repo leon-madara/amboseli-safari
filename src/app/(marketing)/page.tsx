@@ -28,7 +28,7 @@ export default function HomePage() {
       <StickyNavigation showAfterVh={100} />
       <WhatsAppChatBubble
         phoneNumber="254712345678"
-        message="Hi! I'd like to inquire about safari experiences at Amboseli Safari Club."
+        message="Hi! I'd like to inquire about the December 2025 opening and early bird reservations at Amboseli Safari Club."
       />
     </main>
   );

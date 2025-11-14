@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import AtmosphericParticles from '@/components/atoms/AtmosphericParticles/AtmosphericParticles';
+import CountdownTimer from '@/components/molecules/CountdownTimer';
 import styles from './PreDawnHero.module.css';
 
 export interface PreDawnHeroProps extends BaseChapterProps {
@@ -13,6 +14,9 @@ export interface PreDawnHeroProps extends BaseChapterProps {
   backgroundVideo?: string;
   logo?: string;
   tagline?: string;
+  subtitle?: string;
+  launchDate?: string;
+  showCountdown?: boolean;
   primaryCTA?: CTAButton;
   secondaryCTA?: CTAButton;
 }
@@ -22,15 +26,18 @@ export default function PreDawnHero({
   className = '',
   backgroundImage = '/images/hero/Single Leading Bull Silhouette.jpg',
   logo = '/images/logos/mainLOGOAmboseli.svg',
-  tagline = 'Modern Comfort Meets Authentic Safari',
+  tagline = 'A New Safari Experience Awaits',
+  subtitle = 'Opening December 2025 | Amboseli, Kenya',
+  launchDate = '2025-12-01',
+  showCountdown = true,
   primaryCTA = {
-    text: 'Explore Our Rooms',
-    href: '/accommodations',
+    text: 'Reserve Your Stay',
+    href: '/contact',
     variant: 'primary',
   },
   secondaryCTA = {
-    text: 'Request Group Quote',
-    href: '/contact',
+    text: 'Explore Rooms',
+    href: '/accommodations',
     variant: 'secondary',
   },
 }: PreDawnHeroProps) {
@@ -128,12 +135,33 @@ export default function PreDawnHero({
             {!isTypingComplete && <span className={styles.cursor}>|</span>}
           </motion.h1>
 
+          {/* Subtitle */}
+          {subtitle && (
+            <motion.p
+              className={styles.subtitle}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.4 }}
+            >
+              {subtitle}
+            </motion.p>
+          )}
+
+          {/* Countdown Timer */}
+          {showCountdown && launchDate && (
+            <CountdownTimer
+              targetDate={launchDate}
+              label="Opening in"
+              className={styles.countdown}
+            />
+          )}
+
           {/* CTA Buttons */}
           <motion.div
             className={styles.ctaGroup}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.6 }}
+            transition={{ duration: 0.6, delay: 2.0 }}
           >
             {primaryCTA && (
               <a
@@ -155,6 +183,19 @@ export default function PreDawnHero({
                 {secondaryCTA.text}
               </a>
             )}
+          </motion.div>
+
+          {/* Trust Badge */}
+          <motion.div
+            className={styles.trustBadge}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 2.2 }}
+          >
+            <span className={styles.badgeIcon}>🏔️</span>
+            <span className={styles.badgeText}>
+              Kenya's Newest Safari Lodge • Mount Kilimanjaro Views
+            </span>
           </motion.div>
         </div>
       </div>

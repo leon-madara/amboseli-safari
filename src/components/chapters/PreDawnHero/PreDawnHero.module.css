@@ -106,10 +106,55 @@
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   letter-spacing: 0.02em;
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-6);
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
   color: var(--color-text-inverse);
   position: relative;
+}
+
+/* Subtitle */
+.subtitle {
+  font-family: var(--font-family-body);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-8);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+}
+
+/* Countdown Timer */
+.countdown {
+  margin-bottom: var(--space-10);
+}
+
+/* Trust Badge */
+.trustBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-6);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badgeIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.badgeText {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* Typing Cursor */
@@ -270,7 +315,32 @@
 
   .tagline {
     font-size: clamp(1.75rem, 4vw, 3rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .subtitle {
+    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+    margin-bottom: var(--space-6);
+  }
+
+  .countdown {
     margin-bottom: var(--space-8);
+  }
+
+  .trustBadge {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .badgeIcon {
+    font-size: 1.25rem;
+  }
+
+  .badgeText {
+    font-size: var(--font-size-xs);
+    text-align: center;
   }
 
   .ctaGroup {
