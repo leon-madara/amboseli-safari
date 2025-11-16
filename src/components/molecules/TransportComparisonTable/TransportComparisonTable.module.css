@@ -1,0 +1,110 @@
+.comparisonContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparisonTable thead {
+  background: linear-gradient(135deg, #d4af37 0%, #c09f2f 100%);
+}
+
+.featureHeader,
+.optionHeader {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+}
+
+.featureHeader {
+  text-align: left;
+  min-width: 150px;
+}
+
+.optionHeader {
+  position: relative;
+  min-width: 180px;
+}
+
+.optionIcon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.optionName {
+  font-size: 1rem;
+}
+
+.recommendedBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: #4caf50;
+  color: white;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--radius-full, 999px);
+}
+
+.comparisonTable tbody tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.comparisonTable tbody tr:last-child {
+  border-bottom: none;
+}
+
+.featureCell {
+  padding: 1.25rem 1rem;
+  font-weight: 600;
+  color: var(--color-gray-900, #1a1a1a);
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.valueCell {
+  padding: 1.25rem 1rem;
+  text-align: center;
+  color: var(--color-gray-700, #4a4a4a);
+}
+
+.comparisonTable tbody tr:hover {
+  background: rgba(212, 175, 55, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tableWrapper {
+    border-radius: var(--radius-md, 8px);
+  }
+
+  .featureHeader,
+  .optionHeader,
+  .featureCell,
+  .valueCell {
+    padding: 1rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .optionIcon {
+    font-size: 1.5rem;
+  }
+
+  .optionName {
+    font-size: 0.875rem;
+  }
+}

@@ -1,11 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
-import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { useAccommodationsPinning } from '@/hooks/useAccommodationsPinning';
 import { CHAPTER_IMAGES, ROOM_IMAGES } from '@/data/images';
 import styles from './AccommodationsChapter.module.css';
 
@@ -16,6 +14,7 @@ export interface RoomPreview {
   viewImage: string;
   tagline: string;
   price: string;
+  features?: string[];
 }
 
 export interface AccommodationsChapterProps extends BaseChapterProps {
@@ -28,28 +27,31 @@ export default function AccommodationsChapter({
   className = '',
   rooms = [
     {
-      id: 'luxury-tent',
-      name: 'Luxury Safari Tent',
+      id: 'safari-view-room',
+      name: 'Safari View Room',
       image: CHAPTER_IMAGES.accommodations.lodgeExterior,
       viewImage: CHAPTER_IMAGES.accommodations.roomInterior,
-      tagline: 'Canvas walls, endless views',
-      price: 'From $450/night',
+      tagline: 'Modern comfort with pool access',
+      price: 'From $220/night',
+      features: ['Queen bed', 'Air conditioning', 'Wi-Fi', 'Pool access'],
     },
     {
-      id: 'family-suite',
-      name: 'Family Suite',
+      id: 'deluxe-safari-room',
+      name: 'Deluxe Safari Room',
       image: ROOM_IMAGES.familySuite,
       viewImage: CHAPTER_IMAGES.accommodations.lodgeExterior,
-      tagline: 'Space for memories',
-      price: 'From $650/night',
+      tagline: 'Extra space for families',
+      price: 'From $280/night',
+      features: ['King bed + sofa bed', 'Mini-fridge', 'Balcony', 'Family-friendly'],
     },
     {
-      id: 'presidential-villa',
-      name: 'Presidential Villa',
+      id: 'family-apartment',
+      name: 'Family Apartment',
       image: ROOM_IMAGES.deluxeSuite,
       viewImage: ROOM_IMAGES.premiumRoom,
-      tagline: 'Ultimate luxury in the wild',
-      price: 'From $950/night',
+      tagline: 'Perfect for groups and extended stays',
+      price: 'From $380/night',
+      features: ['2 bedrooms', 'Kitchenette', 'Living area', 'Sleeps 4-6'],
     },
   ],
   ctaButton = {
@@ -58,145 +60,197 @@ export default function AccommodationsChapter({
     variant: 'primary',
   },
 }: AccommodationsChapterProps) {
-  const [hoveredRoom, setHoveredRoom] = useState<string | null>(null);
-  
   // Track chapter progress
-  const chapterRef = useRef<HTMLElement>(null);
-  const { progress } = useSpecificChapterProgress('accommodations');
+  useSpecificChapterProgress('accommodations');
+
+  // Integrate GSAP pinning hook
+  const sectionRef = useAccommodationsPinning();
 
   return (
     <section
       id={id}
-      ref={chapterRef}
-      className={`${styles.accommodationsChapter} ${className}`}
+      ref={sectionRef}
+      className={`${styles.accommodationsChapter} accommodationsChapter ${className}`}
       data-chapter="accommodations"
       aria-labelledby="accommodations-heading"
+      role="region"
+      aria-label="Safari accommodations showcase"
     >
+      {/* Skip to next section link for accessibility */}
+      <a
+        href="#dining"
+        className={styles.skipLink}
+        aria-label="Skip to next section: Dining Experience"
+        tabIndex={0}
+      >
+        Skip to Dining Experience
+      </a>
+
       {/* Background with midday lighting */}
-      <div className={styles.backgroundContainer}>
+      <div className={styles.backgroundContainer} aria-hidden="true">
         <div className={styles.gradientOverlay} />
       </div>
 
-      {/* Main Content */}
-      <div className={styles.contentWrapper}>
-        <motion.div
-          className={styles.headerSection}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 id="accommodations-heading" className={styles.heading}>
-            Your Home in the Wild
-          </h2>
-          <p className={styles.subtitle}>
-            Where comfort meets adventure
-          </p>
-        </motion.div>
+      {/* Heading Container - Fixed during pin */}
+      <div className={styles.headingContainer}>
+        <h2 id="accommodations-heading" className={styles.heading}>
+          Comfortable Safari Accommodations
+        </h2>
+        <p className={styles.subtitle}>
+          Modern rooms designed for families and groups
+        </p>
+      </div>
 
-        {/* Room Preview Cards */}
-        <div className={styles.roomsContainer}>
-          {rooms.map((room, index) => (
-            <RoomCard
-              key={room.id}
-              room={room}
-              index={index}
-              isHovered={hoveredRoom === room.id}
-              onHover={() => setHoveredRoom(room.id)}
-              onLeave={() => setHoveredRoom(null)}
+      {/* Rooms Container - Pinned viewport with absolute positioned rooms */}
+      <div className={styles.roomsContainer} role="list" aria-label="Available room types">
+        {/* Room 1: Image Left, Card Right */}
+        <div 
+          className={`${styles.roomImage} room-1-image`} 
+          data-position="left" 
+          data-room="1"
+          role="listitem"
+          aria-label={`${rooms[0].name} image`}
+        >
+          <div className={styles.imageContent}>
+            <Image
+              src={rooms[0].image}
+              alt={`${rooms[0].name} - ${rooms[0].tagline}`}
+              fill
+              sizes="50vw"
+              className={styles.image}
+              loading="lazy"
             />
-          ))}
+          </div>
         </div>
 
-        {/* Sticky CTA at bottom */}
-        <motion.div
-          className={styles.ctaContainer}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+        <div 
+          className={`${styles.roomCard} room-1-card`} 
+          data-position="right" 
+          data-room="1"
+          role="listitem"
+          tabIndex={0}
+          aria-labelledby="room-1-name"
         >
-          <a
-            href={ctaButton.href}
-            className={`${styles.cta} ${styles[`cta${ctaButton.variant.charAt(0).toUpperCase() + ctaButton.variant.slice(1)}`]}`}
-            onClick={ctaButton.onClick}
-            aria-label={ctaButton.text}
-          >
-            {ctaButton.text}
-          </a>
-        </motion.div>
+          <div className={styles.cardContent}>
+            <h3 id="room-1-name" className={styles.roomName}>{rooms[0].name}</h3>
+            <p className={styles.roomTagline}>{rooms[0].tagline}</p>
+            <p className={styles.roomPrice} aria-label={`Price: ${rooms[0].price}`}>{rooms[0].price}</p>
+            {rooms[0].features && (
+              <ul className={`${styles.features} features`} aria-label="Room features">
+                {rooms[0].features.map((feature, idx) => (
+                  <li key={idx} className={styles.feature}>
+                    <span className={styles.featureIcon} aria-hidden="true">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Room 2: Card Left, Image Right */}
+        <div 
+          className={`${styles.roomCard} room-2-card`} 
+          data-position="left" 
+          data-room="2"
+          role="listitem"
+          tabIndex={0}
+          aria-labelledby="room-2-name"
+        >
+          <div className={styles.cardContent}>
+            <h3 id="room-2-name" className={styles.roomName}>{rooms[1].name}</h3>
+            <p className={styles.roomTagline}>{rooms[1].tagline}</p>
+            <p className={styles.roomPrice} aria-label={`Price: ${rooms[1].price}`}>{rooms[1].price}</p>
+            {rooms[1].features && (
+              <ul className={`${styles.features} features`} aria-label="Room features">
+                {rooms[1].features.map((feature, idx) => (
+                  <li key={idx} className={styles.feature}>
+                    <span className={styles.featureIcon} aria-hidden="true">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        <div 
+          className={`${styles.roomImage} room-2-image`} 
+          data-position="right" 
+          data-room="2"
+          role="listitem"
+          aria-label={`${rooms[1].name} image`}
+        >
+          <div className={styles.imageContent}>
+            <Image
+              src={rooms[1].image}
+              alt={`${rooms[1].name} - ${rooms[1].tagline}`}
+              fill
+              sizes="50vw"
+              className={styles.image}
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        {/* Room 3: Image Left, Card Right */}
+        <div 
+          className={`${styles.roomImage} room-3-image`} 
+          data-position="left" 
+          data-room="3"
+          role="listitem"
+          aria-label={`${rooms[2].name} image`}
+        >
+          <div className={styles.imageContent}>
+            <Image
+              src={rooms[2].image}
+              alt={`${rooms[2].name} - ${rooms[2].tagline}`}
+              fill
+              sizes="50vw"
+              className={styles.image}
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <div 
+          className={`${styles.roomCard} room-3-card`} 
+          data-position="right" 
+          data-room="3"
+          role="listitem"
+          tabIndex={0}
+          aria-labelledby="room-3-name"
+        >
+          <div className={styles.cardContent}>
+            <h3 id="room-3-name" className={styles.roomName}>{rooms[2].name}</h3>
+            <p className={styles.roomTagline}>{rooms[2].tagline}</p>
+            <p className={styles.roomPrice} aria-label={`Price: ${rooms[2].price}`}>{rooms[2].price}</p>
+            {rooms[2].features && (
+              <ul className={`${styles.features} features`} aria-label="Room features">
+                {rooms[2].features.map((feature, idx) => (
+                  <li key={idx} className={styles.feature}>
+                    <span className={styles.featureIcon} aria-hidden="true">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Container */}
+      <div className={styles.ctaContainer}>
+        <a
+          href={ctaButton.href}
+          className={`${styles.cta} ${styles[`cta${ctaButton.variant.charAt(0).toUpperCase() + ctaButton.variant.slice(1)}`]}`}
+          onClick={ctaButton.onClick}
+          aria-label={ctaButton.text}
+        >
+          {ctaButton.text}
+        </a>
       </div>
     </section>
   );
 }
 
-interface RoomCardProps {
-  room: RoomPreview;
-  index: number;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-}
-
-function RoomCard({ room, index, isHovered, onHover, onLeave }: RoomCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const parallaxOffset = useParallax(cardRef, { speed: 0.4, direction: 'down' });
-
-  // Alternating slide-in direction
-  const slideDirection = index % 2 === 0 ? -60 : 60;
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className={styles.roomCard}
-      initial={{ opacity: 0, x: slideDirection }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, delay: index * 0.2 }}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-    >
-      <div className={styles.roomImageContainer}>
-        {/* Main room image with parallax */}
-        <div
-          className={styles.roomImageWrapper}
-          style={{ transform: `translateY(${parallaxOffset}px)` }}
-        >
-          <Image
-            src={room.image}
-            alt={room.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-            className={styles.roomImage}
-            loading="lazy"
-          />
-        </div>
-
-        {/* View from window overlay - appears on hover */}
-        <div className={`${styles.viewOverlay} ${isHovered ? styles.viewOverlayVisible : ''}`}>
-          <Image
-            src={room.viewImage}
-            alt={`View from ${room.name}`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-            className={styles.viewImage}
-            loading="lazy"
-          />
-          <div className={styles.viewLabel}>View from your window</div>
-        </div>
-
-        {/* Availability indicator */}
-        <div className={styles.availabilityBadge}>
-          <span className={styles.availabilityDot} />
-          Available
-        </div>
-      </div>
-
-      <div className={styles.roomInfo}>
-        <h3 className={styles.roomName}>{room.name}</h3>
-        <p className={styles.roomTagline}>{room.tagline}</p>
-        <p className={styles.roomPrice}>{room.price}</p>
-      </div>
-    </motion.div>
-  );
-}

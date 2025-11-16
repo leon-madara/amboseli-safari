@@ -9,16 +9,16 @@ import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
 import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './WellnessChapter.module.css';
 
-export interface SpaService {
-  name: string;
-  duration: string;
+export interface PoolFeature {
+  icon: string;
+  title: string;
   description: string;
 }
 
 export interface WellnessChapterProps extends BaseChapterProps {
   backgroundImage?: string;
   yogaImage?: string;
-  spaServices?: SpaService[];
+  poolFeatures?: PoolFeature[];
   ctaButton?: CTAButton;
 }
 
@@ -27,25 +27,40 @@ export default function WellnessChapter({
   className = '',
   backgroundImage = CHAPTER_IMAGES.wellness.spa,
   yogaImage = CHAPTER_IMAGES.wellness.yogaSunset,
-  spaServices = [
+  poolFeatures = [
     {
-      name: 'Savanna Stone Massage',
-      duration: '60 minutes',
-      description: 'Hot stone therapy with indigenous oils',
+      icon: '🏊',
+      title: 'Large Swimming Pool',
+      description: 'Perfect for families to cool off after safari adventures',
     },
     {
-      name: 'Sunset Meditation',
-      duration: '45 minutes',
-      description: 'Guided mindfulness with nature sounds',
+      icon: '🍹',
+      title: 'Poolside Dining Area',
+      description: 'Enjoy refreshments and meals by the water',
     },
     {
-      name: 'African Aromatherapy',
-      duration: '90 minutes',
-      description: 'Full body treatment with local botanicals',
+      icon: '👨‍👩‍👧‍👦',
+      title: 'Family-Friendly Shallow Section',
+      description: 'Safe swimming area for children of all ages',
+    },
+    {
+      icon: '🏔️',
+      title: 'Kilimanjaro Views from Pool Deck',
+      description: 'Stunning mountain vistas while you relax',
+    },
+    {
+      icon: '☀️',
+      title: 'Sun Loungers & Shade Areas',
+      description: 'Comfortable seating with umbrellas for all-day comfort',
+    },
+    {
+      icon: '🍸',
+      title: 'Pool Bar',
+      description: 'Refreshing drinks and light snacks served poolside',
     },
   ],
   ctaButton = {
-    text: 'Explore Wellness',
+    text: 'View Pool Details',
     href: '/wellness',
     variant: 'primary',
   },
@@ -115,10 +130,10 @@ export default function WellnessChapter({
           transition={{ duration: 0.8 }}
         >
           <h2 id="wellness-heading" className={styles.heading}>
-            Wellness & Rejuvenation
+            Pool & Relaxation
           </h2>
           <p className={styles.subtitle}>
-            Find your inner peace in the wild
+            Cool off after your safari adventure
           </p>
         </motion.div>
 
@@ -136,32 +151,31 @@ export default function WellnessChapter({
           </div>
         </motion.div>
 
-        {/* Spa Services with Staggered Appearance */}
-        <div className={styles.spaServicesSection}>
+        {/* Pool Features with Staggered Appearance */}
+        <div className={styles.poolFeaturesSection}>
           <motion.h3
-            className={styles.spaServicesHeading}
+            className={styles.poolFeaturesHeading}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Spa Treatments
+            Pool Amenities
           </motion.h3>
 
-          <div className={styles.spaServicesGrid}>
-            {spaServices.map((service, index) => (
+          <div className={styles.poolFeaturesGrid}>
+            {poolFeatures.map((feature, index) => (
               <motion.div
                 key={index}
-                className={styles.serviceCard}
+                className={styles.featureCard}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.8, delay: 0.4 + index * 0.2 }}
               >
-                <div className={styles.serviceIcon}>✨</div>
-                <h4 className={styles.serviceName}>{service.name}</h4>
-                <p className={styles.serviceDuration}>{service.duration}</p>
-                <p className={styles.serviceDescription}>{service.description}</p>
+                <div className={styles.featureIcon}>{feature.icon}</div>
+                <h4 className={styles.featureTitle}>{feature.title}</h4>
+                <p className={styles.featureDescription}>{feature.description}</p>
               </motion.div>
             ))}
           </div>

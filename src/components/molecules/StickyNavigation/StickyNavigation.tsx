@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from '@/components/atoms/Link';
 import { useChapterProgress } from '@/hooks/useChapterProgress';
@@ -61,7 +61,7 @@ export function StickyNavigation({
   const { scrollVh, scrollY } = useChapterProgress();
   const [isVisible, setIsVisible] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -71,8 +71,8 @@ export function StickyNavigation({
 
     // Auto-hide logic: hide when scrolling up, show when scrolling down
     if (shouldBeVisible) {
-      const scrollDelta = scrollY - lastScrollY;
-      
+      const scrollDelta = scrollY - lastScrollYRef.current;
+
       // Only hide if scrolling up more than 5px (prevents jitter)
       if (scrollDelta < -5) {
         setIsHidden(true);
@@ -83,8 +83,8 @@ export function StickyNavigation({
       setIsHidden(false);
     }
 
-    setLastScrollY(scrollY);
-  }, [scrollVh, scrollY, showAfterVh, lastScrollY]);
+    lastScrollYRef.current = scrollY;
+  }, [scrollVh, scrollY, showAfterVh]);
 
   // Close mobile menu when clicking outside or on a link
   useEffect(() => {

@@ -202,7 +202,7 @@ const wellnessPackages = [
   {
     title: 'Couples Escape',
     duration: '3 hours',
-    price: '$450',
+    price: '$380',
     includes: [
       'Side-by-side couples massage (90 min)',
       'Private jacuzzi session',

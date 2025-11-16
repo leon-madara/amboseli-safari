@@ -140,7 +140,7 @@ export default function TestimonialCarousel({
 
               {/* Testimonial Text */}
               <blockquote className={styles.quote}>
-                <p className={styles.text}>"{currentTestimonial.text}"</p>
+                <p className={styles.text}>&ldquo;{currentTestimonial.text}&rdquo;</p>
               </blockquote>
 
               {/* Guest Info */}

@@ -287,7 +287,7 @@ interface BushBreakfastChapterProps extends BaseChapterProps {
 
 ### Chapter 5: AccommodationsChapter
 
-**Purpose**: Preview room options with immersive visuals
+**Purpose**: Preview room options with immersive visuals using a pinned scroll effect with alternating layouts
 
 **Props Interface**:
 ```typescript
@@ -303,22 +303,72 @@ interface RoomPreview {
   viewImage: string; // "view from window"
   tagline: string;
   price: string;
+  features: string[];
 }
 ```
 
 **Visual Design**:
-- Height: 200vh (500vh-700vh range)
+- Height: 300vh (500vh-800vh range) - Extended for pinning effect
 - Midday lighting (#87ceeb to #f0e68c)
-- 2-3 room cards with large imagery
-- Split-screen layout on desktop
+- 3 room cards with large imagery
+- **Pinned scroll section** with alternating split-screen layouts
 - Availability indicators (subtle)
 
+**Pinning Effect Architecture**:
+
+The section uses GSAP ScrollTrigger to pin the viewport while rooms transition through three distinct phases:
+
+**Phase 1: Room 1 Entrance (0-33% of pin duration)**
+- Layout: `[IMAGE: Left 50%] [CARD: Right 50%]`
+- Both image and card slide up from bottom simultaneously
+- Creates unified entrance effect
+- Duration: 100vh of scroll
+
+**Phase 2: Room 2 Transition (33-66% of pin duration)**
+- Layout flips to: `[CARD: Left 50%] [IMAGE: Right 50%]`
+- Room 1 image slides down and exits
+- Room 1 card slides left (from right position to left position)
+- Card content morphs to Room 2 during horizontal slide
+- Room 2 image slides up from bottom on right side
+- Duration: 100vh of scroll
+
+**Phase 3: Room 3 Transition (66-100% of pin duration)**
+- Layout flips back to: `[IMAGE: Left 50%] [CARD: Right 50%]`
+- Room 2 card slides down and exits
+- Room 2 image slides left (from right position to left position)
+- Image content morphs to Room 3 during horizontal slide
+- Room 3 card slides up from bottom on right side
+- Duration: 100vh of scroll
+
+**GSAP Implementation Details**:
+```javascript
+// Pin configuration
+ScrollTrigger.create({
+  trigger: ".accommodationsChapter",
+  start: "top top",
+  end: "+=300%",
+  pin: true,
+  scrub: 1,
+  anticipatePin: 1
+});
+
+// Three separate timelines for each room transition
+// Each timeline controls: image position, card position, content morphing
+```
+
+**Content Morphing**:
+- Room name cross-fades during transition
+- Tagline updates with fade effect
+- Features list items stagger in after transition
+- Price badge animates with subtle bounce
+- Availability indicator pulses when room settles
+
 **Interactions**:
-- Room images have strong parallax (0.4x speed)
-- Hover reveals "view from window" overlay
-- Cards slide in from alternating sides
-- Price fades in on hover
-- CTA sticky at bottom of section
+- Scroll-driven animations (no manual interaction during pin)
+- Hover still reveals "view from window" overlay when room is settled
+- Price badge visible throughout
+- Features list animates in after each room settles
+- CTA appears at end of pin sequence
 
 
 ### Chapter 6: DiningChapter
@@ -727,6 +777,291 @@ interface AtmosphericParticlesProps {
 - Canvas-based particle system
 - Optimized for performance (max 50 particles)
 - Pauses when not in view
+
+## Advanced Scroll Effects
+
+### Accommodations Pinning Effect - Technical Implementation
+
+**Overview**:
+The Accommodations chapter uses GSAP ScrollTrigger to create a sophisticated pinned scroll experience where three rooms are showcased with alternating layouts and coordinated transitions.
+
+**Architecture**:
+
+```typescript
+// Component structure
+<section className="accommodationsChapter" data-pin-section>
+  <div className="heading-container">
+    <h2>Comfortable Safari Accommodations</h2>
+    <p>Modern rooms designed for families and groups</p>
+  </div>
+
+  <div className="rooms-container">
+    {/* Room 1: Image Left, Card Right */}
+    <div className="room-1-image room-image" data-position="left" />
+    <div className="room-1-card room-card" data-position="right" />
+
+    {/* Room 2: Card Left, Image Right */}
+    <div className="room-2-card room-card" data-position="left" />
+    <div className="room-2-image room-image" data-position="right" />
+
+    {/* Room 3: Image Left, Card Right */}
+    <div className="room-3-image room-image" data-position="left" />
+    <div className="room-3-card room-card" data-position="right" />
+  </div>
+
+  <div className="cta-container">
+    <a href="/accommodations">View All Rooms</a>
+  </div>
+</section>
+```
+
+**CSS Positioning**:
+
+```css
+.rooms-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.room-image, .room-card {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+}
+
+.room-image[data-position="left"] { left: 0; }
+.room-image[data-position="right"] { right: 0; }
+.room-card[data-position="left"] { left: 0; }
+.room-card[data-position="right"] { right: 0; }
+
+/* Initial states - all elements start off-screen */
+.room-1-image, .room-1-card { transform: translateY(100%); }
+.room-2-image { transform: translate(50vw, 100%); }
+.room-2-card { transform: translateX(50vw); }
+.room-3-image { transform: translateX(50vw); }
+.room-3-card { transform: translate(50vw, 100%); }
+```
+
+**GSAP ScrollTrigger Implementation**:
+
+```javascript
+// hooks/useAccommodationsPinning.ts
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+export function useAccommodationsPinning() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Pin the entire section
+      ScrollTrigger.create({
+        trigger: ".accommodationsChapter",
+        start: "top top",
+        end: "+=300%",
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1,
+        markers: false // Set to true for debugging
+      });
+
+      // ===== ROOM 1: ENTRANCE (0-33%) =====
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: ".accommodationsChapter",
+          start: "top top",
+          end: "+=100vh",
+          scrub: 1
+        }
+      })
+      .fromTo(".room-1-image", 
+        { y: "100%" }, 
+        { y: "0%", ease: "power2.out" }
+      )
+      .fromTo(".room-1-card", 
+        { y: "100%" }, 
+        { y: "0%", ease: "power2.out" }, 
+        "<"
+      )
+      .fromTo(".room-1-card .features li", 
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, stagger: 0.1, ease: "power2.out" },
+        "-=0.3"
+      );
+
+      // ===== ROOM 1 → ROOM 2: FLIP (33-66%) =====
+      const room2Timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".accommodationsChapter",
+          start: "top+=100vh top",
+          end: "+=100vh",
+          scrub: 1
+        }
+      });
+
+      room2Timeline
+        // Room 1 exits
+        .to(".room-1-image", { 
+          y: "100%", 
+          ease: "power2.in" 
+        })
+        .to(".room-1-card", { 
+          x: "-50vw", 
+          ease: "power2.inOut" 
+        }, "<")
+        
+        // Content morph on card
+        .to(".room-1-card .card-content", { 
+          opacity: 0, 
+          scale: 0.95,
+          duration: 0.2 
+        }, "<0.3")
+        .set(".room-1-card", { 
+          attr: { "data-room": "2" } 
+        })
+        .to(".room-2-card .card-content", { 
+          opacity: 1, 
+          scale: 1,
+          duration: 0.2 
+        })
+        
+        // Room 2 image enters from bottom-right
+        .fromTo(".room-2-image", 
+          { y: "100%", x: "50vw" }, 
+          { y: "0%", x: "50vw", ease: "power2.out" }, 
+          "<-0.2"
+        )
+        .fromTo(".room-2-card .features li", 
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, stagger: 0.1, ease: "power2.out" },
+          "-=0.3"
+        );
+
+      // ===== ROOM 2 → ROOM 3: FLIP BACK (66-100%) =====
+      const room3Timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".accommodationsChapter",
+          start: "top+=200vh top",
+          end: "+=100vh",
+          scrub: 1
+        }
+      });
+
+      room3Timeline
+        // Room 2 exits
+        .to(".room-2-card", { 
+          y: "100%", 
+          ease: "power2.in" 
+        })
+        .to(".room-2-image", { 
+          x: "0", // Slide from right to left
+          ease: "power2.inOut" 
+        }, "<")
+        
+        // Image morph
+        .to(".room-2-image .image-content", { 
+          opacity: 0, 
+          scale: 0.95,
+          duration: 0.2 
+        }, "<0.3")
+        .set(".room-2-image", { 
+          attr: { "data-room": "3" } 
+        })
+        .to(".room-3-image .image-content", { 
+          opacity: 1, 
+          scale: 1,
+          duration: 0.2 
+        })
+        
+        // Room 3 card enters from bottom-right
+        .fromTo(".room-3-card", 
+          { y: "100%", x: "50vw" }, 
+          { y: "0%", x: "50vw", ease: "power2.out" }, 
+          "<-0.2"
+        )
+        .fromTo(".room-3-card .features li", 
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, stagger: 0.1, ease: "power2.out" },
+          "-=0.3"
+        );
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return sectionRef;
+}
+```
+
+**Content Morphing Strategy**:
+
+When cards or images slide horizontally and need to change content:
+
+1. **Fade out** current content (opacity: 0, scale: 0.95)
+2. **Update** data attributes or swap content
+3. **Fade in** new content (opacity: 1, scale: 1)
+4. **Stagger animate** features list items
+
+**Mobile Adaptation** (< 768px):
+
+```javascript
+// Disable pinning on mobile, use simple vertical scroll
+const isMobile = window.innerWidth < 768;
+
+if (isMobile) {
+  // Simple vertical scroll with stagger
+  gsap.utils.toArray('.room-card').forEach((card, index) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 100 },
+      {
+        opacity: 1,
+        y: 0,
+        scrollTrigger: {
+          trigger: card,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: 1
+        }
+      }
+    );
+  });
+} else {
+  // Desktop pinning effect (code above)
+}
+```
+
+**Performance Considerations**:
+
+- Use `will-change: transform` on animated elements
+- Limit to transform and opacity properties (GPU-accelerated)
+- Use `anticipatePin: 1` to prevent layout shift
+- Debounce resize events for responsive adjustments
+- Clean up ScrollTrigger instances on unmount
+
+**Accessibility**:
+
+- Maintain keyboard navigation during pin
+- Ensure screen readers can access all room information
+- Provide "Skip to next section" link
+- Respect `prefers-reduced-motion` preference
+
+```javascript
+const prefersReducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+).matches;
+
+if (prefersReducedMotion) {
+  // Disable pinning, use simple fade-in effects
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+}
+```
 
 ## Data Models
 

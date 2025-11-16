@@ -177,9 +177,9 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
               gap: 'var(--space-10)',
             }}
           >
-            {filteredRooms.map((room, index) => (
+            {filteredRooms.map((room) => (
               <RoomCard
-                key={index}
+                key={room.slug}
                 {...room}
                 isComparing={comparedRooms.includes(room.slug)}
                 onCompareToggle={handleCompareToggle}

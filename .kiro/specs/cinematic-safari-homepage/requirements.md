@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Cinematic Safari Homepage transforms the Amboseli Safari Club website homepage into an immersive, scroll-driven storytelling experience that takes visitors through a complete day in the life of a safari adventure. The experience consists of 12 distinct chapters that progress from pre-dawn to nighttime, each representing a different aspect of the safari experience. Each chapter serves as an engaging preview that links to dedicated detail pages, creating a cohesive journey that emotionally connects visitors with the safari experience while guiding them toward booking.
+The Cinematic Safari Homepage transforms the Amboseli Safari Club website homepage into an immersive, scroll-driven storytelling experience that takes visitors through "Your Perfect Safari Day" - a personal journey from pre-dawn to nighttime. The experience consists of 12 distinct chapters that progress through the day, with each time period representing a phase of the safari journey (anticipation, transformation, discovery, comfort, authenticity, reflection, and action). Each chapter serves as an engaging preview that links to dedicated detail pages, creating a cohesive narrative that emotionally connects visitors with the safari experience through minimalist visual storytelling, subtle wildlife cameos, and progressive information reveal while guiding them toward booking.
 
 ## Glossary
 
@@ -16,6 +16,12 @@ The Cinematic Safari Homepage transforms the Amboseli Safari Club website homepa
 - **Time-of-Day Atmosphere**: Visual styling that reflects the specific time period (dawn, morning, afternoon, evening, night)
 - **Smooth Scroll System**: The existing scroll behavior infrastructure using SmoothScrollProvider
 - **Safari Progress System**: The existing progress tracking infrastructure using SafariProgressProvider
+- **Wildlife Cameo**: A subtle, brief appearance of animal silhouettes or imagery that corresponds to the time of day
+- **Weather Transition Effect**: Visual effects representing weather conditions (mist, light rays, clouds, stars) that enhance atmospheric realism
+- **Minimalist Animation**: Single-element animations that tell micro-stories without overwhelming the user
+- **Interactive Hotspot**: A clickable or hoverable area that reveals additional information on user interaction
+- **Value Proposition Element**: A trust-building statement that appears at strategic moments in the journey
+- **Progressive Information Reveal**: A content delivery pattern that starts with essential information and expands based on user interaction
 
 ## Requirements
 
@@ -222,3 +228,123 @@ The Cinematic Safari Homepage transforms the Amboseli Safari Club website homepa
 3. WHEN the user scrolls through evening chapters, THE Homepage System SHALL display animated fireflies
 4. WHEN the user hovers over interactive cards, THE Chapter Component SHALL provide zoom or reveal effects
 5. WHEN the user completes scrolling through all chapters, THE Homepage System SHALL display a "Your journey so far" summary indicator
+
+### Requirement 18
+
+**User Story:** As a potential safari guest, I want to see subtle wildlife cameos throughout the day progression, so that I feel connected to the natural environment and wildlife encounters.
+
+#### Acceptance Criteria
+
+1. WHEN the Pre-Dawn Hero Chapter renders, THE Pre-Dawn Hero Chapter SHALL display an elephant silhouette crossing the horizon
+2. WHEN the Morning Drive Chapter is in view, THE Morning Drive Chapter SHALL display birds flying across the sky at intervals of 8 to 12 seconds
+3. WHEN the user scrolls to the Sunset chapters, THE Homepage System SHALL display acacia tree silhouettes appearing in the foreground
+4. WHEN the Night chapters render, THE Homepage System SHALL display star constellations forming gradually
+5. WHEN a Wildlife Cameo appears, THE Chapter Component SHALL animate the cameo with smooth fade-in and movement transitions
+
+### Requirement 19
+
+**User Story:** As a potential safari guest, I want to experience minimalist weather transitions that enhance the time-of-day atmosphere, so that the journey feels more immersive and realistic.
+
+#### Acceptance Criteria
+
+1. WHEN the Pre-Dawn Hero Chapter renders, THE Pre-Dawn Hero Chapter SHALL display gentle mist effects that dissipate as the user scrolls
+2. WHEN the Sunrise Chapter is in view, THE Sunrise Chapter SHALL display golden light rays emanating from the sun
+3. WHEN the user scrolls through midday chapters, THE Homepage System SHALL display soft clouds drifting across the sky
+4. WHEN the Wellness Moment Chapter renders, THE Wellness Moment Chapter SHALL display a warm glow effect during sunset
+5. WHEN the Night chapters render, THE Homepage System SHALL display twinkling stars with varying intensity
+
+### Requirement 20
+
+**User Story:** As a potential safari guest, I want the narrative to be framed as "Your Perfect Safari Day" with each time representing a journey phase, so that the experience feels personal and relatable.
+
+#### Acceptance Criteria
+
+1. WHEN the Pre-Dawn Hero Chapter renders, THE Pre-Dawn Hero Chapter SHALL display messaging that conveys anticipation of adventure
+2. WHEN the Sunrise Chapter renders, THE Sunrise Chapter SHALL display messaging that conveys transformation and new beginnings
+3. WHEN the Morning Drive Chapter renders, THE Morning Drive Chapter SHALL display messaging that conveys discovery and excitement
+4. WHEN the Accommodations Preview Chapter renders, THE Accommodations Preview Chapter SHALL display messaging that conveys comfort and luxury
+5. WHEN the Safari Experiences Chapter renders, THE Safari Experiences Chapter SHALL display messaging that conveys authentic experiences
+
+### Requirement 21
+
+**User Story:** As a potential safari guest, I want value propositions to appear subtly at relevant moments, so that I build trust in the safari club's excellence and offerings.
+
+#### Acceptance Criteria
+
+1. WHEN the user scrolls past the Sunrise Chapter, THE Homepage System SHALL display a Value Proposition Element stating "25 years of excellence"
+2. WHEN the Accommodations Preview Chapter becomes visible, THE Accommodations Preview Chapter SHALL display a Value Proposition Element stating "All-inclusive luxury"
+3. WHEN the Guest Stories Chapter is in view, THE Guest Stories Chapter SHALL display a Value Proposition Element stating "5,000+ satisfied guests"
+4. WHEN the Plan Your Safari Chapter renders, THE Plan Your Safari Chapter SHALL display a Value Proposition Element stating "Limited availability"
+5. WHEN a Value Proposition Element appears, THE Homepage System SHALL animate the element with a subtle fade-in effect
+
+### Requirement 22
+
+**User Story:** As a potential safari guest, I want interactive hotspots that reveal additional information, so that I can explore details that interest me without cluttering the main view.
+
+#### Acceptance Criteria
+
+1. WHEN the user hovers over an Interactive Hotspot, THE Chapter Component SHALL reveal additional information in a tooltip or overlay
+2. WHEN the Accommodations Preview Chapter renders, THE Accommodations Preview Chapter SHALL display Interactive Hotspots for 360-degree room views
+3. WHEN the Location & Access Chapter renders, THE Location & Access Chapter SHALL display an Interactive Hotspot for a distance calculator from major cities
+4. WHEN the Safari Experiences Chapter renders, THE Safari Experiences Chapter SHALL display Interactive Hotspots that show before-and-after conservation impact
+5. WHEN an Interactive Hotspot is activated, THE Chapter Component SHALL provide visual feedback indicating the hotspot is active
+
+### Requirement 23
+
+**User Story:** As a potential safari guest, I want content to be progressively revealed based on my interaction, so that I am not overwhelmed with information and can explore at my own pace.
+
+#### Acceptance Criteria
+
+1. WHEN a Chapter Component initially renders, THE Chapter Component SHALL display essential information only
+2. WHEN the user hovers over a content section, THE Chapter Component SHALL expand to reveal additional details
+3. WHEN the user clicks an expand control, THE Chapter Component SHALL reveal detailed information with a smooth animation
+4. WHEN the user scrolls past 50 percent of a chapter, THE Chapter Component SHALL reveal secondary content elements
+5. WHILE the user has not interacted with expandable content, THE Chapter Component SHALL maintain a minimal and clean initial state
+
+### Requirement 24
+
+**User Story:** As a potential safari guest, I want minimalist single-element animations that tell micro-stories, so that the experience feels crafted and intentional without being overwhelming.
+
+#### Acceptance Criteria
+
+1. WHEN the user scrolls through chapters, THE Homepage System SHALL display a compass needle pointing to different sections
+2. WHEN the user progresses through the journey, THE Homepage System SHALL display a safari vehicle moving across the horizon
+3. WHEN the user views photo galleries, THE Chapter Component SHALL apply a camera shutter effect to image transitions
+4. WHEN a Minimalist Animation plays, THE Homepage System SHALL limit animations to one primary animation per chapter
+5. WHEN the user has reduced motion preferences enabled, THE Homepage System SHALL disable all Minimalist Animations
+
+### Requirement 25
+
+**User Story:** As a potential safari guest, I want the homepage to adapt content based on when I visit, so that the experience feels dynamic and personalized.
+
+#### Acceptance Criteria
+
+1. WHEN the user visits the homepage during nighttime hours in their timezone, THE Homepage System SHALL start the journey at the evening section
+2. WHEN the user visits the homepage during morning hours in their timezone, THE Homepage System SHALL start the journey at the Pre-Dawn Hero Chapter
+3. WHEN the Homepage System detects the user's location, THE Homepage System SHALL highlight relevant travel information for that region
+4. WHEN the user returns to the homepage, THE Homepage System SHALL remember their previous scroll position for 24 hours
+5. WHEN the Homepage System displays time-based content, THE Homepage System SHALL provide a manual override to view all chapters from the beginning
+
+### Requirement 26
+
+**User Story:** As a potential safari guest, I want to see conservation stories and cultural integration throughout the journey, so that I understand the safari club's commitment to sustainability and local communities.
+
+#### Acceptance Criteria
+
+1. WHEN the Safari Experiences Chapter renders, THE Safari Experiences Chapter SHALL display subtle mentions of wildlife protection efforts
+2. WHEN the Guest Stories Chapter renders, THE Guest Stories Chapter SHALL display community involvement highlights
+3. WHEN the Dining Experience Chapter renders, THE Dining Experience Chapter SHALL display references to local Maasai culture
+4. WHEN the Safari Journal Chapter renders, THE Safari Journal Chapter SHALL display educational elements about the local ecosystem
+5. WHEN conservation content appears, THE Chapter Component SHALL provide links to detailed conservation pages
+
+### Requirement 27
+
+**User Story:** As a potential safari guest, I want decision support tools integrated into the journey, so that I can plan my safari with confidence.
+
+#### Acceptance Criteria
+
+1. WHEN the Plan Your Safari Chapter renders, THE Plan Your Safari Chapter SHALL display an interactive safari planner tool
+2. WHEN the Accommodations Preview Chapter is in view, THE Accommodations Preview Chapter SHALL display a budget calculator
+3. WHEN the Safari Experiences Chapter renders, THE Safari Experiences Chapter SHALL display a weather guide organized by season
+4. WHEN the Morning Drive Chapter renders, THE Morning Drive Chapter SHALL display a wildlife viewing calendar showing best times
+5. WHEN a decision support tool is activated, THE Chapter Component SHALL provide clear, actionable information to aid booking decisions

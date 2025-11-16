@@ -178,7 +178,7 @@
     - _Requirements: 6.3, 6.4, 6.5, 17.2_
 -
 
-- [x] 8. Implement Chapter 5: AccommodationsChapter
+- [x] 8. Implement Chapter 5: AccommodationsChapter (Basic Version - Completed)
 
 
 
@@ -202,6 +202,106 @@
     - Add subtle availability indicators
     - Add sticky CTA at bottom of section
     - _Requirements: 7.3, 7.4, 7.5_
+
+- [ ] 8A. Refactor AccommodationsChapter with GSAP Pinning Effect
+  - [ ] 8A.1 Install and configure GSAP with ScrollTrigger
+    - Install GSAP package: `npm install gsap`
+    - Register ScrollTrigger plugin in the component
+    - Configure GSAP context for proper cleanup
+    - _Requirements: 7.1_
+
+  - [ ] 8A.2 Create useAccommodationsPinning custom hook
+    - Create `src/hooks/useAccommodationsPinning.ts`
+    - Implement ScrollTrigger pin configuration (300vh duration)
+    - Set up three timeline phases for Room 1, Room 2, Room 3 transitions
+    - Add cleanup function to revert GSAP context on unmount
+    - _Requirements: 7.1, 7.2_
+
+  - [ ] 8A.3 Refactor component structure for pinning
+    - Update AccommodationsChapter to extend height to 300vh (500vh-800vh range)
+    - Restructure DOM to support absolute positioning for rooms
+    - Create separate containers for Room 1, Room 2, Room 3 with data attributes
+    - Position elements: Room 1 (image left, card right), Room 2 (card left, image right), Room 3 (image left, card right)
+    - Add heading container that stays fixed during pin
+    - _Requirements: 7.1, 7.2_
+
+  - [ ] 8A.4 Implement Room 1 entrance animation (0-33%)
+    - Create GSAP timeline for Room 1 entrance
+    - Animate room-1-image from `translateY(100%)` to `translateY(0%)`
+    - Animate room-1-card from `translateY(100%)` to `translateY(0%)` simultaneously
+    - Add stagger animation for features list items (opacity and x position)
+    - Set scroll trigger: start "top top", end "+=100vh", scrub: 1
+    - _Requirements: 7.3, 7.4_
+
+  - [ ] 8A.5 Implement Room 1 → Room 2 transition (33-66%)
+    - Create GSAP timeline for Room 2 transition
+    - Animate room-1-image exit: `translateY(0%)` to `translateY(100%)`
+    - Animate room-1-card horizontal slide: `translateX(0%)` to `translateX(-50vw)`
+    - Implement content morph: fade out room-1 content, update data attributes, fade in room-2 content
+    - Animate room-2-image entrance from bottom-right: `translate(50vw, 100%)` to `translate(50vw, 0%)`
+    - Add stagger animation for room-2 features list
+    - Set scroll trigger: start "top+=100vh top", end "+=100vh", scrub: 1
+    - _Requirements: 7.3, 7.4_
+
+  - [ ] 8A.6 Implement Room 2 → Room 3 transition (66-100%)
+    - Create GSAP timeline for Room 3 transition
+    - Animate room-2-card exit: `translateY(0%)` to `translateY(100%)`
+    - Animate room-2-image horizontal slide: `translateX(50vw)` to `translateX(0%)`
+    - Implement image morph: fade out room-2 image, update data attributes, fade in room-3 image
+    - Animate room-3-card entrance from bottom-right: `translate(50vw, 100%)` to `translate(50vw, 0%)`
+    - Add stagger animation for room-3 features list
+    - Set scroll trigger: start "top+=200vh top", end "+=100vh", scrub: 1
+    - _Requirements: 7.3, 7.4_
+
+  - [ ] 8A.7 Add content morphing animations
+    - Implement fade-out animation for outgoing content (opacity: 0, scale: 0.95)
+    - Add data attribute updates to swap room content
+    - Implement fade-in animation for incoming content (opacity: 1, scale: 1)
+    - Add stagger animation for features list items (opacity and x position with 0.1s stagger)
+    - Ensure smooth transitions with proper timing offsets
+    - _Requirements: 7.3, 7.4_
+
+  - [ ] 8A.8 Implement mobile adaptation for pinning
+    - Detect mobile viewport (< 768px)
+    - Disable pinning effect on mobile devices
+    - Implement simple vertical scroll with stagger animations
+    - Stack image and card vertically on mobile
+    - Ensure touch-friendly interactions
+    - _Requirements: 7.5, 16.1, 16.2_
+
+  - [ ] 8A.9 Add performance optimizations
+    - Add `will-change: transform` to animated elements
+    - Use `anticipatePin: 1` to prevent layout shift
+    - Ensure only transform and opacity properties are animated (GPU-accelerated)
+    - Implement cleanup of ScrollTrigger instances on component unmount
+    - Test performance with 60fps target
+    - _Requirements: 16.3, 16.4_
+
+  - [ ] 8A.10 Implement accessibility for pinned section
+    - Maintain keyboard navigation during pin
+    - Ensure screen readers can access all room information
+    - Add "Skip to next section" link
+    - Detect and respect `prefers-reduced-motion` preference
+    - Disable pinning and use simple fade-in effects when reduced motion is preferred
+    - _Requirements: 16.4_
+
+  - [ ] 8A.11 Update CSS for pinning layout
+    - Create CSS module with absolute positioning for room containers
+    - Set `.rooms-container` to `position: relative`, `height: 100vh`, `overflow: hidden`
+    - Position room images and cards at 50% width
+    - Set initial transform states for all elements (off-screen)
+    - Add responsive styles for mobile (vertical stack)
+    - _Requirements: 7.1, 7.2_
+
+  - [ ] 8A.12 Test GSAP pinning implementation
+    - Verify smooth transitions between all three rooms
+    - Test content morphing animations
+    - Verify scroll progress matches expected timeline
+    - Test on multiple browsers (Chrome, Firefox, Safari, Edge)
+    - Test mobile adaptation and vertical scroll
+    - Verify accessibility with keyboard navigation and screen readers
+    - Test reduced motion preference
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
 - [x] 9. Implement Chapter 6: DiningChapter
 

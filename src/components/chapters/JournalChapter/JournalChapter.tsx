@@ -385,7 +385,7 @@ function NewsletterSignup({ inView }: NewsletterSignupProps) {
         <div className={styles.newsletterIcon}>📬</div>
         <h3 className={styles.newsletterTitle}>Stay Connected</h3>
         <p className={styles.newsletterDescription}>
-          Subscribe to receive safari updates, conservation news, and exclusive offers directly to your inbox.
+          Subscribe to receive safari updates, conservation news, and special offers directly to your inbox.
         </p>
 
         <form onSubmit={handleSubmit} className={styles.newsletterForm}>

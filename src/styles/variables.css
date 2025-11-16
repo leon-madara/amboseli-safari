@@ -94,6 +94,7 @@
   --font-family-accent: 'Dancing Script', cursive;
 
   /* Font Sizes */
+  --font-size-2xs: 0.625rem;    /* 10px */
   --font-size-xs: 0.75rem;      /* 12px */
   --font-size-sm: 0.875rem;     /* 14px */
   --font-size-base: 1rem;       /* 16px */
@@ -378,14 +379,63 @@
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
-@media (max-width: 768px) {
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
   :root {
-    /* Adjust font sizes for mobile */
+    /* Adjust font sizes for extra small screens */
+    --heading-h1-size: var(--font-size-3xl);
+    --heading-h2-size: var(--font-size-xl);
+    --heading-h3-size: var(--font-size-lg);
+    --heading-h4-size: var(--font-size-base);
+
+    /* Adjust section spacing for extra small screens */
+    --space-section-sm: var(--space-8);
+    --space-section-md: var(--space-12);
+    --space-section-lg: var(--space-16);
+    --space-section-xl: var(--space-24);
+
+    /* Adjust container padding for extra small screens */
+    --space-container-padding: var(--space-4);
+    --space-container-padding-md: var(--space-5);
+    --space-container-padding-lg: var(--space-6);
+
+    /* Adjust component spacing */
+    --space-card-padding: var(--space-4);
+    --space-button-padding-x: var(--space-4);
+    --space-button-padding-y: var(--space-2);
+
+    /* Adjust button heights for better touch targets */
+    --button-height-sm: 40px;
+    --button-height-md: 44px;
+    --button-height-lg: 48px;
+  }
+}
+
+/* Small Devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  :root {
+    /* Adjust font sizes for small screens */
     --heading-h1-size: var(--font-size-4xl);
     --heading-h2-size: var(--font-size-2xl);
     --heading-h3-size: var(--font-size-xl);
 
-    /* Adjust section spacing for mobile */
+    /* Adjust section spacing */
+    --space-section-sm: var(--space-10);
+    --space-section-md: var(--space-16);
+    --space-section-lg: var(--space-20);
+    --space-section-xl: var(--space-24);
+  }
+}
+
+/* Medium Devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    /* Adjust font sizes for tablets */
+    --heading-h1-size: var(--font-size-4xl);
+    --heading-h2-size: var(--font-size-2xl);
+    --heading-h3-size: var(--font-size-xl);
+
+    /* Adjust section spacing for tablets */
     --space-section-sm: var(--space-12);
     --space-section-md: var(--space-16);
     --space-section-lg: var(--space-24);

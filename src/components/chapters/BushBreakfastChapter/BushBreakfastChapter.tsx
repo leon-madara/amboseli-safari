@@ -110,7 +110,7 @@ export default function BushBreakfastChapter({
           <h2 id="bush-breakfast-heading" className={styles.heading}>
             Bush Breakfast
           </h2>
-          <p className={styles.tagline}>Where Luxury Meets Wilderness</p>
+          <p className={styles.tagline}>Delicious Meals in Nature</p>
         </motion.div>
 
         {/* Menu Items with Sequential Fade-in */}

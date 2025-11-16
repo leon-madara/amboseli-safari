@@ -3,14 +3,20 @@
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { ParallaxImage } from '@/components/atoms/ParallaxImage';
+import { InfoCard } from '@/components/atoms/InfoCard';
+import { RouteSelector } from '@/components/molecules/RouteSelector';
+import { InteractiveMap } from '@/components/molecules/InteractiveMap';
+import { JourneyTimeline } from '@/components/molecules/JourneyTimeline';
+import { TransportComparisonTable } from '@/components/molecules/TransportComparisonTable';
+import { PhotoGallery } from '@/components/molecules/PhotoGallery';
 import { CHAPTER_IMAGES } from '@/data/images';
 import {
-  LODGE_COORDINATES,
-  CITY_DISTANCES,
+  JOURNEY_ROUTES,
+  JOURNEY_TIMELINE_STEPS,
   TRANSFER_OPTIONS,
-  NEARBY_AIRPORTS,
+  JOURNEY_GALLERY,
+  INFO_CARDS,
 } from '@/data/locationData';
 import styles from './LocationChapter.module.css';
 
@@ -19,22 +25,27 @@ interface LocationChapterProps {
 }
 
 /**
- * Chapter 10: Location & Access
+ * Enhanced Location Chapter - Interactive Journey Planner
  *
- * Shows location information and access options for the safari lodge.
  * Features:
- * - Interactive animated map with pulsing location marker
- * - Distance cards from major cities
- * - Transfer options comparison
- * - Twilight atmosphere
- *
- * Requirements: 12.1-12.5
+ * - Interactive route selector with 4 routes
+ * - Mapbox interactive map with waypoints
+ * - Step-by-step journey timeline
+ * - Transport comparison table
+ * - Photo gallery with filters
+ * - Practical information cards
+ * - Booking CTAs
  */
-export default function LocationChapter({ id }: LocationChapterProps) {
+function LocationChapter({ id }: LocationChapterProps) {
   const { ref, inView } = useInView({
-    threshold: 0.3,
+    threshold: 0.2,
     triggerOnce: false,
   });
+
+  const [selectedRouteId, setSelectedRouteId] = useState(JOURNEY_ROUTES[0].id);
+
+  const selectedRoute = JOURNEY_ROUTES.find(r => r.id === selectedRouteId) || JOURNEY_ROUTES[0];
+  const currentTimeline = JOURNEY_TIMELINE_STEPS[selectedRouteId] || [];
 
   return (
     <section
@@ -58,7 +69,7 @@ export default function LocationChapter({ id }: LocationChapterProps) {
 
       {/* Main content container */}
       <div className={styles.contentContainer}>
-        {/* Section header */}
+        {/* Section 1: Hero Header */}
         <div className={styles.header}>
           <motion.h2
             className={styles.sectionTitle}
@@ -66,7 +77,7 @@ export default function LocationChapter({ id }: LocationChapterProps) {
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Your Gateway to Amboseli
+            Getting to Your Safari Adventure
           </motion.h2>
           <motion.p
             className={styles.sectionSubtitle}
@@ -74,237 +85,126 @@ export default function LocationChapter({ id }: LocationChapterProps) {
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Discover how to reach your safari adventure
+            Choose your route below and start planning your journey
           </motion.p>
         </div>
 
-        {/* Animated Map */}
-        <div className={styles.mapSection}>
-          <h3 className={styles.sectionHeading}>Location</h3>
-          <AnimatedMap
-            coordinates={LODGE_COORDINATES}
-            inView={inView}
+        {/* Section 2: Route Selector */}
+        <motion.div
+          className={styles.routeSelectorSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <h3 className={styles.subsectionTitle}>Choose Your Journey</h3>
+          <RouteSelector
+            routes={JOURNEY_ROUTES.map(route => ({
+              id: route.id,
+              name: route.name,
+              icon: route.icon,
+              duration: route.totalDuration,
+              distance: route.totalDistance,
+              recommended: route.recommended,
+            }))}
+            onRouteChange={setSelectedRouteId}
+            defaultRoute={JOURNEY_ROUTES[0].id}
           />
+        </motion.div>
+
+        {/* Section 3: Interactive Map + Journey Timeline */}
+        <div className={styles.mapTimelineSection}>
+          <motion.div
+            className={styles.mapColumn}
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <h3 className={styles.subsectionTitle}>Your Route</h3>
+            <InteractiveMap
+              waypoints={selectedRoute.waypoints}
+              showRoute={true}
+            />
+          </motion.div>
+
+          <motion.div
+            className={styles.timelineColumn}
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          >
+            <h3 className={styles.subsectionTitle}>Journey Steps</h3>
+            <JourneyTimeline steps={currentTimeline} />
+          </motion.div>
         </div>
 
-        {/* Distance Cards */}
-        <div className={styles.distanceSection}>
-          <h3 className={styles.sectionHeading}>Travel Times from Major Cities</h3>
-          <DistanceCards
-            distances={CITY_DISTANCES}
-            inView={inView}
-          />
-        </div>
+        {/* Section 4: Transport Comparison */}
+        <motion.div
+          className={styles.comparisonSection}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+        >
+          <h3 className={styles.subsectionTitle}>Compare Transportation Options</h3>
+          <TransportComparisonTable options={TRANSFER_OPTIONS} />
+        </motion.div>
 
-        {/* Transfer Options */}
-        <div className={styles.transferSection}>
-          <h3 className={styles.sectionHeading}>Getting Here</h3>
-          <TransferOptions
-            options={TRANSFER_OPTIONS}
-            airports={NEARBY_AIRPORTS}
-            inView={inView}
-          />
-        </div>
+        {/* Section 5: Photo Gallery */}
+        <motion.div
+          className={styles.gallerySection}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
+        >
+          <h3 className={styles.subsectionTitle}>What to Expect Along the Way</h3>
+          <p className={styles.expectationsIntro}>
+            Your journey to Amboseli is part of the adventure. Here&apos;s what you&apos;ll experience:
+          </p>
+          <PhotoGallery images={JOURNEY_GALLERY} columns={3} />
+        </motion.div>
+
+        {/* Section 6: Info Cards */}
+        <motion.div
+          className={styles.infoSection}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 1.6 }}
+        >
+          <h3 className={styles.subsectionTitle}>Essential Travel Information</h3>
+          <div className={styles.infoGrid}>
+            {INFO_CARDS.map(card => (
+              <InfoCard
+                key={card.id}
+                icon={card.icon}
+                title={card.title}
+                content={card.content}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Section 7: Booking CTA */}
+        <motion.div
+          className={styles.ctaSection}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.8, delay: 1.8 }}
+        >
+          <h3 className={styles.ctaHeading}>Ready to Book Your Transfer?</h3>
+          <p className={styles.ctaText}>
+            Let us arrange your comfortable, hassle-free transfer to Amboseli Safari Club
+          </p>
+          <div className={styles.ctaButtons}>
+            <a href="/contact?subject=Transfer%20Booking" className={styles.ctaPrimary}>
+              Arrange Private Transfer
+            </a>
+            <a href="/contact" className={styles.ctaSecondary}>
+              Ask Questions
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-/**
- * Animated Map Component
- * Shows map with pulsing location marker
- */
-interface AnimatedMapProps {
-  coordinates: typeof LODGE_COORDINATES;
-  inView: boolean;
-}
-
-function AnimatedMap({ coordinates, inView }: AnimatedMapProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Generate static map URL using OpenStreetMap-based service
-  const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-l-lodging+D4AF37(${coordinates.lng},${coordinates.lat})/${coordinates.lng},${coordinates.lat},10,0/800x500@2x?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw`;
-
-  return (
-    <motion.div
-      className={styles.mapContainer}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className={styles.mapWrapper}>
-        {/* Map background image */}
-        <div className={styles.mapImage}>
-          <Image
-            src={CHAPTER_IMAGES.location.kenyaMap}
-            alt="Map showing Amboseli Safari Club location"
-            fill
-            sizes="(max-width: 768px) 100vw, 800px"
-            className={styles.mapImg}
-          />
-        </div>
-
-        {/* Pulsing location marker */}
-        <div className={styles.locationMarker}>
-          <div className={styles.markerPulse} />
-          <div className={styles.markerDot} />
-          <div className={styles.markerLabel}>
-            <span className={styles.markerIcon}>📍</span>
-            <span className={styles.markerText}>Amboseli Safari Club</span>
-          </div>
-        </div>
-
-        {/* Coordinates display */}
-        <div className={styles.coordinatesDisplay}>
-          <span className={styles.coordinatesLabel}>Coordinates:</span>
-          <span className={styles.coordinatesValue}>
-            {coordinates.lat.toFixed(4)}°S, {Math.abs(coordinates.lng).toFixed(4)}°E
-          </span>
-        </div>
-      </div>
-
-      {/* Map info */}
-      <div className={styles.mapInfo}>
-        <p className={styles.mapDescription}>
-          Located in the heart of Amboseli National Park, with stunning views of Mount Kilimanjaro
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-/**
- * Distance Cards Component
- * Shows travel times from major cities
- */
-interface DistanceCardsProps {
-  distances: typeof CITY_DISTANCES;
-  inView: boolean;
-}
-
-function DistanceCards({ distances, inView }: DistanceCardsProps) {
-  return (
-    <div className={styles.distanceCardsGrid}>
-      {distances.map((distance, index) => (
-        <motion.div
-          key={distance.city}
-          className={styles.distanceCard}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
-        >
-          <div className={styles.distanceCardIcon}>{distance.icon}</div>
-          <h4 className={styles.distanceCardCity}>{distance.city}</h4>
-          <div className={styles.distanceCardDetails}>
-            <div className={styles.distanceCardMetric}>
-              <span className={styles.distanceCardLabel}>Distance</span>
-              <span className={styles.distanceCardValue}>{distance.distance} km</span>
-            </div>
-            <div className={styles.distanceCardMetric}>
-              <span className={styles.distanceCardLabel}>Drive Time</span>
-              <span className={styles.distanceCardValue}>{distance.driveTime}</span>
-            </div>
-            <div className={styles.distanceCardTransport}>
-              <span className={styles.transportBadge}>{distance.transportType}</span>
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-/**
- * Transfer Options Component
- * Shows different ways to reach the lodge
- */
-interface TransferOptionsProps {
-  options: typeof TRANSFER_OPTIONS;
-  airports: typeof NEARBY_AIRPORTS;
-  inView: boolean;
-}
-
-function TransferOptions({ options, airports, inView }: TransferOptionsProps) {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-  return (
-    <div className={styles.transferOptionsContainer}>
-      {/* Transfer Options Grid */}
-      <div className={styles.transferOptionsGrid}>
-        {options.map((option, index) => (
-          <motion.div
-            key={option.id}
-            className={`${styles.transferOption} ${
-              selectedOption === option.id ? styles.transferOptionSelected : ''
-            }`}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.6, delay: index * 0.15 + 0.3 }}
-            onClick={() => setSelectedOption(option.id)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                setSelectedOption(option.id);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-          >
-            <div className={styles.transferOptionIcon}>{option.icon}</div>
-            <h4 className={styles.transferOptionName}>{option.name}</h4>
-            <p className={styles.transferOptionDescription}>{option.description}</p>
-            <div className={styles.transferOptionDetails}>
-              <div className={styles.transferOptionMeta}>
-                <span className={styles.transferOptionLabel}>Duration:</span>
-                <span className={styles.transferOptionValue}>{option.duration}</span>
-              </div>
-              <div className={styles.transferOptionMeta}>
-                <span className={styles.transferOptionLabel}>Price:</span>
-                <span className={styles.transferOptionValue}>{option.priceRange}</span>
-              </div>
-            </div>
-            {option.recommended && (
-              <span className={styles.recommendedBadge}>Recommended</span>
-            )}
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Nearby Airports */}
-      <motion.div
-        className={styles.airportsSection}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-      >
-        <h4 className={styles.airportsHeading}>Nearby Airports</h4>
-        <div className={styles.airportsList}>
-          {airports.map((airport) => (
-            <div key={airport.code} className={styles.airportItem}>
-              <div className={styles.airportIcon}>✈️</div>
-              <div className={styles.airportInfo}>
-                <div className={styles.airportName}>{airport.name}</div>
-                <div className={styles.airportCode}>({airport.code})</div>
-              </div>
-              <div className={styles.airportDistance}>{airport.distance} km</div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Contact CTA */}
-      <motion.div
-        className={styles.contactCTA}
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
-      >
-        <p className={styles.contactCTAText}>
-          Need help planning your journey? Our team is here to assist.
-        </p>
-        <button className={styles.contactButton}>Contact Us for Transfer Arrangements</button>
-      </motion.div>
-    </div>
-  );
-}
+export default LocationChapter;

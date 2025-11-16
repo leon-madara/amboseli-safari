@@ -143,7 +143,40 @@
 }
 
 /* Mobile Adaptations */
-@media (max-width: 767px) {
+
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
+  .chatBubble.bottom-right {
+    bottom: var(--space-3);
+    right: var(--space-3);
+  }
+
+  .chatBubble.bottom-left {
+    bottom: var(--space-3);
+    left: var(--space-3);
+  }
+
+  .button {
+    width: 52px;
+    height: 52px;
+  }
+
+  .icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .tooltip {
+    font-size: 0.6875rem; /* 11px */
+    padding: var(--space-1) var(--space-2);
+    white-space: normal;
+    max-width: 150px;
+    text-align: center;
+  }
+}
+
+/* Small Devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
   .chatBubble.bottom-right {
     bottom: var(--space-4);
     right: var(--space-4);

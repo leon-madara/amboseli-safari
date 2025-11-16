@@ -50,23 +50,26 @@ export default function PreDawnHero({
   const parallaxOffset = useParallax(backgroundRef, { speed: 0.3, direction: 'down' });
 
   useEffect(() => {
+    let typingInterval: NodeJS.Timeout | null = null;
+    
     // Start typing after 1.2s delay
     const startDelay = setTimeout(() => {
       let currentIndex = 0;
-      const typingInterval = setInterval(() => {
+      typingInterval = setInterval(() => {
         if (currentIndex <= tagline.length) {
           setDisplayedText(tagline.slice(0, currentIndex));
           currentIndex++;
         } else {
-          clearInterval(typingInterval);
+          if (typingInterval) clearInterval(typingInterval);
           setIsTypingComplete(true);
         }
       }, 80); // Type each character every 80ms
-
-      return () => clearInterval(typingInterval);
     }, 1200);
 
-    return () => clearTimeout(startDelay);
+    return () => {
+      clearTimeout(startDelay);
+      if (typingInterval) clearInterval(typingInterval);
+    };
   }, [tagline]);
   return (
     <section

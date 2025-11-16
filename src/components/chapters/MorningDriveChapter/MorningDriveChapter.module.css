@@ -180,11 +180,59 @@
   }
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
   .morningDriveChapter {
     min-height: 100vh;
     cursor: auto; /* Remove custom cursor on mobile */
+  }
+
+  .contentWrapper {
+    padding: 2rem 1rem;
+  }
+
+  .heading {
+    font-size: clamp(1.5rem, 6vw, 1.875rem);
+    margin-bottom: 2rem;
+  }
+
+  .wildlifeGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .cardWrapper:nth-child(even) {
+    margin-top: 0;
+  }
+
+  .distanceCounter {
+    top: 3%;
+    right: 3%;
+    padding: 0.75rem 1rem;
+  }
+
+  .counterValue {
+    font-size: 1.75rem;
+  }
+
+  .counterLabel {
+    font-size: 0.6875rem; /* 11px */
+  }
+
+  .cta {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px; /* Minimum touch target */
+  }
+}
+
+/* Small Devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .morningDriveChapter {
+    min-height: 100vh;
+    cursor: auto;
   }
 
   .contentWrapper {
@@ -222,5 +270,6 @@
   .cta {
     padding: 0.875rem 2rem;
     font-size: 1rem;
+    min-height: 44px;
   }
 }

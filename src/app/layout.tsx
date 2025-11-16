@@ -4,6 +4,7 @@ import { SmoothScrollProvider } from '@/providers/SmoothScrollProvider';
 import { SafariProgressProvider } from '@/providers/SafariProgressProvider';
 import { ScrollProgress } from '@/components/organisms/ScrollProgress';
 import './globals.css';
+import '@/styles/gsap-animations.css';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],

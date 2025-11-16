@@ -259,7 +259,58 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1023px) {
+
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
+  .container {
+    grid-template-columns: 1fr auto;
+    padding: var(--space-2) var(--space-3);
+    height: 56px;
+    gap: var(--space-3);
+  }
+
+  .logo {
+    max-width: 100px;
+    max-height: 32px;
+  }
+
+  .mobileToggle {
+    width: 22px;
+    height: 16px;
+  }
+
+  .hamburger {
+    height: 2px;
+  }
+
+  .mobileMenuContent {
+    padding: var(--space-3) var(--space-3);
+    gap: 0.5rem;
+  }
+
+  .mobileNavLink {
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .mobileCtaButton {
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-4);
+    min-height: 44px; /* Minimum touch target */
+  }
+
+  .desktop,
+  .ctaGroup {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: flex;
+  }
+}
+
+/* Small to Medium Devices (480px - 1023px) */
+@media (min-width: 480px) and (max-width: 1023px) {
   .container {
     grid-template-columns: 1fr auto;
     padding: var(--space-3) var(--space-container-padding);

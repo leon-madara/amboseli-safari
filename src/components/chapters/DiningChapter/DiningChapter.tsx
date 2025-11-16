@@ -35,17 +35,17 @@ export default function DiningChapter({
     {
       name: 'Grilled Serengeti Beef',
       image: DINING_DISH_IMAGES.grilledBeef,
-      description: 'Prime cuts with wild herb butter',
+      description: 'Prime cuts with wild herb butter - Available in family portions',
     },
     {
       name: 'Lake Victoria Tilapia',
       image: DINING_DISH_IMAGES.tilapia,
-      description: 'Pan-seared with lemon & thyme',
+      description: 'Pan-seared with lemon & thyme - Fresh daily catch',
     },
     {
-      name: 'Savanna Sunset Platter',
+      name: 'Kenyan Buffet Spread',
       image: DINING_DISH_IMAGES.sunsetPlatter,
-      description: 'Chef\'s selection of local delicacies',
+      description: 'Traditional dishes perfect for groups and tour parties',
     },
   ],
   winePairings = [
@@ -116,10 +116,10 @@ export default function DiningChapter({
           transition={{ duration: 0.8 }}
         >
           <h2 id="dining-heading" className={styles.heading}>
-            Culinary Excellence
+            Group-Friendly Dining
           </h2>
           <p className={styles.subtitle}>
-            Where flavors meet the African sunset
+            Delicious meals for families and groups of all sizes
           </p>
         </motion.div>
 
@@ -214,6 +214,87 @@ export default function DiningChapter({
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+
+        {/* Group Capacity Information */}
+        <div className={styles.groupInfo}>
+          <motion.h3
+            className={styles.groupHeading}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            Perfect for Groups
+          </motion.h3>
+          
+          <div className={styles.groupFeatures}>
+            <motion.div
+              className={styles.groupFeature}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className={styles.groupIcon}>👥</span>
+              <p>Accommodates tour groups up to 40 people</p>
+            </motion.div>
+            
+            <motion.div
+              className={styles.groupFeature}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <span className={styles.groupIcon}>🍽️</span>
+              <p>Buffet and family-style dining options</p>
+            </motion.div>
+            
+            <motion.div
+              className={styles.groupFeature}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <span className={styles.groupIcon}>👶</span>
+              <p>Kids menu and dietary accommodations</p>
+            </motion.div>
+            
+            <motion.div
+              className={styles.groupFeature}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              <span className={styles.groupIcon}>🥪</span>
+              <p>Packed lunches available for safari days</p>
+            </motion.div>
+            
+            <motion.div
+              className={styles.groupFeature}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <span className={styles.groupIcon}>🎉</span>
+              <p>Private dining available for special events</p>
+            </motion.div>
+            
+            <motion.div
+              className={styles.groupFeature}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+            >
+              <span className={styles.groupIcon}>⏰</span>
+              <p>Flexible meal times to fit your family schedule</p>
+            </motion.div>
           </div>
         </div>
 

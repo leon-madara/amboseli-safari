@@ -272,6 +272,55 @@
   margin: 0;
 }
 
+/* Group Info Section */
+.groupInfo {
+  margin: 4rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+}
+
+.groupHeading {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.groupFeatures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.groupFeature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.groupFeature:hover {
+  transform: translateX(5px);
+}
+
+.groupIcon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.groupFeature p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
 /* CTA Section */
 .ctaSection {
   display: flex;
@@ -376,6 +425,28 @@
 
   .dishInfo {
     padding: 1.5rem;
+  }
+
+  .groupInfo {
+    padding: 1.5rem;
+    margin: 3rem 0;
+  }
+  
+  .groupHeading {
+    font-size: 1.5rem;
+  }
+  
+  .groupFeatures {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .groupFeature {
+    padding: 1rem;
+  }
+  
+  .groupIcon {
+    font-size: 2rem;
   }
 
   .winePairingsGrid {

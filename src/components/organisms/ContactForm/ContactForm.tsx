@@ -64,7 +64,7 @@ export default function ContactForm() {
             animation: 'slideIn 0.3s ease-out',
           }}
         >
-          <strong>Thank you!</strong> Your message has been sent successfully. We'll get back to you within 24 hours.
+          <strong>Thank you!</strong> Your message has been sent successfully. We&apos;ll get back to you within 24 hours.
         </div>
       )}
 

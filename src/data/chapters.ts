@@ -125,15 +125,15 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
       colorGradient: ['#ff8c00', '#ff4500'],
     },
   },
-  // Chapter 8: Getting Here (90vh)
+  // Chapter 8: Getting Here (120vh) - Enhanced with interactive map
   {
     id: 'location',
     number: 8,
     title: 'Getting Here',
     timeOfDay: 'twilight',
-    heightVh: 90,
+    heightVh: 120,
     startVh: 750,
-    endVh: 840,
+    endVh: 870,
     component: LocationChapter,
     atmosphericEffects: {
       colorGradient: ['#2c3e50', '#3498db'],
@@ -146,8 +146,8 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     title: 'Reserve Your Stay',
     timeOfDay: 'night',
     heightVh: 120,
-    startVh: 840,
-    endVh: 960,
+    startVh: 870,
+    endVh: 990,
     component: PlanSafariChapter,
     atmosphericEffects: {
       particles: 'stars',
@@ -196,6 +196,6 @@ export function getPreviousChapter(currentId: string): ChapterConfig | undefined
 
 /**
  * Total height of all chapters in vh
- * Optimized from 1,820vh to 960vh (47% reduction)
+ * Optimized from 1,820vh to 990vh (46% reduction)
  */
-export const TOTAL_JOURNEY_HEIGHT_VH = 960;
+export const TOTAL_JOURNEY_HEIGHT_VH = 990;

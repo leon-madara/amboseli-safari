@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
+import { ReactNode, createContext, useContext, useState, useEffect, useRef } from 'react';
 
 export type TimeOfDay = 'pre-dawn' | 'dawn' | 'morning' | 'midday' | 'afternoon' | 'golden-hour' | 'sunset' | 'dusk' | 'twilight' | 'night';
 
@@ -60,15 +60,30 @@ export function SafariProgressProvider({ children }: SafariProgressProviderProps
   const [chapterProgress, setChapterProgress] = useState(0);
   const [chapterElements, setChapterElements] = useState<Map<string, HTMLElement>>(new Map());
 
+  // Use ref to persist values across renders without causing re-renders
+  const rafIdRef = useRef<number | null>(null);
+  const lastProgressRef = useRef<number>(-1);
+
   // Calculate scroll progress
   useEffect(() => {
     const updateScrollProgress = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
-      const scrolled = window.scrollY;
-      const progress = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
+      if (rafIdRef.current !== null) return; // Skip if already scheduled
 
-      setScrollProgress(Math.min(100, Math.max(0, progress)));
+      rafIdRef.current = requestAnimationFrame(() => {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight - windowHeight;
+        const scrolled = window.scrollY;
+        const progress = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
+        const normalizedProgress = Math.min(100, Math.max(0, progress));
+
+        // Only update if progress changed by more than 0.1%
+        if (Math.abs(normalizedProgress - lastProgressRef.current) > 0.1) {
+          setScrollProgress(normalizedProgress);
+          lastProgressRef.current = normalizedProgress;
+        }
+
+        rafIdRef.current = null;
+      });
     };
 
     updateScrollProgress();
@@ -78,6 +93,9 @@ export function SafariProgressProvider({ children }: SafariProgressProviderProps
     return () => {
       window.removeEventListener('scroll', updateScrollProgress);
       window.removeEventListener('resize', updateScrollProgress);
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
     };
   }, []);
 

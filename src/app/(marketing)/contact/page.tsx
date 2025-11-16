@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import ContactForm from '@/components/organisms/ContactForm';
 import SocialLinks from '@/components/molecules/SocialLinks';
+import ContactInfoCard from '@/components/molecules/ContactInfoCard/ContactInfoCard';
+import ContactActionButton from '@/components/molecules/ContactActionButton/ContactActionButton';
 import { PROPERTY_IMAGES } from '@/data/images';
 
 export const metadata: Metadata = {
@@ -239,101 +241,13 @@ export default function ContactPage() {
             }}
           >
             {contactInfo.map((info, index) => (
-              <div
+              <ContactInfoCard
                 key={index}
-                style={{
-                  padding: 'var(--space-8)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-xl)',
-                  textAlign: 'center',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  cursor: info.link ? 'pointer' : 'default',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  borderTop: '3px solid var(--color-primary-terracotta)',
-                  boxShadow: 'var(--shadow-sm)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                  const icon = e.currentTarget.querySelector('[data-icon]') as HTMLElement;
-                  if (icon) {
-                    icon.style.transform = 'scale(1.1) rotate(5deg)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-                  const icon = e.currentTarget.querySelector('[data-icon]') as HTMLElement;
-                  if (icon) {
-                    icon.style.transform = 'scale(1) rotate(0deg)';
-                  }
-                }}
-              >
-                <div
-                  data-icon
-                  style={{
-                    width: '72px',
-                    height: '72px',
-                    margin: '0 auto var(--space-6)',
-                    padding: 'var(--space-4)',
-                    backgroundColor: 'var(--color-neutral-cream)',
-                    borderRadius: 'var(--radius-full)',
-                    color: 'var(--color-primary-terracotta)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }}
-                >
-                  {info.icon}
-                </div>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-lg)',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    color: 'var(--color-text-primary)',
-                    marginBottom: 'var(--space-3)',
-                  }}
-                >
-                  {info.title}
-                </h3>
-                {info.link ? (
-                  <a
-                    href={info.link}
-                    style={{
-                      fontFamily: 'var(--font-family-body)',
-                      fontSize: 'var(--font-size-base)',
-                      lineHeight: 'var(--line-height-relaxed)',
-                      color: 'var(--color-primary-terracotta)',
-                      textDecoration: 'none',
-                      fontWeight: 'var(--font-weight-medium)',
-                      transition: 'var(--transition-color)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = 'var(--color-primary-terracotta-dark)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = 'var(--color-primary-terracotta)';
-                    }}
-                  >
-                    {info.value}
-                  </a>
-                ) : (
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-family-body)',
-                      fontSize: 'var(--font-size-base)',
-                      lineHeight: 'var(--line-height-relaxed)',
-                      color: 'var(--color-text-secondary)',
-                      margin: 0,
-                    }}
-                  >
-                    {info.value}
-                  </p>
-                )}
-              </div>
+                icon={info.icon}
+                title={info.title}
+                value={info.value}
+                link={info.link}
+              />
             ))}
           </div>
         </div>
@@ -441,71 +355,16 @@ export default function ContactPage() {
               </p>
             </div>
             <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-              <a
-                href="tel:+254123456789"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-3) var(--space-6)',
-                  backgroundColor: 'var(--color-primary-terracotta)',
-                  color: 'white',
-                  textDecoration: 'none',
-                  borderRadius: 'var(--radius-lg)',
-                  fontFamily: 'var(--font-family-body)',
-                  fontSize: 'var(--font-size-base)',
-                  fontWeight: 'var(--font-weight-semibold)',
-                  transition: 'var(--transition-all)',
-                  boxShadow: 'var(--shadow-sm)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--color-primary-terracotta-dark)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--color-primary-terracotta)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-                }}
-              >
-                <span style={{ fontSize: '1.2em' }}>📞</span>
+              <ContactActionButton href="tel:+254123456789" icon="📞" variant="primary">
                 Call Us Now
-              </a>
-              <a
+              </ContactActionButton>
+              <ContactActionButton
                 href="mailto:info@amboselisafariclub.com"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-3) var(--space-6)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  color: 'var(--color-primary-terracotta)',
-                  textDecoration: 'none',
-                  borderRadius: 'var(--radius-lg)',
-                  fontFamily: 'var(--font-family-body)',
-                  fontSize: 'var(--font-size-base)',
-                  fontWeight: 'var(--font-weight-semibold)',
-                  transition: 'var(--transition-all)',
-                  border: '2px solid var(--color-primary-terracotta)',
-                  boxShadow: 'var(--shadow-sm)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--color-primary-terracotta)';
-                  e.currentTarget.style.color = 'white';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)';
-                  e.currentTarget.style.color = 'var(--color-primary-terracotta)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-                }}
+                icon="✉️"
+                variant="secondary"
               >
-                <span style={{ fontSize: '1.2em' }}>✉️</span>
                 Email Us
-              </a>
+              </ContactActionButton>
             </div>
           </div>
         </div>

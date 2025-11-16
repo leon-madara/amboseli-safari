@@ -104,7 +104,62 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
+  .chapterSection {
+    padding: 1rem 0.5rem;
+  }
+
+  .chapterPlaceholder {
+    padding: 1rem;
+  }
+
+  .placeholderContent {
+    max-width: 100%;
+  }
+
+  .chapterNumber {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .chapterTitle {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .chapterTimeOfDay {
+    font-size: 0.875rem;
+  }
+
+  .debugInfo {
+    font-size: 0.625rem;
+    padding: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+}
+
+/* Small Devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .chapterTitle {
+    font-size: 1.75rem;
+  }
+
+  .chapterTimeOfDay {
+    font-size: 0.9375rem;
+  }
+
+  .debugInfo {
+    font-size: 0.6875rem;
+    padding: 0.625rem;
+  }
+}
+
+/* Medium Devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .chapterTitle {
     font-size: 2rem;
   }

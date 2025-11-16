@@ -222,7 +222,80 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
+  .bushBreakfastChapter {
+    min-height: 100vh;
+  }
+
+  .contentWrapper {
+    padding: 1.5rem 0.75rem;
+    gap: 1.25rem;
+  }
+
+  .tableContainer {
+    bottom: 3%;
+    width: 98%;
+  }
+
+  .heading {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .tagline {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+  }
+
+  .menuContainer {
+    padding: 1.25rem;
+    gap: 0.625rem;
+  }
+
+  .menuText {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .menuBullet {
+    width: 6px;
+    height: 6px;
+  }
+
+  .cta {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px; /* Minimum touch target */
+  }
+
+  .steamParticle {
+    width: 2px;
+    height: 2px;
+  }
+
+  @keyframes steamRise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-120px) scale(1.3);
+      opacity: 0;
+    }
+  }
+}
+
+/* Small Devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
   .bushBreakfastChapter {
     min-height: 110vh;
   }
@@ -237,9 +310,27 @@
     width: 95%;
   }
 
+  .heading {
+    font-size: 2rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
   .menuContainer {
     padding: 1.5rem;
     gap: 0.75rem;
+  }
+
+  .menuText {
+    font-size: 0.95rem;
+  }
+
+  .cta {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    min-height: 44px;
   }
 
   .steamParticle {
@@ -265,22 +356,14 @@
   }
 }
 
-@media (max-width: 480px) {
-  .heading {
-    font-size: 2rem;
+/* Medium Devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bushBreakfastChapter {
+    min-height: 110vh;
   }
 
-  .tagline {
-    font-size: 1rem;
-  }
-
-  .menuText {
-    font-size: 0.95rem;
-  }
-
-  .cta {
-    padding: 0.875rem 2rem;
-    font-size: 1rem;
+  .contentWrapper {
+    padding: 2.5rem 1.5rem;
   }
 }
 

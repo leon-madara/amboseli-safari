@@ -195,10 +195,14 @@
 
 .price {
   font-family: var(--font-family-display);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-terracotta);
   line-height: 1;
+  background: linear-gradient(135deg, var(--color-primary-terracotta) 0%, #e8682a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .pricePeriod {
@@ -265,10 +269,14 @@
 
   .mobilePrice {
     font-family: var(--font-family-display);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
     color: var(--color-primary-terracotta);
     line-height: 1;
+    background: linear-gradient(135deg, var(--color-primary-terracotta) 0%, #e8682a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .mobileAvailability {

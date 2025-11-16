@@ -1,0 +1,39 @@
+/* GSAP Animation Initial States */
+/* These styles set the initial transform states for GSAP animations */
+
+/* Room 1: Both start off-screen at bottom */
+.room-1-image,
+.room-1-card {
+  transform: translateY(100%);
+}
+
+/* Room 2: Image starts off-screen bottom-right, card starts off-screen right */
+.room-2-image {
+  transform: translate(50vw, 100%);
+}
+
+.room-2-card {
+  transform: translateX(50vw);
+}
+
+/* Room 3: Image starts off-screen right, card starts off-screen bottom-right */
+.room-3-image {
+  transform: translateX(50vw);
+}
+
+.room-3-card {
+  transform: translate(50vw, 100%);
+}
+
+/* Reduced Motion: Reset all transforms */
+@media (prefers-reduced-motion: reduce) {
+  .room-1-image,
+  .room-1-card,
+  .room-2-image,
+  .room-2-card,
+  .room-3-image,
+  .room-3-card {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

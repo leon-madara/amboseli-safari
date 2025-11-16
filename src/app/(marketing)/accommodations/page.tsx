@@ -25,7 +25,7 @@ const rooms = [
     ],
     capacity: 2,
     size: '45 m²',
-    price: '$450',
+    price: '$220',
     features: [
       'King-size bed',
       'Private veranda',
@@ -57,7 +57,7 @@ const rooms = [
     ],
     capacity: 2,
     size: '65 m²',
-    price: '$650',
+    price: '$280',
     features: [
       'King-size bed',
       'Living room',
@@ -89,7 +89,7 @@ const rooms = [
     ],
     capacity: 4,
     size: '85 m²',
-    price: '$850',
+    price: '$380',
     features: [
       'Two bedrooms',
       'Connecting door',
