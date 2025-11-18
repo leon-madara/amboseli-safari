@@ -187,15 +187,33 @@ export default function MorningDriveChapter({
           // Defensive: Ensure progress is always a valid number between 0 and 1
           const progress = Math.max(0, Math.min(1, self.progress ?? 0));
 
-          // PHASE 1: Pin & Read (0-5.83% = 0-70vh)
-          // No animations, content is static - extended by 20vh
-          // Image starts sliding in during last portion (60vh-70vh) to be 10vw visible when fade starts
+          // PHASE 1: Pin & Read (0-12.5% = 0-150vh)
+          // Entire scene stays static during the first 150vh of scroll after pin
 
-          // PHASE 2: Heading and Content Card Fade Up & Out (5.83%-10% = 70vh-120vh)
+          const animationStart = 0.125; // 150vh / 1200vh
+          const fadeStart = animationStart; // fade begins after 150vh dwell
+          const fadeEnd = 0.1667;        // 200vh / 1200vh
+          const mainSlideStart = fadeEnd;
+          const mainSlideEnd = 0.8417;  // 1010vh / 1200vh
+
+          const clamp = (value: number, min = 0, max = 1) =>
+            Math.max(min, Math.min(max, value));
+
+          const setImageState = (
+            translateXPercent: number,
+            scaleValue: number,
+            opacityValue: number
+          ) => {
+            if (!fullScreenImageRef.current) return;
+            fullScreenImageRef.current.style.transform = `translateX(${translateXPercent}%) scale(${scaleValue})`;
+            fullScreenImageRef.current.style.opacity = String(opacityValue);
+          };
+
+          // PHASE 2: Heading and Content Card Fade Up & Out (8.33%-12.5% = 100vh-150vh)
           // Heading and entire card (text + image) fade as one unit
-          if (progress >= 0.0583 && progress < 0.1) {
+          if (progress >= fadeStart && progress < fadeEnd) {
             // Calculate fade progress with defensive bounds checking
-            const fadeProgress = Math.max(0, Math.min(1, (progress - 0.0583) / 0.0417));
+            const fadeProgress = clamp((progress - fadeStart) / (fadeEnd - fadeStart));
 
             // Heading fades up and out
             if (headingRef.current) {
@@ -208,7 +226,7 @@ export default function MorningDriveChapter({
               contentWrapperRef.current.style.opacity = String(Math.max(0, 1 - fadeProgress));
               contentWrapperRef.current.style.transform = `translateY(${-100 * fadeProgress}px)`;
             }
-          } else if (progress < 0.0583) {
+          } else if (progress < fadeStart) {
             // Reset to initial state when scrolling back before fade (REVERSE SCROLL)
             if (headingRef.current) {
               headingRef.current.style.opacity = '1';
@@ -218,7 +236,7 @@ export default function MorningDriveChapter({
               contentWrapperRef.current.style.opacity = '1';
               contentWrapperRef.current.style.transform = 'translateY(0)';
             }
-          } else if (progress >= 0.1) {
+          } else if (progress >= fadeEnd) {
             // Keep faded out after phase completes (FORWARD SCROLL LOCK)
             if (headingRef.current) {
               headingRef.current.style.opacity = '0';
@@ -230,77 +248,37 @@ export default function MorningDriveChapter({
             }
           }
 
-          // PHASE 3: Full-Screen Image Slides In (4.17%-84.17% = 50vh-1010vh)
-          // Starts simultaneously with card fade - no gap/empty page
-          // Duration: 960vh (50vh to 1010vh)
-          // Starts at 70% scale and 30% opacity, grows to 100% scale
-          // Opacity reaches 100% once 50vw of the frame is on screen (translateX = -50%)
-          if (progress >= 0.0417 && progress < 0.8417) {
-            // Calculate slide progress with defensive bounds checking
-            // Duration: 960vh (50vh to 1010vh) = 0.8 of total progress
-            const slideProgress = Math.max(0, Math.min(1, (progress - 0.0417) / 0.8));
-            // Use smooth ease-in-out for consistent speed throughout
-            // Starts slow, speeds up in middle, slows down at end
+          // SAFARI IMAGE: extended hold, synchronized fade slide, cinematic glide
+          if (progress < animationStart) {
+            setImageState(-100, 0.7, 0.3);
+          } else if (progress >= fadeStart && progress < fadeEnd) {
+            // Tie slide directly to card fade: -90% -> -40% while text fades out
+            const fadeProgress = clamp((progress - fadeStart) / (fadeEnd - fadeStart));
+            const translateX = -90 + (50 * fadeProgress);
+            const scale = 0.8 + (0.1 * fadeProgress); // 0.8 -> 0.9
+            const visibilityProgress = clamp((translateX + 90) / 40);
+            const opacity = translateX >= -50
+              ? 1
+              : Math.max(0.3, Math.min(1, 0.3 + (0.7 * visibilityProgress)));
+            setImageState(translateX, scale, opacity);
+          } else if (progress >= mainSlideStart && progress < mainSlideEnd) {
+            // Continue glide across horizon once text is gone: -40% -> 0%
+            const slideProgress = clamp((progress - mainSlideStart) / (mainSlideEnd - mainSlideStart));
             const easedSlide = slideProgress < 0.5
               ? 2 * slideProgress * slideProgress
               : 1 - Math.pow(-2 * slideProgress + 2, 2) / 2;
-            const clampedEasedSlide = Math.max(0, Math.min(1, easedSlide));
-
-            if (fullScreenImageRef.current) {
-              // Slide from left: -100% to 0%
-              const translateX = Math.max(-100, Math.min(0, -100 + (100 * clampedEasedSlide)));
-
-              // Scale from 70% to 100%
-              const scale = Math.max(0.7, Math.min(1, 0.7 + (0.3 * clampedEasedSlide)));
-
-              // Opacity ties to visible width — hit 100% opacity once 50vw is onscreen (translateX = -50%)
-              // clampedEasedSlide of 0.5 === translateX -50% === 50vw showing
-              let opacity = 0.3;
-              if (clampedEasedSlide < 0.5) {
-                const visibilityProgress = Math.max(0, Math.min(1, clampedEasedSlide / 0.5));
-                const easedVisibility = 1 - Math.pow(1 - visibilityProgress, 3);
-                opacity = Math.max(0.3, Math.min(1, 0.3 + (0.7 * easedVisibility)));
-              } else {
-                opacity = 1;
-              }
-
-              fullScreenImageRef.current.style.transform = `translateX(${translateX}%) scale(${scale})`;
-              fullScreenImageRef.current.style.opacity = String(opacity);
-            }
-          } else if (progress >= 0.0334 && progress < 0.0417) {
-            // PRE-SLIDE TEASER: During final 10vh of Phase 1 (40vh-50vh) ease image in to leave 10vw visible
-            // Keeps safari scene partially visible so fade + slide feel connected
-            if (fullScreenImageRef.current) {
-              const teaserProgress = Math.max(0, Math.min(1, (progress - 0.0334) / 0.0083));
-              const translateX = -100 + (10 * teaserProgress); // -100% -> -90% (≈10vw visible because width = 100vw)
-              const easedTeaser = teaserProgress < 0.5
-                ? 2 * teaserProgress * teaserProgress
-                : 1 - Math.pow(-2 * teaserProgress + 2, 2) / 2;
-
-              fullScreenImageRef.current.style.transform = `translateX(${translateX}%) scale(${0.7 + (0.02 * easedTeaser)})`;
-              fullScreenImageRef.current.style.opacity = '0.3';
-            }
-          } else if (progress < 0.0334) {
-            // Reset to completely off-screen before teaser window
-            if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(-100%) scale(0.7)';
-              fullScreenImageRef.current.style.opacity = '0.3';
-            }
-          } else if (progress >= 0.8417) {
-            // Keep fully visible after slide completes (FORWARD SCROLL LOCK)
-            if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
-              fullScreenImageRef.current.style.opacity = '1';
-            }
+            const translateX = -40 + (40 * easedSlide);
+            const scale = 0.9 + (0.1 * easedSlide);
+            setImageState(translateX, scale, 1);
+          } else {
+            // Lock final state after glide completes
+            setImageState(0, 1, 1);
           }
 
           // PHASE 4: Pause After Image Fully Visible (84.17%-85% = 1010vh-1020vh)
           // Image is fully on screen, wait 10vh before first text
           if (progress >= 0.8417 && progress < 0.85) {
-            if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
-              fullScreenImageRef.current.style.opacity = '1';
-            }
+            // State handled above - keep block for clarity
           }
 
           // PHASE 5A: First Line Appears (85%-85.42% = 1020vh-1025vh)
@@ -391,10 +369,6 @@ export default function MorningDriveChapter({
             if (contentWrapperRef.current) {
               contentWrapperRef.current.style.opacity = '0';
             }
-            if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
-              fullScreenImageRef.current.style.opacity = '1';
-            }
             if (textLine1Ref.current) {
               textLine1Ref.current.style.opacity = '1';
             }
@@ -419,10 +393,6 @@ export default function MorningDriveChapter({
             if (contentWrapperRef.current) {
               contentWrapperRef.current.style.opacity = '0';
             }
-            if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
-              fullScreenImageRef.current.style.opacity = '1';
-            }
             if (textLine1Ref.current) {
               textLine1Ref.current.style.opacity = '1';
             }
@@ -441,10 +411,10 @@ export default function MorningDriveChapter({
           if (progress > 0 && progress < 0.03) {
             setAriaMessage('Morning Safari Drive section is now in focus.');
           }
-          else if (progress > 0.05 && progress < 0.08) {
+          else if (progress > 0.11 && progress < 0.17) {
             setAriaMessage('Heading and content are fading away.');
           }
-          else if (progress > 0.045 && progress < 0.08) {
+          else if (progress > 0.12 && progress < 0.18) {
             setAriaMessage('Full safari scene is slowly appearing with Mount Kilimanjaro and elephants.');
           }
           else if (progress > 0.8417 && progress < 0.85) {
