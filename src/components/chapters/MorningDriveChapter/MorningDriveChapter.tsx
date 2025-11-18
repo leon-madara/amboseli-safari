@@ -87,10 +87,13 @@ export default function MorningDriveChapter({
 }: MorningDriveChapterProps) {
   // Refs for GSAP animation targets
   const sectionRef = useRef<HTMLElement>(null);
-  const textCardRef = useRef<HTMLDivElement>(null);
-  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
   const fullScreenImageRef = useRef<HTMLDivElement>(null);
-  const animatedOverlayRef = useRef<HTMLDivElement>(null);
+  const textLine1Ref = useRef<HTMLSpanElement>(null);
+  const textLine2Word1Ref = useRef<HTMLSpanElement>(null);
+  const textLine2Word2Ref = useRef<HTMLSpanElement>(null);
+  const textLine2Word3Ref = useRef<HTMLSpanElement>(null);
   
   // Viewport width state for responsive behavior
   // Requirements: 7.1, 7.2
@@ -144,28 +147,24 @@ export default function MorningDriveChapter({
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       // Show final state without animations
-      if (textCardRef.current) {
-        gsap.set(textCardRef.current, { opacity: 0 });
+      if (headingRef.current) {
+        gsap.set(headingRef.current, { opacity: 0 });
+      }
+      if (contentWrapperRef.current) {
+        gsap.set(contentWrapperRef.current, { opacity: 0 });
       }
 
-      if (imageContainerRef.current) {
-        const imageStartWidth = 400;
-        const isMobile = viewportWidth < 768;
-        const targetWidthPercentage = isMobile ? 0.9 : 0.4;
-        const targetWidth = viewportWidth * targetWidthPercentage;
-        const targetScale = targetWidth / imageStartWidth;
-
-        gsap.set(imageContainerRef.current, {
-          scale: targetScale,
-          transformOrigin: 'top left',
-        });
+      if (textLine1Ref.current) {
+        gsap.set(textLine1Ref.current, { opacity: 1 });
       }
-
-      if (animatedOverlayRef.current) {
-        gsap.set(animatedOverlayRef.current, {
-          opacity: 1,
-          left: '10%'
-        });
+      if (textLine2Word1Ref.current) {
+        gsap.set(textLine2Word1Ref.current, { opacity: 1 });
+      }
+      if (textLine2Word2Ref.current) {
+        gsap.set(textLine2Word2Ref.current, { opacity: 1 });
+      }
+      if (textLine2Word3Ref.current) {
+        gsap.set(textLine2Word3Ref.current, { opacity: 1 });
       }
 
       setAriaMessage('Morning Safari Drive content is ready. Image and text are now visible.');
@@ -174,144 +173,318 @@ export default function MorningDriveChapter({
 
     // GSAP Context for cleanup
     const ctx = gsap.context(() => {
-      // Calculate target dimensions
-      const imageStartWidth = 400;
-      const isMobile = viewportWidth < 768;
-      // Image grows to 40% viewport width (not 80%)
-      const targetWidthPercentage = isMobile ? 0.9 : 0.4;
-      const targetWidth = viewportWidth * targetWidthPercentage;
-      const targetScale = targetWidth / imageStartWidth;
 
       // Main Pin ScrollTrigger with manual animation via onUpdate
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top top',
-        end: '+=750vh',
+        end: '+=1200vh',
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
         markers: false,
         onUpdate: (self) => {
-          const progress = self.progress;
+          // Defensive: Ensure progress is always a valid number between 0 and 1
+          const progress = Math.max(0, Math.min(1, self.progress ?? 0));
 
-          // PHASE 1: Pin & Read (0-6.67% = 0-50vh)
-          // No animations, content is static
+          // PHASE 1: Pin & Read (0-5.83% = 0-70vh)
+          // No animations, content is static - extended by 20vh
+          // Image starts sliding in during last portion (60vh-70vh) to be 10vw visible when fade starts
 
-          // PHASE 2: Everything Fades Up & Out (6.67%-13.33% = 50vh-100vh)
-          if (progress >= 0.0667 && progress < 0.1333) {
-            const fadeProgress = (progress - 0.0667) / 0.0666; // 0 to 1
+          // PHASE 2: Heading and Content Card Fade Up & Out (5.83%-10% = 70vh-120vh)
+          // Heading and entire card (text + image) fade as one unit
+          if (progress >= 0.0583 && progress < 0.1) {
+            // Calculate fade progress with defensive bounds checking
+            const fadeProgress = Math.max(0, Math.min(1, (progress - 0.0583) / 0.0417));
 
-            // Text card fades up and out
-            if (textCardRef.current) {
-              textCardRef.current.style.opacity = String(1 - fadeProgress);
-              textCardRef.current.style.transform = `translateY(${-100 * fadeProgress}px)`;
+            // Heading fades up and out
+            if (headingRef.current) {
+              headingRef.current.style.opacity = String(Math.max(0, 1 - fadeProgress));
+              headingRef.current.style.transform = `translateY(${-50 * fadeProgress}px)`;
             }
 
-            // Small image fades up and out
-            if (imageContainerRef.current) {
-              imageContainerRef.current.style.opacity = String(1 - fadeProgress);
-              imageContainerRef.current.style.transform = `translateY(${-100 * fadeProgress}px)`;
+            // Entire content wrapper card fades up and out
+            if (contentWrapperRef.current) {
+              contentWrapperRef.current.style.opacity = String(Math.max(0, 1 - fadeProgress));
+              contentWrapperRef.current.style.transform = `translateY(${-100 * fadeProgress}px)`;
             }
-          } else if (progress < 0.0667) {
-            // Reset to initial state when scrolling back before fade
-            if (textCardRef.current) {
-              textCardRef.current.style.opacity = '1';
-              textCardRef.current.style.transform = 'translateY(0)';
+          } else if (progress < 0.0583) {
+            // Reset to initial state when scrolling back before fade (REVERSE SCROLL)
+            if (headingRef.current) {
+              headingRef.current.style.opacity = '1';
+              headingRef.current.style.transform = 'translateY(0)';
             }
-            if (imageContainerRef.current) {
-              imageContainerRef.current.style.opacity = '1';
-              imageContainerRef.current.style.transform = 'translateY(0)';
+            if (contentWrapperRef.current) {
+              contentWrapperRef.current.style.opacity = '1';
+              contentWrapperRef.current.style.transform = 'translateY(0)';
             }
-          } else if (progress >= 0.1333) {
-            // Keep faded out after phase completes
-            if (textCardRef.current) {
-              textCardRef.current.style.opacity = '0';
-              textCardRef.current.style.transform = 'translateY(-100px)';
+          } else if (progress >= 0.1) {
+            // Keep faded out after phase completes (FORWARD SCROLL LOCK)
+            if (headingRef.current) {
+              headingRef.current.style.opacity = '0';
+              headingRef.current.style.transform = 'translateY(-50px)';
             }
-            if (imageContainerRef.current) {
-              imageContainerRef.current.style.opacity = '0';
-              imageContainerRef.current.style.transform = 'translateY(-100px)';
+            if (contentWrapperRef.current) {
+              contentWrapperRef.current.style.opacity = '0';
+              contentWrapperRef.current.style.transform = 'translateY(-100px)';
             }
           }
 
-          // PHASE 3: Full-Screen Image Slides In (12%-72% = 90vh-540vh)
-          // Now 450vh duration (1.5x slower) - starts when fade is 80% complete
-          if (progress >= 0.12 && progress < 0.72) {
-            const slideProgress = (progress - 0.12) / 0.6; // 0 to 1
-            // Use power-6 easing for extremely smooth, luxurious slide
-            const easedSlide = 1 - Math.pow(1 - slideProgress, 6);
+          // PHASE 3: Full-Screen Image Slides In (4.17%-84.17% = 50vh-1010vh)
+          // Starts simultaneously with card fade - no gap/empty page
+          // Duration: 960vh (50vh to 1010vh)
+          // Starts at 70% scale and 30% opacity, grows to 100% scale
+          // Opacity reaches 100% once 50vw of the frame is on screen (translateX = -50%)
+          if (progress >= 0.0417 && progress < 0.8417) {
+            // Calculate slide progress with defensive bounds checking
+            // Duration: 960vh (50vh to 1010vh) = 0.8 of total progress
+            const slideProgress = Math.max(0, Math.min(1, (progress - 0.0417) / 0.8));
+            // Use smooth ease-in-out for consistent speed throughout
+            // Starts slow, speeds up in middle, slows down at end
+            const easedSlide = slideProgress < 0.5
+              ? 2 * slideProgress * slideProgress
+              : 1 - Math.pow(-2 * slideProgress + 2, 2) / 2;
+            const clampedEasedSlide = Math.max(0, Math.min(1, easedSlide));
 
             if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = `translateX(${-100 + (100 * easedSlide)}%)`;
+              // Slide from left: -100% to 0%
+              const translateX = Math.max(-100, Math.min(0, -100 + (100 * clampedEasedSlide)));
+
+              // Scale from 70% to 100%
+              const scale = Math.max(0.7, Math.min(1, 0.7 + (0.3 * clampedEasedSlide)));
+
+              // Opacity ties to visible width — hit 100% opacity once 50vw is onscreen (translateX = -50%)
+              // clampedEasedSlide of 0.5 === translateX -50% === 50vw showing
+              let opacity = 0.3;
+              if (clampedEasedSlide < 0.5) {
+                const visibilityProgress = Math.max(0, Math.min(1, clampedEasedSlide / 0.5));
+                const easedVisibility = 1 - Math.pow(1 - visibilityProgress, 3);
+                opacity = Math.max(0.3, Math.min(1, 0.3 + (0.7 * easedVisibility)));
+              } else {
+                opacity = 1;
+              }
+
+              fullScreenImageRef.current.style.transform = `translateX(${translateX}%) scale(${scale})`;
+              fullScreenImageRef.current.style.opacity = String(opacity);
+            }
+          } else if (progress >= 0.0334 && progress < 0.0417) {
+            // PRE-SLIDE TEASER: During final 10vh of Phase 1 (40vh-50vh) ease image in to leave 10vw visible
+            // Keeps safari scene partially visible so fade + slide feel connected
+            if (fullScreenImageRef.current) {
+              const teaserProgress = Math.max(0, Math.min(1, (progress - 0.0334) / 0.0083));
+              const translateX = -100 + (10 * teaserProgress); // -100% -> -90% (≈10vw visible because width = 100vw)
+              const easedTeaser = teaserProgress < 0.5
+                ? 2 * teaserProgress * teaserProgress
+                : 1 - Math.pow(-2 * teaserProgress + 2, 2) / 2;
+
+              fullScreenImageRef.current.style.transform = `translateX(${translateX}%) scale(${0.7 + (0.02 * easedTeaser)})`;
+              fullScreenImageRef.current.style.opacity = '0.3';
+            }
+          } else if (progress < 0.0334) {
+            // Reset to completely off-screen before teaser window
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = 'translateX(-100%) scale(0.7)';
+              fullScreenImageRef.current.style.opacity = '0.3';
+            }
+          } else if (progress >= 0.8417) {
+            // Keep fully visible after slide completes (FORWARD SCROLL LOCK)
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
               fullScreenImageRef.current.style.opacity = '1';
             }
-          } else if (progress < 0.12) {
-            // Reset to off-screen when scrolling back before slide
+          }
+
+          // PHASE 4: Pause After Image Fully Visible (84.17%-85% = 1010vh-1020vh)
+          // Image is fully on screen, wait 10vh before first text
+          if (progress >= 0.8417 && progress < 0.85) {
             if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(-100%)';
-              fullScreenImageRef.current.style.opacity = '0';
-            }
-          } else if (progress >= 0.72) {
-            // Keep fully visible after slide completes
-            if (fullScreenImageRef.current) {
-              fullScreenImageRef.current.style.transform = 'translateX(0%)';
+              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
               fullScreenImageRef.current.style.opacity = '1';
             }
           }
 
-          // PHASE 4: Pause Before Text (72%-76% = 540vh-570vh)
-          // Full-screen image visible, no text yet
+          // PHASE 5A: First Line Appears (85%-85.42% = 1020vh-1025vh)
+          // "This could be your morning" fades in after 10vh pause
+          if (progress >= 0.85 && progress < 0.8542) {
+            const line1Progress = Math.max(0, Math.min(1, (progress - 0.85) / 0.0042));
+            const easedLine1 = Math.max(0, Math.min(1, 1 - Math.pow(1 - line1Progress, 3)));
 
-          // PHASE 5: Text Overlay Appears (76%-80% = 570vh-600vh)
-          if (progress >= 0.76 && progress < 0.80) {
-            const textProgress = (progress - 0.76) / 0.04; // 0 to 1
-            const easedText = 1 - Math.pow(1 - textProgress, 3);
-
-            if (animatedOverlayRef.current) {
-              animatedOverlayRef.current.style.opacity = String(easedText);
+            if (textLine1Ref.current) {
+              textLine1Ref.current.style.opacity = String(easedLine1);
             }
-          } else if (progress < 0.76) {
-            // Keep hidden when scrolling back before text appears
-            if (animatedOverlayRef.current) {
-              animatedOverlayRef.current.style.opacity = '0';
+          } else if (progress < 0.85) {
+            // Keep hidden when scrolling back (REVERSE SCROLL)
+            if (textLine1Ref.current) {
+              textLine1Ref.current.style.opacity = '0';
             }
-          } else if (progress >= 0.80) {
-            // Keep fully visible after text fade completes
-            if (animatedOverlayRef.current) {
-              animatedOverlayRef.current.style.opacity = '1';
+          } else if (progress >= 0.8542) {
+            // Keep fully visible after fade completes (FORWARD SCROLL LOCK)
+            if (textLine1Ref.current) {
+              textLine1Ref.current.style.opacity = '1';
             }
           }
 
-          // PHASE 6: Hold for Reading (80%-93.33% = 600vh-700vh)
+          // PHASE 5B: "Exciting." Appears (85.83%-86.25% = 1030vh-1035vh)
+          // Appears 5vh after first line completes
+          if (progress >= 0.8583 && progress < 0.8625) {
+            const word1Progress = Math.max(0, Math.min(1, (progress - 0.8583) / 0.0042));
+            const easedWord1 = Math.max(0, Math.min(1, 1 - Math.pow(1 - word1Progress, 3)));
+
+            if (textLine2Word1Ref.current) {
+              textLine2Word1Ref.current.style.opacity = String(easedWord1);
+            }
+          } else if (progress < 0.8583) {
+            if (textLine2Word1Ref.current) {
+              textLine2Word1Ref.current.style.opacity = '0';
+            }
+          } else if (progress >= 0.8625) {
+            if (textLine2Word1Ref.current) {
+              textLine2Word1Ref.current.style.opacity = '1';
+            }
+          }
+
+          // PHASE 5C: "Beautiful." Appears (87.5%-87.92% = 1050vh-1055vh)
+          // Appears 15vh after "Exciting." completes for extra breathing room
+          if (progress >= 0.875 && progress < 0.8792) {
+            const word2Progress = Math.max(0, Math.min(1, (progress - 0.875) / 0.0042));
+            const easedWord2 = Math.max(0, Math.min(1, 1 - Math.pow(1 - word2Progress, 3)));
+
+            if (textLine2Word2Ref.current) {
+              textLine2Word2Ref.current.style.opacity = String(easedWord2);
+            }
+          } else if (progress < 0.875) {
+            if (textLine2Word2Ref.current) {
+              textLine2Word2Ref.current.style.opacity = '0';
+            }
+          } else if (progress >= 0.8792) {
+            if (textLine2Word2Ref.current) {
+              textLine2Word2Ref.current.style.opacity = '1';
+            }
+          }
+
+          // PHASE 5D: "Breath taking." Appears (89.17%-89.58% = 1070vh-1075vh)
+          // Appears 20vh after "Beautiful." completes for dramatic pacing
+          if (progress >= 0.8917 && progress < 0.8958) {
+            const word3Progress = Math.max(0, Math.min(1, (progress - 0.8917) / 0.0041));
+            const easedWord3 = Math.max(0, Math.min(1, 1 - Math.pow(1 - word3Progress, 3)));
+
+            if (textLine2Word3Ref.current) {
+              textLine2Word3Ref.current.style.opacity = String(easedWord3);
+            }
+          } else if (progress < 0.8917) {
+            if (textLine2Word3Ref.current) {
+              textLine2Word3Ref.current.style.opacity = '0';
+            }
+          } else if (progress >= 0.8958) {
+            if (textLine2Word3Ref.current) {
+              textLine2Word3Ref.current.style.opacity = '1';
+            }
+          }
+
+          // PHASE 6: Hold for Reading (89.58%-95.83% = 1075vh-1150vh)
           // Everything stays visible and static
+          // Defensive: Ensure all elements maintain final state
+          if (progress >= 0.8958 && progress < 0.9583) {
+            if (headingRef.current) {
+              headingRef.current.style.opacity = '0';
+            }
+            if (contentWrapperRef.current) {
+              contentWrapperRef.current.style.opacity = '0';
+            }
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
+              fullScreenImageRef.current.style.opacity = '1';
+            }
+            if (textLine1Ref.current) {
+              textLine1Ref.current.style.opacity = '1';
+            }
+            if (textLine2Word1Ref.current) {
+              textLine2Word1Ref.current.style.opacity = '1';
+            }
+            if (textLine2Word2Ref.current) {
+              textLine2Word2Ref.current.style.opacity = '1';
+            }
+            if (textLine2Word3Ref.current) {
+              textLine2Word3Ref.current.style.opacity = '1';
+            }
+          }
 
-          // PHASE 7: Exit (93.33%-100% = 700vh-750vh)
+          // PHASE 7: Exit (95.83%-100% = 1150vh-1200vh)
           // No animations, just unpinning
+          // Defensive: Maintain final state during unpin
+          if (progress >= 0.9583) {
+            if (headingRef.current) {
+              headingRef.current.style.opacity = '0';
+            }
+            if (contentWrapperRef.current) {
+              contentWrapperRef.current.style.opacity = '0';
+            }
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = 'translateX(0%) scale(1)';
+              fullScreenImageRef.current.style.opacity = '1';
+            }
+            if (textLine1Ref.current) {
+              textLine1Ref.current.style.opacity = '1';
+            }
+            if (textLine2Word1Ref.current) {
+              textLine2Word1Ref.current.style.opacity = '1';
+            }
+            if (textLine2Word2Ref.current) {
+              textLine2Word2Ref.current.style.opacity = '1';
+            }
+            if (textLine2Word3Ref.current) {
+              textLine2Word3Ref.current.style.opacity = '1';
+            }
+          }
 
           // Screen reader announcements
           if (progress > 0 && progress < 0.03) {
             setAriaMessage('Morning Safari Drive section is now in focus.');
           }
-          else if (progress > 0.06 && progress < 0.09) {
-            setAriaMessage('Content is fading away.');
+          else if (progress > 0.05 && progress < 0.08) {
+            setAriaMessage('Heading and content are fading away.');
           }
-          else if (progress > 0.11 && progress < 0.14) {
+          else if (progress > 0.045 && progress < 0.08) {
             setAriaMessage('Full safari scene is slowly appearing with Mount Kilimanjaro and elephants.');
           }
-          else if (progress > 0.75 && progress < 0.78) {
-            setAriaMessage('Inspirational message is appearing: This could be your morning.');
+          else if (progress > 0.8417 && progress < 0.85) {
+            setAriaMessage('Image is now fully visible. Waiting before text appears.');
+          }
+          else if (progress > 0.85 && progress < 0.86) {
+            setAriaMessage('First message appearing: This could be your morning.');
+          }
+          else if (progress > 0.8583 && progress < 0.8625) {
+            setAriaMessage('Word appearing: Exciting.');
+          }
+          else if (progress > 0.8667 && progress < 0.8708) {
+            setAriaMessage('Word appearing: Beautiful.');
+          }
+          else if (progress > 0.8917 && progress < 0.896) {
+            setAriaMessage('Word appearing: Breath taking.');
           }
         },
       });
 
       // Set initial states
       if (fullScreenImageRef.current) {
-        fullScreenImageRef.current.style.opacity = '0';
-        fullScreenImageRef.current.style.transform = 'translateX(-100%)';
+        fullScreenImageRef.current.style.opacity = '0.3';
+        fullScreenImageRef.current.style.transform = 'translateX(-100%) scale(0.7)';
       }
 
-      if (animatedOverlayRef.current) {
-        animatedOverlayRef.current.style.opacity = '0';
+      if (textLine1Ref.current) {
+        textLine1Ref.current.style.opacity = '0';
+      }
+
+      if (textLine2Word1Ref.current) {
+        textLine2Word1Ref.current.style.opacity = '0';
+      }
+
+      if (textLine2Word2Ref.current) {
+        textLine2Word2Ref.current.style.opacity = '0';
+      }
+
+      if (textLine2Word3Ref.current) {
+        textLine2Word3Ref.current.style.opacity = '0';
       }
 
     }, sectionRef);
@@ -343,16 +516,17 @@ export default function MorningDriveChapter({
 
       <div className={styles.container}>
         <h2
+          ref={headingRef}
           id="morning-drive-heading"
           className={styles.heading}
         >
           Morning Safari Drive
         </h2>
 
-        {/* Two-Card Content Wrapper */}
-        <div className={styles.contentWrapper}>
-          {/* Text Card - Fades out during Phase 2 */}
-          <div ref={textCardRef} className={styles.textCard}>
+        {/* Two-Card Content Wrapper - Fades as one unit during Phase 2 */}
+        <div ref={contentWrapperRef} className={styles.contentWrapper}>
+          {/* Text Card */}
+          <div className={styles.textCard}>
             <h3 className={styles.subHeading}>
               First Light on the Golden Plains
             </h3>
@@ -385,9 +559,9 @@ export default function MorningDriveChapter({
             </div>
           </div>
 
-          {/* Image Card - Stays visible, detaches & grows */}
+          {/* Image Card */}
           <div className={styles.imageCard}>
-            <div ref={imageContainerRef} className={styles.imageContainer}>
+            <div className={styles.imageContainer}>
               <OptimizedImage
                 src={midgroundImage}
                 alt="A golden savanna at dawn with Mount Kilimanjaro silhouetted in the distance, safari vehicle in the foreground tracking wildlife"
@@ -413,11 +587,15 @@ export default function MorningDriveChapter({
           />
         </div>
 
-        {/* Text overlay - appears at top after full-screen image */}
-        <div ref={animatedOverlayRef} className={styles.animatedHeading}>
+        {/* Text overlay - appears sequentially after full-screen image */}
+        <div className={styles.animatedHeading}>
           <h3 className={styles.animatedHeadingText}>
-            <span className={styles.textLine1}>This could be your morning</span>
-            <span className={styles.textLine2}>Exciting. Beautiful. Captivating.</span>
+            <span ref={textLine1Ref} className={styles.textLine1}>This could be your morning</span>
+            <span className={styles.textLine2}>
+              <span ref={textLine2Word1Ref} className={styles.word}>Exciting.</span>
+              <span ref={textLine2Word2Ref} className={styles.word}>Beautiful.</span>
+              <span ref={textLine2Word3Ref} className={styles.word}>Breath taking.</span>
+            </span>
           </h3>
         </div>
       </div>
