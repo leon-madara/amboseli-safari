@@ -44,7 +44,7 @@ const getChapterHeight = (baseHeight: number): number => {
 const BASE_HEIGHTS = {
   preDawn: 100,
   morningDrive: 60,
-  wildlifeEncounters: 80,
+  wildlifeEncounters: 160, // Updated for card stacking animation (was 80)
   accommodations: 80,
   dining: 80,
   experiences: 80,
