@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { ParallaxContainer, ParallaxLayer } from '@/components/animations/ParallaxContainer';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import { CHAPTER_IMAGES, DINING_DISH_IMAGES } from '@/data/images';
 import styles from './DiningChapter.module.css';
 
@@ -78,36 +79,35 @@ export default function DiningChapter({
   };
 
   return (
-    <section
-      id={id}
-      ref={chapterRef}
-      className={`${styles.diningChapter} ${className}`}
-      data-chapter="dining"
-      aria-labelledby="dining-heading"
-    >
-      {/* Background with afternoon golden light and parallax */}
-      <div className={styles.backgroundContainer}>
-        <div
-          ref={backgroundRef}
-          className={styles.backgroundImageWrapper}
-          style={{ transform: `translateY(${backgroundParallaxOffset}px)` }}
-        >
-          <Image
-            src={backgroundImage}
-            alt="Sundowner deck at golden hour"
-            fill
-            quality={85}
-            sizes="100vw"
-            className={styles.backgroundImage}
-          />
+    <ParallaxContainer className={styles.parallaxWrapper}>
+      <section
+        id={id}
+        ref={chapterRef}
+        className={`${styles.diningChapter} ${className}`}
+        data-chapter="dining"
+        aria-labelledby="dining-heading"
+      >
+        {/* Background with afternoon golden light and parallax */}
+        <div className={styles.backgroundContainer}>
+          <ParallaxLayer speed={0.4} className={styles.backgroundLayer} zIndex={1}>
+            <div className={styles.backgroundImageWrapper}>
+              <OptimizedImage
+                src={backgroundImage}
+                alt="Sundowner deck at golden hour"
+                fill
+                imageType="chapter-background"
+                className={styles.backgroundImage}
+              />
+            </div>
+          </ParallaxLayer>
+
+          {/* Afternoon golden light gradient overlay */}
+          <div className={styles.gradientOverlay} />
         </div>
 
-        {/* Afternoon golden light gradient overlay */}
-        <div className={styles.gradientOverlay} />
-      </div>
-
-      {/* Main Content */}
-      <div className={styles.contentWrapper}>
+      {/* Main Content - Foreground Layer */}
+      <ParallaxLayer speed={1.0} className={styles.foregroundLayer} zIndex={5}>
+        <div className={styles.contentWrapper}>
         <motion.div
           className={styles.headerSection}
           initial={{ opacity: 0, y: 30 }}
@@ -143,13 +143,13 @@ export default function DiningChapter({
 
               <div className={styles.dishCard}>
                 <div className={styles.dishImageContainer}>
-                  <Image
+                  <OptimizedImage
                     src={dishes[currentDishIndex].image}
                     alt={dishes[currentDishIndex].name}
                     fill
+                    imageType="content"
                     sizes="(max-width: 768px) 90vw, 600px"
                     className={styles.dishImage}
-                    loading="lazy"
                   />
                 </div>
                 <div className={styles.dishInfo}>
@@ -326,7 +326,9 @@ export default function DiningChapter({
             {ctaButton.text}
           </a>
         </motion.div>
-      </div>
-    </section>
+        </div>
+      </ParallaxLayer>
+      </section>
+    </ParallaxContainer>
   );
 }

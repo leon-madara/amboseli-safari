@@ -17,6 +17,7 @@ import {
   TRANSFER_OPTIONS,
   JOURNEY_GALLERY,
   INFO_CARDS,
+  PROXIMITY_LANDMARKS,
 } from '@/data/locationData';
 import styles from './LocationChapter.module.css';
 
@@ -111,7 +112,36 @@ function LocationChapter({ id }: LocationChapterProps) {
           />
         </motion.div>
 
-        {/* Section 3: Interactive Map + Journey Timeline */}
+        {/* Section 3: Key Travel Information */}
+        <motion.div
+          className={styles.travelInfoSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+        >
+          <div className={styles.travelInfoGrid}>
+            <div className={styles.travelInfoCard}>
+              <span className={styles.travelInfoIcon}>🏙️</span>
+              <h4 className={styles.travelInfoTitle}>From Nairobi</h4>
+              <p className={styles.travelInfoDistance}>365 km</p>
+              <p className={styles.travelInfoTime}>3-4 hours drive</p>
+            </div>
+            <div className={styles.travelInfoCard}>
+              <span className={styles.travelInfoIcon}>🚪</span>
+              <h4 className={styles.travelInfoTitle}>Kimana Gate</h4>
+              <p className={styles.travelInfoDistance}>2 km</p>
+              <p className={styles.travelInfoTime}>Main park entrance</p>
+            </div>
+            <div className={styles.travelInfoCard}>
+              <span className={styles.travelInfoIcon}>🏔️</span>
+              <h4 className={styles.travelInfoTitle}>Mount Kilimanjaro</h4>
+              <p className={styles.travelInfoDistance}>45 km</p>
+              <p className={styles.travelInfoTime}>Unobstructed views</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Section 4: Interactive Map + Journey Timeline */}
         <div className={styles.mapTimelineSection}>
           <motion.div
             className={styles.mapColumn}
@@ -123,6 +153,7 @@ function LocationChapter({ id }: LocationChapterProps) {
             <InteractiveMap
               waypoints={selectedRoute.waypoints}
               showRoute={true}
+              proximityLandmarks={PROXIMITY_LANDMARKS}
             />
           </motion.div>
 
@@ -137,7 +168,7 @@ function LocationChapter({ id }: LocationChapterProps) {
           </motion.div>
         </div>
 
-        {/* Section 4: Transport Comparison */}
+        {/* Section 5: Transport Comparison */}
         <motion.div
           className={styles.comparisonSection}
           initial={{ opacity: 0, y: 30 }}
@@ -148,7 +179,7 @@ function LocationChapter({ id }: LocationChapterProps) {
           <TransportComparisonTable options={TRANSFER_OPTIONS} />
         </motion.div>
 
-        {/* Section 5: Photo Gallery */}
+        {/* Section 6: Photo Gallery */}
         <motion.div
           className={styles.gallerySection}
           initial={{ opacity: 0, y: 30 }}
@@ -162,7 +193,7 @@ function LocationChapter({ id }: LocationChapterProps) {
           <PhotoGallery images={JOURNEY_GALLERY} columns={3} />
         </motion.div>
 
-        {/* Section 6: Info Cards */}
+        {/* Section 7: Info Cards */}
         <motion.div
           className={styles.infoSection}
           initial={{ opacity: 0, y: 30 }}
@@ -182,7 +213,7 @@ function LocationChapter({ id }: LocationChapterProps) {
           </div>
         </motion.div>
 
-        {/* Section 7: Booking CTA */}
+        {/* Section 8: Booking CTA */}
         <motion.div
           className={styles.ctaSection}
           initial={{ opacity: 0, scale: 0.95 }}

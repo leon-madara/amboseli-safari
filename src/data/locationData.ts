@@ -14,6 +14,18 @@ export const LODGE_COORDINATES: Coordinates = {
   lng: 37.2606,
 };
 
+// Kimana Gate (main park entrance)
+export const KIMANA_GATE_COORDINATES: Coordinates = {
+  lat: -2.6450,
+  lng: 37.2528,
+};
+
+// Mount Kilimanjaro peak (for views indicator)
+export const KILIMANJARO_COORDINATES: Coordinates = {
+  lat: -3.0674,
+  lng: 37.3556,
+};
+
 export interface CityDistance {
   id: string;
   city: string;
@@ -31,9 +43,9 @@ export const CITY_DISTANCES: CityDistance[] = [
     id: 'nairobi',
     city: 'Nairobi',
     country: 'Kenya',
-    distance: '240',
-    driveTime: '4 hours',
-    travelTime: '4 hours',
+    distance: '365',
+    driveTime: '3-4 hours',
+    travelTime: '3-4 hours',
     transportType: 'Both',
     description: 'Kenya\'s capital city and main international gateway',
     icon: '🏙️',
@@ -222,6 +234,43 @@ export function getNearestCity(): CityDistance {
 // Alias for consistent naming across components
 export const NEARBY_AIRPORTS = NEAREST_AIRPORTS;
 
+// Proximity information for key landmarks
+export interface ProximityInfo {
+  id: string;
+  name: string;
+  distance: string;
+  description: string;
+  icon: string;
+  coordinates: Coordinates;
+}
+
+export const PROXIMITY_LANDMARKS: ProximityInfo[] = [
+  {
+    id: 'kimana-gate',
+    name: 'Kimana Gate',
+    distance: '2 km',
+    description: 'Main entrance to Amboseli National Park',
+    icon: '🚪',
+    coordinates: KIMANA_GATE_COORDINATES,
+  },
+  {
+    id: 'kilimanjaro',
+    name: 'Mount Kilimanjaro',
+    distance: '45 km',
+    description: 'Unobstructed views of Africa\'s highest peak',
+    icon: '🏔️',
+    coordinates: KILIMANJARO_COORDINATES,
+  },
+  {
+    id: 'nairobi',
+    name: 'Nairobi',
+    distance: '365 km',
+    description: 'Kenya\'s capital and international gateway (3-4 hours drive)',
+    icon: '🏙️',
+    coordinates: { lat: -1.2921, lng: 36.8219 },
+  },
+];
+
 // ============================================================
 // ENHANCED JOURNEY PLANNING DATA
 // ============================================================
@@ -301,8 +350,8 @@ export const JOURNEY_ROUTES: JourneyRoute[] = [
         description: 'Your luxury safari destination',
       },
     ],
-    totalDistance: '240 km',
-    totalDuration: '4 hours',
+    totalDistance: '365 km',
+    totalDuration: '3-4 hours',
     recommended: true,
     transportType: 'Both',
   },

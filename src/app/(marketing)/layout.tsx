@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import Navigation from '@/components/organisms/Navigation/Navigation';
 import Footer from '@/components/organisms/Footer/Footer';
+import PillNavigation from '@/components/organisms/PillNavigation/PillNavigation';
 
 export default function MarketingLayout({
   children,
@@ -9,7 +9,7 @@ export default function MarketingLayout({
 }) {
   return (
     <div className="marketing-layout">
-      <Navigation />
+      <PillNavigation />
       {children}
       <Footer />
     </div>

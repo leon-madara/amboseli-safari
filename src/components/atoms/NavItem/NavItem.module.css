@@ -1,0 +1,131 @@
+.navItem {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  /* Ensure minimum touch target size of 44x44 pixels for accessibility */
+  min-height: 44px;
+  min-width: 44px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: 9999px;
+  /* Instant transition when becoming inactive (no delay) */
+  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              font-weight 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  
+  /* Default state - charcoal text */
+  color: #3A3633;
+  background-color: transparent;
+  border: none;
+  
+  /* Performance optimizations - GPU acceleration for transforms */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Hover state */
+.navItem:hover {
+  color: #8B4A2F; /* darker terracotta for better contrast */
+  background-color: rgba(232, 213, 196, 0.3); /* sand with slightly more opacity */
+  /* Use translate3d for GPU acceleration instead of scale */
+  transform: scale(1.05) translateZ(0);
+  -webkit-transform: scale(1.05) translateZ(0);
+}
+
+/* Active state - text color changes with delay to match sliding indicator */
+.navItem.active {
+  color: #FAF7F2; /* cream */
+  font-weight: 600;
+  background-color: transparent;
+  border: none;
+  /* Delay color change to sync with sliding indicator arrival */
+  transition: color 400ms cubic-bezier(0.4, 0, 0.2, 1) 300ms,
+              font-weight 400ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+}
+
+.navItem.active:hover {
+  background-color: #252321; /* charcoal-dark */
+  /* Use translate3d for GPU acceleration */
+  transform: scale(1.02) translateZ(0);
+  -webkit-transform: scale(1.02) translateZ(0);
+}
+
+/* Focus state for accessibility */
+.navItem:focus {
+  outline: 2px solid #4A9FFF;
+  outline-offset: 2px;
+}
+
+.navItem:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.navItem:focus-visible {
+  outline: 2px solid #4A9FFF;
+  outline-offset: 2px;
+}
+
+/* Subtle pulse animation for active state */
+@keyframes activePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 159, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(74, 159, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 159, 255, 0);
+  }
+}
+
+.navItem.active {
+  /* Add subtle pulse animation on initial active state */
+  animation: activePulse 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 767px) {
+  .navItem {
+    /* Optimize for touch interactions on mobile */
+    -webkit-tap-highlight-color: rgba(74, 159, 255, 0.2);
+    /* Ensure adequate spacing for touch targets */
+    padding: 0.625rem 0.875rem;
+  }
+  
+  /* Remove hover effects on touch devices */
+  @media (hover: none) {
+    .navItem:hover {
+      color: #3A3633;
+      background-color: transparent;
+      transform: translateZ(0);
+    }
+    
+    .navItem.active:hover {
+      color: #FAF7F2;
+      background-color: #3A3633;
+      transform: translateZ(0);
+    }
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .navItem {
+    transition: none;
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  .navItem:hover {
+    transform: none;
+  }
+  
+  .navItem.active {
+    animation: none;
+  }
+}

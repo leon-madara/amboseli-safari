@@ -79,7 +79,7 @@ export default function DiningPage() {
 
           <div className={styles.experiencesGrid}>
             {diningExperiences.map((experience, index) => (
-              <ExperienceCard key={index} experience={experience} index={index} />
+              <ExperienceCard key={index} experience={experience as any} />
             ))}
           </div>
         </div>

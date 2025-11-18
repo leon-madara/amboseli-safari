@@ -1,0 +1,193 @@
+/* Page Container */
+.page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+/* Page Header */
+.pageHeader {
+  max-width: var(--container-max-width-2xl);
+  margin: 0 auto;
+  padding: var(--space-section-md) var(--space-container-padding-lg);
+  text-align: center;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.breadcrumbLink {
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-primary-terracotta);
+}
+
+.breadcrumbLink:focus-visible {
+  outline: 2px solid var(--color-primary-terracotta);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.breadcrumbSeparator {
+  color: var(--color-text-tertiary);
+}
+
+.breadcrumbCurrent {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.pageTitle {
+  font-family: var(--font-family-display);
+  font-size: var(--heading-h1-size);
+  font-weight: var(--heading-h1-weight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.pageSubtitle {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Content Area */
+.content {
+  max-width: var(--container-max-width-2xl);
+  margin: 0 auto;
+  padding: 0 var(--space-container-padding-lg) var(--space-section-lg);
+  /* Smooth transition between loading and loaded states */
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: var(--space-20);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.emptyStateText {
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-6) 0;
+}
+
+.emptyStateLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-inverse);
+  background-color: var(--color-primary-terracotta);
+  text-decoration: none;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-button);
+  transition: var(--transition-all);
+  box-shadow: var(--shadow-button);
+}
+
+.emptyStateLink:hover {
+  background-color: var(--color-primary-terracotta-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.emptyStateLink:focus-visible {
+  outline: 3px solid var(--color-primary-terracotta);
+  outline-offset: 4px;
+}
+
+/* Placeholder for Grid (temporary) */
+.gridPlaceholder {
+  text-align: center;
+  padding: var(--space-16);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-card);
+  border: 2px dashed var(--color-border-light);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-family-body);
+  font-size: var(--body-large-size);
+}
+
+/* Tablet Responsive Adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pageHeader {
+    padding: var(--space-section-md) var(--space-container-padding-lg);
+  }
+
+  .pageTitle {
+    font-size: var(--heading-h1-size);
+  }
+
+  .pageSubtitle {
+    font-size: var(--body-large-size);
+  }
+
+  .content {
+    padding: 0 var(--space-container-padding-lg) var(--space-section-lg);
+  }
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 767px) {
+  .pageHeader {
+    padding: var(--space-section-sm) var(--space-container-padding);
+  }
+
+  .pageTitle {
+    font-size: var(--heading-h2-size);
+  }
+
+  .pageSubtitle {
+    font-size: var(--body-base-size);
+  }
+
+  .content {
+    padding: 0 var(--space-container-padding) var(--space-section-md);
+  }
+
+  .emptyState {
+    padding: var(--space-12);
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumbs {
+    font-size: var(--font-size-xs);
+  }
+
+  .pageTitle {
+    font-size: var(--heading-h3-size);
+  }
+}

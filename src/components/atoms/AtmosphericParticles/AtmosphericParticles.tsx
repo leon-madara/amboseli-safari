@@ -48,6 +48,9 @@ export default function AtmosphericParticles({
       return;
     }
 
+    // Detect mobile viewport for performance optimization
+    const isMobile = window.innerWidth < 768;
+
     // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -58,7 +61,10 @@ export default function AtmosphericParticles({
 
     // Initialize particles
     const initParticles = () => {
-      const particleCount = Math.min(Math.floor(density), 50); // Max 50 particles
+      // Reduce particle count to 50% on mobile devices for better performance
+      const mobileMultiplier = isMobile ? 0.5 : 1.0;
+      const adjustedDensity = Math.floor(density * mobileMultiplier);
+      const particleCount = Math.min(adjustedDensity, 50); // Max 50 particles
       particlesRef.current = [];
 
       for (let i = 0; i < particleCount; i++) {

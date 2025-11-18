@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { ParallaxContainer, ParallaxLayer } from '@/components/animations/ParallaxContainer';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import ExperienceCard from '@/components/molecules/ExperienceCard';
 import ActivityTimeline from '@/components/molecules/ActivityTimeline';
 import { CHAPTER_IMAGES, EXPERIENCE_CARD_IMAGES } from '@/data/images';
@@ -91,36 +92,35 @@ export default function ExperiencesChapter({
   const { progress } = useSpecificChapterProgress('experiences');
 
   return (
-    <section
-      id={id}
-      ref={chapterRef}
-      className={`${styles.experiencesChapter} ${className}`}
-      data-chapter="experiences"
-      aria-labelledby="experiences-heading"
-    >
-      {/* Background with golden hour lighting and parallax */}
-      <div className={styles.backgroundContainer}>
-        <div
-          ref={backgroundRef}
-          className={styles.backgroundImageWrapper}
-          style={{ transform: `translateY(${backgroundParallaxOffset}px)` }}
-        >
-          <Image
-            src={backgroundImage}
-            alt="Game drive at golden hour"
-            fill
-            quality={85}
-            sizes="100vw"
-            className={styles.backgroundImage}
-          />
+    <ParallaxContainer className={styles.parallaxWrapper}>
+      <section
+        id={id}
+        ref={chapterRef}
+        className={`${styles.experiencesChapter} ${className}`}
+        data-chapter="experiences"
+        aria-labelledby="experiences-heading"
+      >
+        {/* Background with golden hour lighting and parallax */}
+        <div className={styles.backgroundContainer}>
+          <ParallaxLayer speed={0.4} className={styles.backgroundLayer} zIndex={1}>
+            <div className={styles.backgroundImageWrapper}>
+              <OptimizedImage
+                src={backgroundImage}
+                alt="Game drive at golden hour"
+                fill
+                imageType="chapter-background"
+                className={styles.backgroundImage}
+              />
+            </div>
+          </ParallaxLayer>
+
+          {/* Golden hour lighting gradient overlay */}
+          <div className={styles.gradientOverlay} />
         </div>
 
-        {/* Golden hour lighting gradient overlay */}
-        <div className={styles.gradientOverlay} />
-      </div>
-
-      {/* Main Content */}
-      <div className={styles.contentWrapper}>
+      {/* Main Content - Foreground Layer */}
+      <ParallaxLayer speed={1.0} className={styles.foregroundLayer} zIndex={5}>
+        <div className={styles.contentWrapper}>
         <motion.div
           className={styles.headerSection}
           initial={{ opacity: 0, y: 30 }}
@@ -147,7 +147,7 @@ export default function ExperiencesChapter({
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
             >
-              <ExperienceCard {...experience} />
+              <ExperienceCard experience={experience as any} />
             </motion.div>
           ))}
         </div>
@@ -182,7 +182,9 @@ export default function ExperiencesChapter({
             {ctaButton.text}
           </a>
         </motion.div>
-      </div>
-    </section>
+        </div>
+      </ParallaxLayer>
+      </section>
+    </ParallaxContainer>
   );
 }

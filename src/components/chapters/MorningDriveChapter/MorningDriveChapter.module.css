@@ -1,161 +1,147 @@
 .morningDriveChapter {
   position: relative;
-  min-height: 150vh;
   width: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: url('/images/cursors/binoculars.svg') 16 16, crosshair;
-}
-
-/* Background Container */
-.backgroundContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.backgroundImage {
-  position: absolute;
-  top: -10%;
-  left: 0;
-  width: 100%;
-  height: 120%;
+  padding: 10vh 2rem 4rem;
+  background: transparent;
+  min-height: 100vh;
+  z-index: 5;
   will-change: transform;
 }
 
-.image {
-  object-fit: cover;
-  object-position: center;
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
 }
 
-/* Bright morning light gradient overlay */
-.gradientOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 216, 155, 0.4) 0%,
-    rgba(25, 84, 123, 0.3) 100%
-  );
-  pointer-events: none;
-}
-
-/* Distance Counter */
-.distanceCounter {
-  position: absolute;
-  top: 10%;
-  right: 5%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  text-align: center;
-}
-
-.counterValue {
+.heading {
   font-size: 3rem;
   font-weight: 700;
-  color: #19547b;
-  line-height: 1;
-  margin-bottom: 0.25rem;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  padding: 1rem 0;
+  z-index: 20;
 }
 
-.counterLabel {
+/* Two-Card Content Wrapper */
+.contentWrapper {
+  display: flex;
+  gap: 3rem;
+  flex-direction: row;
+  align-items: flex-start;
+  flex: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Text Card - Fades out during Phase 2 */
+.textCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: transparent;
+  border: none;
+  will-change: opacity, transform;
+}
+
+/* Image Card - Stays visible */
+.imageCard {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+}
+
+.subHeading {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #ffd89b;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.description {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #e0e0e0;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.tripDetails {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #3a4a5a;
+}
+
+.detailsHeading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 150px;
+}
+
+.detailLabel {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #666;
+  color: #b0b0b0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Content Wrapper */
-.contentWrapper {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-}
-
-.heading {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 4rem;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Wildlife Grid - Staggered Layout */
-.wildlifeGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-}
-
-.cardWrapper {
-  /* Staggered positioning for visual interest */
-  transform-origin: center;
-}
-
-.cardWrapper:nth-child(even) {
-  margin-top: 2rem;
-}
-
-/* CTA Container */
-.ctaContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
-}
-
-.cta {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
+.detailValue {
+  font-size: 1rem;
   font-weight: 600;
-  text-decoration: none;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-align: center;
+  color: #ffd89b;
 }
 
-.ctaPrimary {
-  background: linear-gradient(135deg, #19547b 0%, #ffd89b 100%);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(25, 84, 123, 0.3);
+.imageContainer {
+  width: 400px;
+  height: 250px;
+  transform-origin: center center;
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+  opacity: 1 !important;
+  will-change: transform;
+  contain: layout style;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
-.ctaPrimary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(25, 84, 123, 0.4);
-}
-
-.ctaSecondary {
-  background: rgba(255, 255, 255, 0.95);
-  color: #19547b;
-  border: 2px solid #19547b;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.ctaSecondary:hover {
-  background: #19547b;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(25, 84, 123, 0.3);
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Tablet Styles */
@@ -164,112 +150,221 @@
     font-size: 2.5rem;
   }
 
-  .wildlifeGrid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+  .contentWrapper {
+    gap: 2rem;
+  }
+}
+
+/* Small Devices (480px - 767px) */
+@media (max-width: 767px) {
+  .morningDriveChapter {
+    padding: 2rem 1rem;
   }
 
-  .distanceCounter {
-    top: 8%;
-    right: 3%;
-    padding: 1.25rem 1.5rem;
+  .heading {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
   }
 
-  .counterValue {
-    font-size: 2.5rem;
+  .contentWrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .textCard {
+    gap: 1.25rem;
+  }
+
+  .subHeading {
+    font-size: 1.5rem;
+  }
+
+  .imageContainer {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .image {
+    height: 200px;
+  }
+
+  .detailsList {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .detailItem {
+    min-width: auto;
   }
 }
 
 /* Extra Small Devices (320px - 479px) */
 @media (max-width: 479px) {
   .morningDriveChapter {
-    min-height: 100vh;
-    cursor: auto; /* Remove custom cursor on mobile */
-  }
-
-  .contentWrapper {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .heading {
-    font-size: clamp(1.5rem, 6vw, 1.875rem);
-    margin-bottom: 2rem;
-  }
-
-  .wildlifeGrid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-
-  .cardWrapper:nth-child(even) {
-    margin-top: 0;
-  }
-
-  .distanceCounter {
-    top: 3%;
-    right: 3%;
-    padding: 0.75rem 1rem;
-  }
-
-  .counterValue {
     font-size: 1.75rem;
-  }
-
-  .counterLabel {
-    font-size: 0.6875rem; /* 11px */
-  }
-
-  .cta {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    width: 100%;
-    max-width: 100%;
-    min-height: 44px; /* Minimum touch target */
-  }
-}
-
-/* Small Devices (480px - 767px) */
-@media (min-width: 480px) and (max-width: 767px) {
-  .morningDriveChapter {
-    min-height: 100vh;
-    cursor: auto;
+    margin-bottom: 1rem;
   }
 
   .contentWrapper {
-    padding: 3rem 1.5rem;
-  }
-
-  .heading {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .wildlifeGrid {
-    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  .cardWrapper:nth-child(even) {
-    margin-top: 0;
+  .textCard {
+    gap: 1rem;
   }
 
-  .distanceCounter {
-    top: 5%;
-    right: 5%;
-    padding: 1rem 1.25rem;
+  .subHeading {
+    font-size: 1.25rem;
   }
 
-  .counterValue {
+  .description {
+    font-size: 1.0625rem;
+  }
+
+  .detailsHeading {
+    font-size: 1.125rem;
+  }
+
+  .detailsList {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .detailItem {
+    min-width: auto;
+  }
+
+  .detailLabel {
+    font-size: 0.8125rem;
+  }
+
+  .detailValue {
+    font-size: 0.9375rem;
+  }
+
+  .image {
+    height: 180px;
+  }
+}
+
+/* Animated heading overlay */
+.animatedHeading {
+  position: fixed;
+  top: calc(50vh + 250px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  pointer-events: none;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  will-change: opacity;
+  contain: layout style paint;
+  backface-visibility: hidden;
+}
+
+.animatedHeadingText {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headingWord1 {
+  color: #ffffff;
+}
+
+.headingWord2 {
+  color: #ffd89b;
+}
+
+.headingWord3 {
+  color: #d4a574;
+}
+
+.headingWord4 {
+  color: #8b6f47;
+}
+
+.headingWord5 {
+  color: #19547b;
+}
+
+/* Tablet Styles for animated heading */
+@media (max-width: 1024px) {
+  .animatedHeadingText {
     font-size: 2rem;
   }
+}
 
-  .counterLabel {
-    font-size: 0.75rem;
+/* Mobile Styles for animated heading */
+@media (max-width: 767px) {
+  .animatedHeading {
+    top: calc(50vh + 150px);
+    width: 95%;
   }
 
-  .cta {
-    padding: 0.875rem 2rem;
-    font-size: 1rem;
-    min-height: 44px;
+  .animatedHeadingText {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .animatedHeadingText {
+    font-size: 1.25rem;
+  }
+}
+
+/* Accessibility: Screen reader only content */
+/* Requirement: 7.5 - Visually hidden but accessible to screen readers */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Accessibility: Ensure section remains keyboard navigable during pin phase */
+/* Requirement: 7.5 - Visible focus indicator for keyboard navigation */
+.morningDriveChapter:focus {
+  outline: 2px solid #19547b;
+  outline-offset: 4px;
+}
+
+/* Accessibility: Skip link support */
+/* Requirement: 7.5 - Ensure skip links work correctly with pinned section */
+.morningDriveChapter:focus-visible {
+  outline: 3px solid #19547b;
+  outline-offset: 4px;
+}
+
+/* Accessibility: Reduced motion support */
+/* Requirement: 7.5 - Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .morningDriveChapter,
+  .imageContainer,
+  .animatedHeading {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .morningDriveChapter * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

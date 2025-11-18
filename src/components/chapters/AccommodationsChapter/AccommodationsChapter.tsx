@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
 import { useAccommodationsPinning } from '@/hooks/useAccommodationsPinning';
+import { ParallaxContainer, ParallaxLayer } from '@/components/animations/ParallaxContainer';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import { CHAPTER_IMAGES, ROOM_IMAGES } from '@/data/images';
 import styles from './AccommodationsChapter.module.css';
 
@@ -67,29 +68,30 @@ export default function AccommodationsChapter({
   const sectionRef = useAccommodationsPinning();
 
   return (
-    <section
-      id={id}
-      ref={sectionRef}
-      className={`${styles.accommodationsChapter} accommodationsChapter ${className}`}
-      data-chapter="accommodations"
-      aria-labelledby="accommodations-heading"
-      role="region"
-      aria-label="Safari accommodations showcase"
-    >
-      {/* Skip to next section link for accessibility */}
-      <a
-        href="#dining"
-        className={styles.skipLink}
-        aria-label="Skip to next section: Dining Experience"
-        tabIndex={0}
+    <ParallaxContainer className={styles.parallaxWrapper}>
+      <section
+        id={id}
+        ref={sectionRef}
+        className={`${styles.accommodationsChapter} accommodationsChapter ${className}`}
+        data-chapter="accommodations"
+        aria-labelledby="accommodations-heading"
+        role="region"
+        aria-label="Safari accommodations showcase"
       >
-        Skip to Dining Experience
-      </a>
+        {/* Skip to next section link for accessibility */}
+        <a
+          href="#dining"
+          className={styles.skipLink}
+          aria-label="Skip to next section: Dining Experience"
+          tabIndex={0}
+        >
+          Skip to Dining Experience
+        </a>
 
-      {/* Background with midday lighting */}
-      <div className={styles.backgroundContainer} aria-hidden="true">
-        <div className={styles.gradientOverlay} />
-      </div>
+        {/* Background with midday lighting */}
+        <div className={styles.backgroundContainer} aria-hidden="true">
+          <div className={styles.gradientOverlay} />
+        </div>
 
       {/* Heading Container - Fixed during pin */}
       <div className={styles.headingContainer}>
@@ -104,24 +106,25 @@ export default function AccommodationsChapter({
       {/* Rooms Container - Pinned viewport with absolute positioned rooms */}
       <div className={styles.roomsContainer} role="list" aria-label="Available room types">
         {/* Room 1: Image Left, Card Right */}
-        <div 
-          className={`${styles.roomImage} room-1-image`} 
-          data-position="left" 
-          data-room="1"
-          role="listitem"
-          aria-label={`${rooms[0].name} image`}
-        >
-          <div className={styles.imageContent}>
-            <Image
-              src={rooms[0].image}
-              alt={`${rooms[0].name} - ${rooms[0].tagline}`}
-              fill
-              sizes="50vw"
-              className={styles.image}
-              loading="lazy"
-            />
+        <ParallaxLayer speed={0.5} className={`${styles.roomImage} room-1-image`} zIndex={2}>
+          <div 
+            data-position="left" 
+            data-room="1"
+            role="listitem"
+            aria-label={`${rooms[0].name} image`}
+          >
+            <div className={styles.imageContent}>
+              <OptimizedImage
+                src={rooms[0].image}
+                alt={`${rooms[0].name} - ${rooms[0].tagline}`}
+                fill
+                imageType="content"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={styles.image}
+              />
+            </div>
           </div>
-        </div>
+        </ParallaxLayer>
 
         <div 
           className={`${styles.roomCard} room-1-card`} 
@@ -174,44 +177,46 @@ export default function AccommodationsChapter({
           </div>
         </div>
 
-        <div 
-          className={`${styles.roomImage} room-2-image`} 
-          data-position="right" 
-          data-room="2"
-          role="listitem"
-          aria-label={`${rooms[1].name} image`}
-        >
-          <div className={styles.imageContent}>
-            <Image
-              src={rooms[1].image}
-              alt={`${rooms[1].name} - ${rooms[1].tagline}`}
-              fill
-              sizes="50vw"
-              className={styles.image}
-              loading="lazy"
-            />
+        <ParallaxLayer speed={0.5} className={`${styles.roomImage} room-2-image`} zIndex={2}>
+          <div 
+            data-position="right" 
+            data-room="2"
+            role="listitem"
+            aria-label={`${rooms[1].name} image`}
+          >
+            <div className={styles.imageContent}>
+              <OptimizedImage
+                src={rooms[1].image}
+                alt={`${rooms[1].name} - ${rooms[1].tagline}`}
+                fill
+                imageType="content"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={styles.image}
+              />
+            </div>
           </div>
-        </div>
+        </ParallaxLayer>
 
         {/* Room 3: Image Left, Card Right */}
-        <div 
-          className={`${styles.roomImage} room-3-image`} 
-          data-position="left" 
-          data-room="3"
-          role="listitem"
-          aria-label={`${rooms[2].name} image`}
-        >
-          <div className={styles.imageContent}>
-            <Image
-              src={rooms[2].image}
-              alt={`${rooms[2].name} - ${rooms[2].tagline}`}
-              fill
-              sizes="50vw"
-              className={styles.image}
-              loading="lazy"
-            />
+        <ParallaxLayer speed={0.5} className={`${styles.roomImage} room-3-image`} zIndex={2}>
+          <div 
+            data-position="left" 
+            data-room="3"
+            role="listitem"
+            aria-label={`${rooms[2].name} image`}
+          >
+            <div className={styles.imageContent}>
+              <OptimizedImage
+                src={rooms[2].image}
+                alt={`${rooms[2].name} - ${rooms[2].tagline}`}
+                fill
+                imageType="content"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={styles.image}
+              />
+            </div>
           </div>
-        </div>
+        </ParallaxLayer>
 
         <div 
           className={`${styles.roomCard} room-3-card`} 
@@ -250,7 +255,8 @@ export default function AccommodationsChapter({
           {ctaButton.text}
         </a>
       </div>
-    </section>
+      </section>
+    </ParallaxContainer>
   );
 }
 

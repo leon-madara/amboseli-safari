@@ -26,12 +26,8 @@ export default function Navigation() {
         clearTimeout(scrollTimeout.current);
       }
 
-      // Hide on scroll down, show on scroll up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
+      // Hide navigation while scrolling (any direction)
+      setIsVisible(false);
 
       // Show after 1 second of no scrolling
       scrollTimeout.current = setTimeout(() => {

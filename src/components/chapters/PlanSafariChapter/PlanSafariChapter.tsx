@@ -414,6 +414,7 @@ function ContactMethods({ methods, inView }: ContactMethodsProps) {
           transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
           target={method.type === 'email' ? undefined : '_blank'}
           rel={method.type === 'email' ? undefined : 'noopener noreferrer'}
+          aria-label={method.label}
         >
           <div className={styles.contactMethodIcon}>{method.icon}</div>
           <div className={styles.contactMethodContent}>

@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: 'Amboseli Safari Club',
     images: [
       {
-        url: '/images/hero/hero-main.jpg',
+        url: '/images/hero/heroImage.jpg',
         width: 1200,
         height: 630,
         alt: 'Amboseli Safari Club with Mount Kilimanjaro',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: 'Amboseli Safari Club | Luxury Safari Lodge in Kenya',
     description:
       'Experience the ultimate safari at Amboseli Safari Club. Opening December 2025.',
-    images: ['/images/hero/hero-main.jpg'],
+    images: ['/images/hero/heroImage.jpg'],
   },
   robots: {
     index: true,

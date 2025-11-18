@@ -49,7 +49,7 @@ export function useAccommodationsPinning() {
     if (prefersReducedMotion) {
       // Kill all ScrollTrigger instances when reduced motion is detected
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === '.accommodationsChapter') {
+        if (trigger.vars.trigger === sectionRef.current) {
           trigger.kill();
         }
       });
@@ -118,7 +118,7 @@ export function useAccommodationsPinning() {
     const ctx = gsap.context(() => {
       // Pin the entire section for 300vh
       ScrollTrigger.create({
-        trigger: '.accommodationsChapter',
+        trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
         start: 'top top',
         end: '+=300vh', // Fixed: Pin for exactly 300vh (was +=300% which meant 900vh)
         pin: true,
@@ -137,7 +137,7 @@ export function useAccommodationsPinning() {
       // Both image and card slide up from bottom simultaneously
       const room1Timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: '.accommodationsChapter',
+          trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
           start: 'top top',
           end: '+=100vh',
           scrub: 1,
@@ -173,7 +173,7 @@ export function useAccommodationsPinning() {
       // Layout flips: [Image Left, Card Right] → [Card Left, Image Right]
       const room2Timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: '.accommodationsChapter',
+          trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
           start: 'top+=100vh top',
           end: '+=100vh',
           scrub: 1,
@@ -242,7 +242,7 @@ export function useAccommodationsPinning() {
       // Layout flips back: [Card Left, Image Right] → [Image Left, Card Right]
       const room3Timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: '.accommodationsChapter',
+          trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
           start: 'top+=200vh top',
           end: '+=100vh',
           scrub: 1,
@@ -321,7 +321,7 @@ export function useAccommodationsPinning() {
       if (e.matches) {
         // User enabled reduced motion - kill all animations
         ScrollTrigger.getAll().forEach((trigger) => {
-          if (trigger.vars.trigger === '.accommodationsChapter') {
+          if (trigger.vars.trigger === sectionRef.current) {
             trigger.kill();
           }
         });
@@ -371,7 +371,7 @@ export function useAccommodationsPinning() {
       
       // Kill all ScrollTrigger instances for this section
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === '.accommodationsChapter') {
+        if (trigger.vars.trigger === sectionRef.current) {
           trigger.kill();
         }
       });
