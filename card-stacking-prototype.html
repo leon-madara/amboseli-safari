@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wildlife Card Stacking Animation Concepts</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 1rem;
+      z-index: 1000;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav button {
+      padding: 0.75rem 1.5rem;
+      background: #d4a574;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .nav button:hover {
+      background: #8b6f47;
+      transform: translateY(-2px);
+    }
+
+    .nav button.active {
+      background: #8b6f47;
+      box-shadow: 0 0 20px rgba(212, 165, 116, 0.5);
+    }
+
+    .concept-container {
+      min-height: 100vh;
+      padding: 6rem 2rem 2rem;
+      display: none;
+    }
+
+    .concept-container.active {
+      display: block;
+    }
+
+    .concept-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .concept-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #d4a574;
+    }
+
+    .concept-header p {
+      font-size: 1.1rem;
+      color: #aaa;
+    }
+
+    .demo-area {
+      position: relative;
+      height: 600px;
+      background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc8 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      position: absolute;
+      width: 350px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) !important;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      color: #2c1810;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-scientific {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #7a6a5a;
+      margin-bottom: 1rem;
+    }
+
+    .status-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(255, 193, 7, 0.9);
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    .controls {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .controls button {
+      padding: 1rem 2rem;
+      margin: 0 0.5rem;
+      background: #d4a574;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .controls button:hover {
+      background: #8b6f47;
+      transform: translateY(-2px);
+    }
+
+    .info-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(212, 165, 116, 0.1);
+      border-left: 4px solid #d4a574;
+      border-radius: 8px;
+    }
+
+    .info-box h3 {
+      color: #d4a574;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .info-box li {
+      padding: 0.25rem 0;
+      color: #ccc;
+    }
+
+    .info-box li:before {
+      content: "✓ ";
+      color: #d4a574;
+      font-weight: bold;
+    }
+
+    /* Concept-specific styles */
+
+    /* Concept 1: Photo Album Stack */
+    #concept1 .card:nth-child(1) {
+      z-index: 1;
+      transform: translateY(250px) rotate(-3deg);
+    }
+
+    #concept1 .card:nth-child(2) {
+      z-index: 2;
+      transform: translate(30px, 200px) rotate(4deg);
+    }
+
+    #concept1 .card:nth-child(3) {
+      z-index: 3;
+      transform: translate(-20px, 150px) rotate(-2deg);
+    }
+
+    #concept1 .card:nth-child(4) {
+      z-index: 4;
+      transform: translate(40px, 100px) rotate(3deg);
+    }
+
+    #concept1 .card:nth-child(5) {
+      z-index: 5;
+      transform: translate(-10px, 50px) rotate(-1deg);
+    }
+
+    #concept1.stacked .card:nth-child(1) {
+      transform: translateY(80px) rotate(-3deg);
+    }
+
+    #concept1.stacked .card:nth-child(2) {
+      transform: translate(30px, 60px) rotate(4deg);
+    }
+
+    #concept1.stacked .card:nth-child(3) {
+      transform: translate(-20px, 40px) rotate(-2deg);
+    }
+
+    #concept1.stacked .card:nth-child(4) {
+      transform: translate(40px, 20px) rotate(3deg);
+    }
+
+    #concept1.stacked .card:nth-child(5) {
+      transform: translate(-10px, 0px) rotate(-1deg);
+    }
+
+    /* Concept 2: Cascading Deck */
+    #concept2 .card:nth-child(1) {
+      z-index: 1;
+      transform: translateY(300px) rotate(0deg);
+    }
+
+    #concept2 .card:nth-child(2) {
+      z-index: 2;
+      transform: translate(0px, 320px) rotate(3deg);
+    }
+
+    #concept2 .card:nth-child(3) {
+      z-index: 3;
+      transform: translate(0px, 340px) rotate(6deg);
+    }
+
+    #concept2 .card:nth-child(4) {
+      z-index: 4;
+      transform: translate(0px, 360px) rotate(9deg);
+    }
+
+    #concept2 .card:nth-child(5) {
+      z-index: 5;
+      transform: translate(0px, 380px) rotate(12deg);
+    }
+
+    #concept2.stacked .card:nth-child(1) {
+      transform: translateY(150px) rotate(0deg);
+    }
+
+    #concept2.stacked .card:nth-child(2) {
+      transform: translate(0px, 110px) rotate(3deg);
+    }
+
+    #concept2.stacked .card:nth-child(3) {
+      transform: translate(0px, 70px) rotate(6deg);
+    }
+
+    #concept2.stacked .card:nth-child(4) {
+      transform: translate(0px, 30px) rotate(9deg);
+    }
+
+    #concept2.stacked .card:nth-child(5) {
+      transform: translate(0px, -10px) rotate(12deg);
+    }
+
+    /* Concept 3: Sliding Drawer (RECOMMENDED) */
+    #concept3 .card {
+      width: 400px;
+      left: 50%;
+      margin-left: -200px;
+    }
+
+    #concept3 .card:nth-child(1) {
+      z-index: 1;
+      transform: translateY(300px) rotate(-2deg);
+    }
+
+    #concept3 .card:nth-child(2) {
+      z-index: 2;
+      transform: translateY(320px) rotate(2deg);
+    }
+
+    #concept3 .card:nth-child(3) {
+      z-index: 3;
+      transform: translateY(340px) rotate(-3deg);
+    }
+
+    #concept3 .card:nth-child(4) {
+      z-index: 4;
+      transform: translateY(360px) rotate(2deg);
+    }
+
+    #concept3 .card:nth-child(5) {
+      z-index: 5;
+      transform: translateY(380px) rotate(0deg);
+    }
+
+    #concept3.stacked .card:nth-child(1) {
+      transform: translateY(-80px) rotate(-2deg);
+    }
+
+    #concept3.stacked .card:nth-child(2) {
+      transform: translateY(-30px) rotate(2deg);
+    }
+
+    #concept3.stacked .card:nth-child(3) {
+      transform: translateY(20px) rotate(-3deg);
+    }
+
+    #concept3.stacked .card:nth-child(4) {
+      transform: translateY(70px) rotate(2deg);
+    }
+
+    #concept3.stacked .card:nth-child(5) {
+      transform: translateY(120px) rotate(0deg);
+    }
+
+    /* Concept 4: Magazine Spread */
+    #concept4 .card:nth-child(1) {
+      z-index: 1;
+      transform: translate(0px, 300px) rotate(-5deg);
+    }
+
+    #concept4 .card:nth-child(2) {
+      z-index: 2;
+      transform: translate(20px, 320px) rotate(-3deg);
+    }
+
+    #concept4 .card:nth-child(3) {
+      z-index: 3;
+      transform: translate(40px, 340px) rotate(0deg);
+    }
+
+    #concept4 .card:nth-child(4) {
+      z-index: 4;
+      transform: translate(60px, 360px) rotate(3deg);
+    }
+
+    #concept4 .card:nth-child(5) {
+      z-index: 5;
+      transform: translate(80px, 380px) rotate(5deg);
+    }
+
+    #concept4.stacked .card:nth-child(1) {
+      transform: translate(0px, 100px) rotate(-5deg);
+    }
+
+    #concept4.stacked .card:nth-child(2) {
+      transform: translate(20px, 80px) rotate(-3deg);
+    }
+
+    #concept4.stacked .card:nth-child(3) {
+      transform: translate(40px, 60px) rotate(0deg);
+    }
+
+    #concept4.stacked .card:nth-child(4) {
+      transform: translate(60px, 40px) rotate(3deg);
+    }
+
+    #concept4.stacked .card:nth-child(5) {
+      transform: translate(80px, 20px) rotate(5deg);
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .nav button {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .concept-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .demo-area {
+        height: 500px;
+      }
+
+      .card {
+        width: 280px !important;
+        margin-left: -140px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <button onclick="showConcept(1)" class="active" id="btn1">Photo Album</button>
+    <button onclick="showConcept(2)" id="btn2">Cascading Deck</button>
+    <button onclick="showConcept(3)" id="btn3">Sliding Drawer ⭐</button>
+    <button onclick="showConcept(4)" id="btn4">Magazine Spread</button>
+  </nav>
+
+  <!-- Concept 1: Photo Album Stack -->
+  <div id="concept1" class="concept-container active">
+    <div class="concept-header">
+      <h1>Concept 1: Photo Album Stack</h1>
+      <p>Polaroid-style layered photos with organic rotation</p>
+    </div>
+
+    <div class="demo-area">
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=400&h=200&fit=crop" alt="Elephant" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Elephant</h3>
+          <p class="card-scientific">Loxodonta africana</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=400&h=200&fit=crop" alt="Lion" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Lion</h3>
+          <p class="card-scientific">Panthera leo</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=200&fit=crop" alt="Giraffe" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Masai Giraffe</h3>
+          <p class="card-scientific">Giraffa tippelskirchi</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Near Threatened</div>
+        <img src="https://images.unsplash.com/photo-1535336875559-2b87e82c4e75?w=400&h=200&fit=crop" alt="Zebra" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Plains Zebra</h3>
+          <p class="card-scientific">Equus quagga</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=400&h=200&fit=crop" alt="Cheetah" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Cheetah</h3>
+          <p class="card-scientific">Acinonyx jubatus</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="animateConcept(1)">Animate Stack</button>
+      <button onclick="resetConcept(1)">Reset</button>
+    </div>
+
+    <div class="info-box">
+      <h3>Pros:</h3>
+      <ul>
+        <li>Natural, organic feel like shuffling photos</li>
+        <li>Clear depth perception with overlapping cards</li>
+        <li>Easy to see multiple animals at once</li>
+        <li>Works great on mobile with less rotation</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Concept 2: Cascading Deck -->
+  <div id="concept2" class="concept-container">
+    <div class="concept-header">
+      <h1>Concept 2: Cascading Deck</h1>
+      <p>Playing cards being dealt with progressive rotation</p>
+    </div>
+
+    <div class="demo-area">
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=400&h=200&fit=crop" alt="Elephant" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Elephant</h3>
+          <p class="card-scientific">Loxodonta africana</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=400&h=200&fit=crop" alt="Lion" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Lion</h3>
+          <p class="card-scientific">Panthera leo</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=200&fit=crop" alt="Giraffe" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Masai Giraffe</h3>
+          <p class="card-scientific">Giraffa tippelskirchi</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Near Threatened</div>
+        <img src="https://images.unsplash.com/photo-1535336875559-2b87e82c4e75?w=400&h=200&fit=crop" alt="Zebra" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Plains Zebra</h3>
+          <p class="card-scientific">Equus quagga</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=400&h=200&fit=crop" alt="Cheetah" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Cheetah</h3>
+          <p class="card-scientific">Acinonyx jubatus</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="animateConcept(2)">Animate Stack</button>
+      <button onclick="resetConcept(2)">Reset</button>
+    </div>
+
+    <div class="info-box">
+      <h3>Pros:</h3>
+      <ul>
+        <li>Very dynamic and playful animation</li>
+        <li>All cards remain partially visible</li>
+        <li>Clear visual progression</li>
+        <li>Great visual rhythm and energy</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Concept 3: Sliding Drawer (RECOMMENDED) -->
+  <div id="concept3" class="concept-container">
+    <div class="concept-header">
+      <h1>Concept 3: Sliding Drawer ⭐ RECOMMENDED</h1>
+      <p>Cards slide up and overlap like filing drawer tabs</p>
+    </div>
+
+    <div class="demo-area">
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=400&h=200&fit=crop" alt="Elephant" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Elephant</h3>
+          <p class="card-scientific">Loxodonta africana</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=400&h=200&fit=crop" alt="Lion" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Lion</h3>
+          <p class="card-scientific">Panthera leo</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=200&fit=crop" alt="Giraffe" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Masai Giraffe</h3>
+          <p class="card-scientific">Giraffa tippelskirchi</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Near Threatened</div>
+        <img src="https://images.unsplash.com/photo-1535336875559-2b87e82c4e75?w=400&h=200&fit=crop" alt="Zebra" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Plains Zebra</h3>
+          <p class="card-scientific">Equus quagga</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=400&h=200&fit=crop" alt="Cheetah" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Cheetah</h3>
+          <p class="card-scientific">Acinonyx jubatus</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="animateConcept(3)">Animate Stack</button>
+      <button onclick="resetConcept(3)">Reset</button>
+    </div>
+
+    <div class="info-box">
+      <h3>Pros:</h3>
+      <ul>
+        <li>Best content readability - all names visible as tabs</li>
+        <li>Clean, modern aesthetic that fits luxury brand</li>
+        <li>Easy to implement with GSAP</li>
+        <li>Mobile-friendly - adapts to vertical scroll</li>
+        <li>Accessible - no extreme rotations</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Concept 4: Magazine Spread -->
+  <div id="concept4" class="concept-container">
+    <div class="concept-header">
+      <h1>Concept 4: Magazine Spread</h1>
+      <p>Cards unfold like magazine pages</p>
+    </div>
+
+    <div class="demo-area">
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=400&h=200&fit=crop" alt="Elephant" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Elephant</h3>
+          <p class="card-scientific">Loxodonta africana</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=400&h=200&fit=crop" alt="Lion" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">African Lion</h3>
+          <p class="card-scientific">Panthera leo</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Endangered</div>
+        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=200&fit=crop" alt="Giraffe" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Masai Giraffe</h3>
+          <p class="card-scientific">Giraffa tippelskirchi</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Near Threatened</div>
+        <img src="https://images.unsplash.com/photo-1535336875559-2b87e82c4e75?w=400&h=200&fit=crop" alt="Zebra" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Plains Zebra</h3>
+          <p class="card-scientific">Equus quagga</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="status-badge">Vulnerable</div>
+        <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=400&h=200&fit=crop" alt="Cheetah" class="card-image">
+        <div class="card-content">
+          <h3 class="card-title">Cheetah</h3>
+          <p class="card-scientific">Acinonyx jubatus</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="animateConcept(4)">Animate Stack</button>
+      <button onclick="resetConcept(4)">Reset</button>
+    </div>
+
+    <div class="info-box">
+      <h3>Pros:</h3>
+      <ul>
+        <li>Elegant, editorial feel</li>
+        <li>Good balance of visibility and stacking</li>
+        <li>Easy to implement with GSAP</li>
+        <li>Natural for storytelling</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function showConcept(num) {
+      // Hide all concepts
+      document.querySelectorAll('.concept-container').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+
+      // Show selected concept
+      document.getElementById('concept' + num).classList.add('active');
+      document.getElementById('btn' + num).classList.add('active');
+    }
+
+    function animateConcept(num) {
+      const container = document.getElementById('concept' + num);
+      container.classList.add('stacked');
+    }
+
+    function resetConcept(num) {
+      const container = document.getElementById('concept' + num);
+      container.classList.remove('stacked');
+    }
+
+    // Auto-animate on load for demo
+    setTimeout(() => {
+      animateConcept(1);
+    }, 500);
+  </script>
+</body>
+</html>
