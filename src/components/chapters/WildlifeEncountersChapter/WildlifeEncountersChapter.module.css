@@ -60,42 +60,44 @@
   font-style: italic;
 }
 
-/* Gallery Container - Initially hidden, fades in */
+/* Gallery Container - Card stacking container */
 .galleryContainer {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
-  transform: translateY(-50%);
   width: 100%;
-  height: 65vh;
-  display: flex;
-  align-items: center;
+  height: 100%;
+  display: block;
   z-index: 5;
-  opacity: 0;
-  overflow: hidden;
+  opacity: 0; /* GSAP handles fade-in */
+  overflow: visible; /* Allow cards to extend beyond */
 }
 
 .cardsWrapper {
-  display: flex;
-  gap: 2rem;
-  padding: 0 5vw;
-  will-change: transform;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-/* Wildlife Card */
+/* Wildlife Card - Absolute positioning for stacking */
 .card {
-  flex-shrink: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Initial centered position */
   width: clamp(320px, 35vw, 450px);
   background: rgba(255, 255, 255, 0.98);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  will-change: transform; /* GPU acceleration */
+  backface-visibility: hidden; /* Prevent flickering */
 }
 
 .card:hover {
-  transform: translateY(-10px);
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  /* Note: transform is controlled by GSAP, not CSS hover */
 }
 
 .cardImage {
