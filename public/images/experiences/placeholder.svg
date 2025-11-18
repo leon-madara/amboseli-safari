@@ -1,0 +1,9 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#F5F1ED"/>
+  <g transform="translate(400, 300)">
+    <circle cx="0" cy="-40" r="60" fill="#C86F4D" opacity="0.2"/>
+    <path d="M -30 -20 L 0 -50 L 30 -20 L 20 -20 L 20 20 L -20 20 L -20 -20 Z" fill="#C86F4D" opacity="0.4"/>
+    <circle cx="0" cy="0" r="8" fill="#C86F4D"/>
+    <text x="0" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#8B7355" text-anchor="middle">Experience Image</text>
+  </g>
+</svg>

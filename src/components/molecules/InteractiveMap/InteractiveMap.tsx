@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { RouteWaypoint } from '@/data/locationData';
+import { RouteWaypoint, ProximityInfo } from '@/data/locationData';
 import styles from './InteractiveMap.module.css';
 
 export interface InteractiveMapProps {
@@ -10,6 +10,7 @@ export interface InteractiveMapProps {
   centerLng?: number;
   zoom?: number;
   showRoute?: boolean;
+  proximityLandmarks?: ProximityInfo[];
 }
 
 /**
@@ -26,8 +27,10 @@ export function InteractiveMap({
   centerLng = 37.0,
   zoom = 7,
   showRoute = true,
+  proximityLandmarks = [],
 }: InteractiveMapProps) {
   const [activeMarker, setActiveMarker] = useState<number | null>(null);
+  const [activeLandmark, setActiveLandmark] = useState<string | null>(null);
 
   // Generate Mapbox static map URL with markers
   const generateStaticMapUrl = () => {
@@ -62,9 +65,17 @@ export function InteractiveMap({
       }
 
       // Create pin overlays for each waypoint
-      const pins = sortedWaypoints.map((wp, idx) =>
+      const waypointPins = sortedWaypoints.map((wp, idx) =>
         `pin-s-${idx + 1}+D4AF37(${wp.lng},${wp.lat})`
       ).join(',');
+
+      // Create markers for proximity landmarks (different color)
+      const landmarkPins = proximityLandmarks
+        .filter(lm => lm && typeof lm.coordinates?.lat === 'number' && typeof lm.coordinates?.lng === 'number')
+        .map(lm => `pin-s+FF6B35(${lm.coordinates.lng},${lm.coordinates.lat})`)
+        .join(',');
+
+      const pins = landmarkPins ? `${waypointPins},${landmarkPins}` : waypointPins;
 
       // Calculate center point from waypoints
       let mapCenterLng = centerLng || 0;
@@ -165,6 +176,29 @@ export function InteractiveMap({
           📍 Get Directions
         </button>
       </div>
+
+      {/* Proximity Landmarks Info */}
+      {proximityLandmarks && proximityLandmarks.length > 0 && (
+        <div className={styles.proximityInfo}>
+          {proximityLandmarks.map((landmark) => (
+            <div
+              key={landmark.id}
+              className={`${styles.proximityCard} ${activeLandmark === landmark.id ? styles.active : ''}`}
+              onMouseEnter={() => setActiveLandmark(landmark.id)}
+              onMouseLeave={() => setActiveLandmark(null)}
+            >
+              <span className={styles.proximityIcon}>{landmark.icon}</span>
+              <div className={styles.proximityDetails}>
+                <strong className={styles.proximityName}>{landmark.name}</strong>
+                <span className={styles.proximityDistance}>{landmark.distance}</span>
+              </div>
+              {activeLandmark === landmark.id && (
+                <div className={styles.proximityDescription}>{landmark.description}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

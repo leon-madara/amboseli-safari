@@ -1,5 +1,11 @@
 /* AccommodationsChapter Styles - GSAP Pinning Layout */
 
+/* Parallax Wrapper */
+.parallaxWrapper {
+  position: relative;
+  width: 100%;
+}
+
 .accommodationsChapter {
   position: relative;
   min-height: 300vh; /* Extended for pinning effect (500vh-800vh range) */

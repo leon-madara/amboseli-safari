@@ -1,79 +1,87 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import type { DiningExperience } from '@/data/dining';
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { ExperienceType } from '@/types/experience';
 import styles from './ExperienceCard.module.css';
 
 interface ExperienceCardProps {
-  experience?: DiningExperience;
-  index?: number;
-  id?: string;
-  title?: string;
-  image?: string;
-  duration?: string;
-  difficulty?: string;
-  timeOfDay?: string;
+  experience: ExperienceType;
 }
 
-const timeIcons: Record<string, string> = {
-  'Early Morning': '🌅',
-  'Evening': '🌆',
-  'By Arrangement': '📅',
-  'By Reservation': '🍴',
-  'Morning': '🌅',
-  'Afternoon': '☀️',
-};
+const PLACEHOLDER_IMAGE = '/images/experiences/placeholder.svg';
 
-export default function ExperienceCard({
-  experience,
-  index = 0,
-  id,
-  title,
-  image,
-  duration,
-  difficulty,
-  timeOfDay
-}: ExperienceCardProps) {
-  // Handle both dining experience and safari experience formats
-  const displayTime = experience?.time || timeOfDay || 'By Arrangement';
-  const displayTitle = experience?.title || title || 'Experience';
-  const displayDescription = experience?.description || `${duration || ''} ${difficulty || ''}`.trim();
+function getTimeOfDay(title: string): string {
+  const lowerTitle = title.toLowerCase();
+  if (lowerTitle.includes('sunrise') || lowerTitle.includes('dawn')) return 'Early Morning';
+  if (lowerTitle.includes('sunset') || lowerTitle.includes('evening')) return 'Evening';
+  if (lowerTitle.includes('night')) return 'Night';
+  return 'Daytime';
+}
 
-  const icon = timeIcons[displayTime] || '✨';
+function getTimeIcon(timeOfDay: string): string {
+  const icons: Record<string, string> = {
+    'Early Morning': '🌅',
+    'Evening': '🌆',
+    'Night': '🌙',
+    'Daytime': '☀️',
+  };
+  return icons[timeOfDay] || '✨';
+}
+
+export default function ExperienceCard({ experience }: ExperienceCardProps) {
+  const [imageSrc, setImageSrc] = useState(experience.image || PLACEHOLDER_IMAGE);
+  const [imageError, setImageError] = useState(false);
+  const timeOfDay = getTimeOfDay(experience.title);
+  const timeIcon = getTimeIcon(timeOfDay);
+
+  const handleImageError = () => {
+    if (!imageError) {
+      setImageError(true);
+      setImageSrc(PLACEHOLDER_IMAGE);
+    }
+  };
 
   return (
-    <motion.div
-      className={styles.card}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ y: -6, transition: { duration: 0.2 } }}
-    >
-      <div className={styles.topBar} />
-
-      <motion.div
-        className={styles.iconContainer}
-        initial={{ scale: 0, rotate: -180 }}
-        whileInView={{ scale: 1, rotate: 0 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.6,
-          delay: index * 0.08 + 0.2,
-          type: 'spring',
-          bounce: 0.4,
-        }}
-      >
-        <span className={styles.icon}>{icon}</span>
-      </motion.div>
+    <Link href={`/experiences/${experience.slug}`} className={styles.card}>
+      <div className={styles.imageContainer}>
+        <Image
+          src={imageSrc}
+          alt={`${experience.title} - ${experience.shortDescription}`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className={styles.image}
+          loading="lazy"
+          quality={85}
+          onError={handleImageError}
+        />
+        <div className={styles.gradientOverlay} />
+        <div className={styles.badge} aria-label={`Available during ${timeOfDay}`}>
+          <span className={styles.badgeIcon}>{timeIcon}</span>
+          <span className={styles.badgeText}>{timeOfDay}</span>
+        </div>
+      </div>
 
       <div className={styles.content}>
-        <div className={styles.badge}>{displayTime}</div>
+        <h3 className={styles.title}>{experience.title}</h3>
+        <p className={styles.description}>{experience.shortDescription}</p>
 
-        <h3 className={styles.title}>{displayTitle}</h3>
-
-        <p className={styles.description}>{displayDescription}</p>
+        <div className={styles.meta}>
+          <span className={styles.metaItem}>
+            <span className={styles.metaIcon}>⏱️</span>
+            {experience.duration}
+          </span>
+          <span className={styles.metaItem}>
+            <span className={styles.metaIcon}>📊</span>
+            {experience.difficulty}
+          </span>
+        </div>
       </div>
-    </motion.div>
+
+      <div className={styles.footer}>
+        <span className={styles.cta}>Explore Experience →</span>
+      </div>
+    </Link>
   );
 }

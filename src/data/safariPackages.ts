@@ -157,7 +157,7 @@ export const SAFARI_PACKAGES: SafariPackage[] = [
 
 export interface ContactMethod {
   id: string;
-  type: 'whatsapp' | 'phone' | 'email';
+  type: 'whatsapp' | 'phone' | 'email' | 'social';
   value: string;
   label: string;
   icon: string; // emoji
@@ -168,13 +168,13 @@ export interface ContactMethod {
 
 export const CONTACT_METHODS: ContactMethod[] = [
   {
-    id: 'whatsapp',
-    type: 'whatsapp',
-    value: '+254 712 345 678',
-    label: 'Chat on WhatsApp',
-    icon: '💬',
-    displayValue: '+254 712 345 678',
-    link: 'https://wa.me/254712345678',
+    id: 'email',
+    type: 'email',
+    value: 'info@amboselisafariclub.com',
+    label: 'Email Us',
+    icon: '📧',
+    displayValue: 'info@amboselisafariclub.com',
+    link: 'mailto:info@amboselisafariclub.com',
     primary: true,
   },
   {
@@ -187,13 +187,31 @@ export const CONTACT_METHODS: ContactMethod[] = [
     link: 'tel:+254712345678',
   },
   {
-    id: 'email',
-    type: 'email',
-    value: 'reservations@amboselisafariclub.com',
-    label: 'Email Us',
-    icon: '📧',
-    displayValue: 'reservations@amboselisafariclub.com',
-    link: 'mailto:reservations@amboselisafariclub.com',
+    id: 'whatsapp',
+    type: 'whatsapp',
+    value: '+254 712 345 678',
+    label: 'Chat on WhatsApp',
+    icon: '💬',
+    displayValue: '+254 712 345 678',
+    link: 'https://wa.me/254712345678',
+  },
+  {
+    id: 'instagram',
+    type: 'social',
+    value: '@amboselisafariclub',
+    label: 'Follow on Instagram',
+    icon: '📸',
+    displayValue: '@amboselisafariclub',
+    link: 'https://instagram.com/amboselisafariclub',
+  },
+  {
+    id: 'facebook',
+    type: 'social',
+    value: 'Amboseli Safari Club',
+    label: 'Like on Facebook',
+    icon: '👍',
+    displayValue: 'Amboseli Safari Club',
+    link: 'https://facebook.com/amboselisafariclub',
   },
 ];
 

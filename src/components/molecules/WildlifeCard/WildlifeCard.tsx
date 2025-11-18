@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import styles from './WildlifeCard.module.css';
 
 export interface WildlifeCardProps {
@@ -37,13 +37,13 @@ export default function WildlifeCard({
           animate={{ scale: isHovered ? 1.1 : 1 }}
           transition={{ duration: 0.4 }}
         >
-          <Image
+          <OptimizedImage
             src={image}
             alt={`${name} in the wild`}
             fill
+            imageType="content"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className={styles.image}
-            loading="lazy"
           />
         </motion.div>
 

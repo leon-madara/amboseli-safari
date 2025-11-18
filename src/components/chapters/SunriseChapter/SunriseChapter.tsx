@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import { BaseChapterProps } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './SunriseChapter.module.css';
 
@@ -48,12 +48,11 @@ export default function SunriseChapter({
       {/* Background with warm golden gradient */}
       <div className={styles.backgroundContainer}>
         <div className={styles.backgroundImage}>
-          <Image
+          <OptimizedImage
             src={backgroundImage}
             alt="Sunrise over the African savanna"
             fill
-            quality={85}
-            sizes="100vw"
+            imageType="chapter-background"
             className={styles.image}
           />
         </div>
@@ -85,13 +84,13 @@ export default function SunriseChapter({
         className={styles.jeepContainer}
         style={{ transform: `translateY(${jeepParallaxOffset}px)` }}
       >
-        <Image
+        <OptimizedImage
           src={jeepImage}
           alt="Safari jeep ready for adventure"
           width={600}
           height={400}
+          imageType="content"
           className={styles.jeepImage}
-          loading="lazy"
         />
       </div>
 

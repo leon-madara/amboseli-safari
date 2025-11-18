@@ -608,6 +608,62 @@
   margin-bottom: 6rem;
 }
 
+/* Travel Info Section */
+.travelInfoSection {
+  margin-bottom: 6rem;
+}
+
+.travelInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.travelInfoCard {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg, 12px);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.travelInfoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border-color: #d4af37;
+}
+
+.travelInfoIcon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.travelInfoTitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-gray-900, #1a1a1a);
+  margin-bottom: 0.75rem;
+}
+
+.travelInfoDistance {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 0.5rem;
+}
+
+.travelInfoTime {
+  font-size: 1rem;
+  color: var(--color-gray-700, #4a4a4a);
+  margin: 0;
+}
+
 /* Map + Timeline Section */
 .mapTimelineSection {
   display: grid;
@@ -733,10 +789,24 @@
   }
 
   .routeSelectorSection,
+  .travelInfoSection,
   .comparisonSection,
   .gallerySection,
   .infoSection {
     margin-bottom: 4rem;
+  }
+
+  .travelInfoGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .travelInfoIcon {
+    font-size: 2.5rem;
+  }
+
+  .travelInfoDistance {
+    font-size: 1.75rem;
   }
 
   .mapTimelineSection {
@@ -780,6 +850,7 @@
 
 /* Reduced motion for new sections */
 @media (prefers-reduced-motion: reduce) {
+  .travelInfoCard:hover,
   .ctaPrimary:hover,
   .ctaSecondary:hover {
     transform: none;

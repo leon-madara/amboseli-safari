@@ -49,7 +49,7 @@ export function useAccommodationsPinning() {
     if (prefersReducedMotion) {
       // Kill all ScrollTrigger instances when reduced motion is detected
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === '.accommodationsChapter') {
+        if (trigger.vars.trigger === sectionRef.current) {
           trigger.kill();
         }
       });
@@ -118,20 +118,26 @@ export function useAccommodationsPinning() {
     const ctx = gsap.context(() => {
       // Pin the entire section for 300vh
       ScrollTrigger.create({
-        trigger: '.accommodationsChapter',
+        trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
         start: 'top top',
-        end: '+=300%',
+        end: '+=300vh', // Fixed: Pin for exactly 300vh (was +=300% which meant 900vh)
         pin: true,
         scrub: 1,
         anticipatePin: 1,
         markers: false, // Set to true for debugging
       });
 
+      // Set initial states for content that should be hidden
+      gsap.set('.room-2-card .card-content', { opacity: 0, scale: 0.95 });
+      gsap.set('.room-3-image .image-content', { opacity: 0, scale: 0.95 });
+      gsap.set('.room-2-card .features li', { opacity: 0, x: -20 });
+      gsap.set('.room-3-card .features li', { opacity: 0, x: -20 });
+
       // ===== PHASE 1: ROOM 1 ENTRANCE (0-33%) =====
       // Both image and card slide up from bottom simultaneously
       const room1Timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: '.accommodationsChapter',
+          trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
           start: 'top top',
           end: '+=100vh',
           scrub: 1,
@@ -167,7 +173,7 @@ export function useAccommodationsPinning() {
       // Layout flips: [Image Left, Card Right] → [Card Left, Image Right]
       const room2Timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: '.accommodationsChapter',
+          trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
           start: 'top+=100vh top',
           end: '+=100vh',
           scrub: 1,
@@ -182,63 +188,61 @@ export function useAccommodationsPinning() {
           ease: 'power2.in',
           force3D: true,
         })
-        // Room 1 card slides left (from right position to left position)
-        // Only animating transform (x) for GPU acceleration
+        // Room 1 card exits downward (instead of sliding left)
+        // Only animating transform (y) for GPU acceleration
         .to(
           '.room-1-card',
           {
-            x: '-50vw',
-            ease: 'power2.inOut',
+            y: '100%',
+            ease: 'power2.in',
             force3D: true,
           },
-          '<' // Start at the same time
+          '<' // Start at the same time as image exit
         )
-        // Fade out Room 1 card content
-        // Only animating opacity and transform (scale) for GPU acceleration
+        // Room 2 card enters from right (starts at translateX(50vw), animates to 0)
+        // Only animating transform (x) for GPU acceleration
         .to(
-          '.room-1-card .card-content',
+          '.room-2-card',
           {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.2,
+            x: '0',
+            ease: 'power2.out',
             force3D: true,
           },
-          '<0.3' // Start 30% into the animation
+          '<0.4' // Start 40% into the exit animations
         )
-        // Update data attributes to swap content to Room 2
-        .set('.room-1-card', {
-          attr: { 'data-room': '2' },
-        })
         // Fade in Room 2 card content
         // Only animating opacity and transform (scale) for GPU acceleration
-        .to('.room-2-card .card-content', {
-          opacity: 1,
-          scale: 1,
-          duration: 0.2,
-          force3D: true,
-        })
+        .to(
+          '.room-2-card .card-content',
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.3,
+            force3D: true,
+          },
+          '<0.2' // Start slightly after card starts moving
+        )
         // Room 2 image enters from bottom-right
         // Only animating transform (x, y) for GPU acceleration
         .fromTo(
           '.room-2-image',
           { y: '100%', x: '50vw' },
-          { y: '0%', x: '50vw', ease: 'power2.out', force3D: true },
-          '<-0.2' // Start slightly before previous animation
+          { y: '0%', x: '0', ease: 'power2.out', force3D: true },
+          '<-0.1' // Start slightly before card content fades in
         )
         // Stagger animate Room 2 features list
         // Only animating opacity and transform (x) for GPU acceleration
-        .fromTo(
+        .to(
           '.room-2-card .features li',
-          { opacity: 0, x: -20 },
           { opacity: 1, x: 0, stagger: 0.1, ease: 'power2.out', force3D: true },
-          '-=0.3'
+          '-=0.4'
         );
 
       // ===== PHASE 3: ROOM 2 → ROOM 3 TRANSITION (66-100%) =====
       // Layout flips back: [Card Left, Image Right] → [Image Left, Card Right]
       const room3Timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: '.accommodationsChapter',
+          trigger: sectionRef.current, // Fixed: Use direct ref instead of class selector
           start: 'top+=200vh top',
           end: '+=100vh',
           scrub: 1,
@@ -253,56 +257,54 @@ export function useAccommodationsPinning() {
           ease: 'power2.in',
           force3D: true,
         })
-        // Room 2 image slides left (from right position to left position)
-        // Only animating transform (x) for GPU acceleration
+        // Room 2 image exits downward
+        // Only animating transform (y) for GPU acceleration
         .to(
           '.room-2-image',
           {
-            x: '0',
-            ease: 'power2.inOut',
+            y: '100%',
+            ease: 'power2.in',
             force3D: true,
           },
-          '<' // Start at the same time
+          '<' // Start at the same time as card exit
         )
-        // Fade out Room 2 image content
-        // Only animating opacity and transform (scale) for GPU acceleration
+        // Room 3 image enters from right (starts at translateX(50vw), animates to 0)
+        // Only animating transform (x) for GPU acceleration
         .to(
-          '.room-2-image .image-content',
+          '.room-3-image',
           {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.2,
+            x: '0',
+            ease: 'power2.out',
             force3D: true,
           },
-          '<0.3' // Start 30% into the animation
+          '<0.4' // Start 40% into the exit animations
         )
-        // Update data attributes to swap image to Room 3
-        .set('.room-2-image', {
-          attr: { 'data-room': '3' },
-        })
         // Fade in Room 3 image content
         // Only animating opacity and transform (scale) for GPU acceleration
-        .to('.room-3-image .image-content', {
-          opacity: 1,
-          scale: 1,
-          duration: 0.2,
-          force3D: true,
-        })
+        .to(
+          '.room-3-image .image-content',
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.3,
+            force3D: true,
+          },
+          '<0.2' // Start slightly after image starts moving
+        )
         // Room 3 card enters from bottom-right
         // Only animating transform (x, y) for GPU acceleration
         .fromTo(
           '.room-3-card',
           { y: '100%', x: '50vw' },
-          { y: '0%', x: '50vw', ease: 'power2.out', force3D: true },
-          '<-0.2' // Start slightly before previous animation
+          { y: '0%', x: '0', ease: 'power2.out', force3D: true },
+          '<-0.1' // Start slightly before image content fades in
         )
         // Stagger animate Room 3 features list
         // Only animating opacity and transform (x) for GPU acceleration
-        .fromTo(
+        .to(
           '.room-3-card .features li',
-          { opacity: 0, x: -20 },
           { opacity: 1, x: 0, stagger: 0.1, ease: 'power2.out', force3D: true },
-          '-=0.3'
+          '-=0.4'
         );
     }, sectionRef);
 
@@ -319,7 +321,7 @@ export function useAccommodationsPinning() {
       if (e.matches) {
         // User enabled reduced motion - kill all animations
         ScrollTrigger.getAll().forEach((trigger) => {
-          if (trigger.vars.trigger === '.accommodationsChapter') {
+          if (trigger.vars.trigger === sectionRef.current) {
             trigger.kill();
           }
         });
@@ -369,7 +371,7 @@ export function useAccommodationsPinning() {
       
       // Kill all ScrollTrigger instances for this section
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === '.accommodationsChapter') {
+        if (trigger.vars.trigger === sectionRef.current) {
           trigger.kill();
         }
       });

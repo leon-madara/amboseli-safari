@@ -1,6 +1,5 @@
 import { CinematicJourney } from '@/components/organisms/CinematicJourney';
 import { ScrollProgressIndicator } from '@/components/molecules/ScrollProgressIndicator';
-import { StickyNavigation } from '@/components/molecules/StickyNavigation';
 import { WhatsAppChatBubble } from '@/components/molecules/WhatsAppChatBubble';
 
 /**
@@ -12,7 +11,6 @@ import { WhatsAppChatBubble } from '@/components/molecules/WhatsAppChatBubble';
  * Features:
  * - CinematicJourney: 9-chapter scroll-driven storytelling experience (~960vh)
  * - ScrollProgressIndicator: Visual progress bar with chapter navigation
- * - StickyNavigation: Auto-hiding navigation bar after hero section
  * - WhatsAppChatBubble: Instant communication channel
  * - Pre-launch countdown timer to December 2025
  *
@@ -37,7 +35,6 @@ export default function HomePage() {
 
       {/* Persistent UI elements */}
       <ScrollProgressIndicator position="right" />
-      <StickyNavigation showAfterVh={80} />
       <WhatsAppChatBubble
         phoneNumber="254712345678"
         message="Hi! I'd like to inquire about safari experiences at Amboseli Safari Club."

@@ -148,6 +148,78 @@ scripts\clean-cache.bat   # Windows
    node --version  # Should be >= 18.0.0
    ```
 
+## Testing Scripts
+
+### Cross-Browser Compatibility Testing
+
+**Script:** `test-cross-browser-compatibility.js`
+
+Tests the navigation component for cross-browser compatibility, verifying:
+- Backdrop-filter support and webkit prefixes
+- Fallback behavior for unsupported browsers
+- Mobile browser optimizations (iOS Safari, Chrome Mobile)
+- Performance optimizations (RAF, passive listeners)
+- Accessibility features (reduced motion, keyboard navigation)
+
+**Usage:**
+```bash
+node scripts/test-cross-browser-compatibility.js
+```
+
+**What it tests:**
+1. Backdrop-filter CSS implementation
+2. JavaScript support detection
+3. Reduced motion support
+4. Mobile browser optimizations
+5. Scroll performance optimizations
+6. Browser-specific CSS prefixes
+7. Error handling and graceful degradation
+
+**Output:**
+- Detailed test results with pass/fail status
+- Browser compatibility report
+- Manual testing checklist
+- Recommendations for production deployment
+
+**Requirements Tested:** 2.5 (Browser Compatibility), 5.4 (Performance)
+
+**Documentation:**
+- Full report: `docs/cross-browser-testing-report.md`
+- Quick reference: `docs/browser-compatibility-quick-reference.md`
+
+### Other Testing Scripts
+
+**Experiences Grid Responsive Testing:**
+```bash
+node scripts/test-experiences-responsive.js
+```
+Tests responsive behavior of the Experiences Grid across devices, verifying mobile/tablet/desktop layouts, touch interactions, and image optimization. **Requirements:** 4.1, 4.2, 4.3, 4.4
+
+**Accessibility Testing:**
+```bash
+node scripts/test-accommodations-accessibility.js
+```
+
+**GSAP Pinning Tests:**
+```bash
+node scripts/test-gsap-pinning.js
+```
+
+**Navigation Scroll Tests:**
+```bash
+node scripts/test-navigation-scroll.js
+```
+
+**Scroll Performance Tests:**
+```bash
+node scripts/test-scroll-performance.js
+```
+
+**Contrast Ratio Verification:**
+```bash
+node scripts/verify-contrast-ratios.js
+```
+
 ## Contributing
 
 When adding new scripts:

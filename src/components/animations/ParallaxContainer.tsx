@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, createContext, useContext, useState, useEffect, useRef } from 'react';
+import { ReactNode, createContext, useContext, useState, useEffect, useRef, CSSProperties } from 'react';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface ParallaxContextValue {
@@ -14,6 +14,66 @@ const ParallaxContext = createContext<ParallaxContextValue>({
 });
 
 export const useParallax = () => useContext(ParallaxContext);
+
+export interface ParallaxLayerProps {
+  speed: number; // 0.0 - 1.0, where 0.3 = background, 0.6 = midground, 1.0 = foreground
+  children: ReactNode;
+  className?: string;
+  zIndex?: number;
+}
+
+export function ParallaxLayer({ speed, children, className = '', zIndex }: ParallaxLayerProps) {
+  const { scrollOffset, isEnabled } = useParallax();
+  const layerRef = useRef<HTMLDivElement>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  useEffect(() => {
+    if (!isEnabled) return;
+
+    const handleScroll = () => {
+      setIsScrolling(true);
+      
+      // Clear existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      
+      // Set new timeout to remove will-change after scrolling stops
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [isEnabled]);
+
+  // Calculate parallax offset based on layer speed
+  // Reduce parallax intensity to 50% on mobile devices for better performance
+  const mobileSpeedMultiplier = isMobile ? 0.5 : 1.0;
+  const adjustedSpeed = speed * mobileSpeedMultiplier;
+  const parallaxOffset = isEnabled ? scrollOffset * adjustedSpeed * 100 : 0;
+
+  const layerStyle: CSSProperties = {
+    transform: `translate3d(0, ${parallaxOffset}px, 0)`,
+    willChange: isScrolling ? 'transform' : 'auto',
+    zIndex: zIndex,
+  };
+
+  return (
+    <div ref={layerRef} className={className} style={layerStyle}>
+      {children}
+    </div>
+  );
+}
 
 interface ParallaxContainerProps {
   children: ReactNode;
@@ -31,7 +91,8 @@ export function ParallaxContainer({
   const isMobile = useMediaQuery('(max-width: 768px)');
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
-  // Disable parallax on mobile and when user prefers reduced motion
+  // Disable complex parallax effects on mobile devices for better performance
+  // Also disable when user prefers reduced motion for accessibility
   const isEnabled = !disabled && !isMobile && !prefersReducedMotion;
 
   useEffect(() => {

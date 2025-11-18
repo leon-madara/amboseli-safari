@@ -167,10 +167,88 @@
   }
 }
 
+/* Proximity Information */
+.proximityInfo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 20;
+  max-width: 280px;
+}
+
+.proximityCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.proximityCard:hover,
+.proximityCard.active {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-color: #d4af37;
+  transform: translateX(5px);
+}
+
+.proximityIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.proximityDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.proximityName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-900, #1a1a1a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.proximityDistance {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #d4af37;
+}
+
+.proximityDescription {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: var(--radius-md, 8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 0.75rem;
+  color: var(--color-gray-700, #4a4a4a);
+  line-height: 1.4;
+  z-index: 30;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .markerNumber,
-  .directionsButton {
+  .directionsButton,
+  .proximityCard {
     transition: none;
   }
 
@@ -178,7 +256,49 @@
     transform: none;
   }
 
-  .directionsButton:hover {
+  .directionsButton:hover,
+  .proximityCard:hover {
     transform: none;
+  }
+}
+
+/* Responsive adjustments for proximity info */
+@media (max-width: 768px) {
+  .proximityInfo {
+    max-width: 200px;
+  }
+
+  .proximityCard {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .proximityIcon {
+    font-size: 1.25rem;
+  }
+
+  .proximityName {
+    font-size: 0.75rem;
+  }
+
+  .proximityDistance {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .proximityInfo {
+    position: static;
+    max-width: 100%;
+    margin-top: 1rem;
+  }
+
+  .proximityCard {
+    flex-direction: row;
+  }
+
+  .proximityDescription {
+    position: static;
+    margin-top: 0.5rem;
   }
 }

@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import AtmosphericParticles from '@/components/atoms/AtmosphericParticles/AtmosphericParticles';
 import CountdownTimer from '@/components/molecules/CountdownTimer';
 import styles from './PreDawnHero.module.css';
@@ -24,11 +24,11 @@ export interface PreDawnHeroProps extends BaseChapterProps {
 export default function PreDawnHero({
   id,
   className = '',
-  backgroundImage = '/images/hero/Single Leading Bull Silhouette.jpg',
+  backgroundImage = '/images/hero/heroImage.jpg',
   logo = '/images/logos/mainLOGOAmboseli.svg',
   tagline = 'A New Safari Experience Awaits',
   subtitle = 'Opening December 2025 | Amboseli, Kenya',
-  launchDate = '2025-12-01',
+  launchDate = '2025-12-15',
   showCountdown = true,
   primaryCTA = {
     text: 'Reserve Your Stay',
@@ -45,9 +45,7 @@ export default function PreDawnHero({
   const [displayedText, setDisplayedText] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
 
-  // Parallax effect for background (0.3x speed)
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const parallaxOffset = useParallax(backgroundRef, { speed: 0.3, direction: 'down' });
+  // Parallax effect removed for clean image display
 
   useEffect(() => {
     let typingInterval: NodeJS.Timeout | null = null;
@@ -78,50 +76,18 @@ export default function PreDawnHero({
       data-chapter="pre-dawn"
       aria-labelledby="pre-dawn-heading"
     >
-      {/* Background Image with Parallax */}
+      {/* Background Image */}
       <div className={styles.backgroundContainer}>
-        <div
-          ref={backgroundRef}
-          className={styles.backgroundImage}
-          style={{ transform: `translateY(${parallaxOffset}px)` }}
-        >
-          <Image
+        <div className={styles.backgroundImage}>
+          <OptimizedImage
             src={backgroundImage}
             alt="Mount Kilimanjaro at pre-dawn with silhouette"
             fill
-            priority
-            quality={90}
-            sizes="100vw"
+            imageType="hero"
             className={styles.image}
           />
         </div>
-        
-        {/* Gradient Sky Overlay - Mount Kilimanjaro silhouette effect */}
-        <div className={styles.gradientOverlay} />
-        
-        {/* Dark Pre-Dawn Overlay */}
-        <div className={styles.preDawnOverlay} />
-        
-        {/* Star Field Particle Animation */}
-        <AtmosphericParticles type="stars" density={40} speed={1} />
       </div>
-
-      {/* Logo */}
-      <motion.div
-        className={styles.logoContainer}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-      >
-        <Image
-          src={logo}
-          alt="Amboseli Safari Club"
-          width={280}
-          height={100}
-          className={styles.logo}
-          priority
-        />
-      </motion.div>
 
       {/* Main Content */}
       <div className={styles.contentWrapper}>

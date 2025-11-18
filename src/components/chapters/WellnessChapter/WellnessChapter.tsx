@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import { CHAPTER_IMAGES } from '@/data/images';
 import styles from './WellnessChapter.module.css';
 
@@ -83,12 +83,11 @@ export default function WellnessChapter({
     >
       {/* Background with sunset colors */}
       <div className={styles.backgroundContainer}>
-        <Image
+        <OptimizedImage
           src={backgroundImage}
           alt="Sunset wellness atmosphere"
           fill
-          quality={85}
-          sizes="100vw"
+          imageType="chapter-background"
           className={styles.backgroundImage}
         />
 
@@ -109,13 +108,13 @@ export default function WellnessChapter({
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
         >
-          <Image
+          <OptimizedImage
             src={yogaImage}
             alt="Yoga silhouette at sunset"
             fill
+            imageType="content"
             sizes="(max-width: 768px) 80vw, 600px"
             className={styles.yogaImage}
-            loading="lazy"
           />
         </motion.div>
       </div>

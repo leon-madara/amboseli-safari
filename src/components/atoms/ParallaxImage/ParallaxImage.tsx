@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef, CSSProperties } from 'react';
-import Image from 'next/image';
 import { useParallax, ParallaxOptions } from '@/hooks/useParallax';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import styles from './ParallaxImage.module.css';
 
 /**
@@ -78,6 +78,9 @@ export function ParallaxImage({
     objectPosition,
   };
 
+  // Determine image type based on priority
+  const imageType = priority ? 'hero' : 'chapter-background';
+
   return (
     <div 
       ref={containerRef}
@@ -90,25 +93,21 @@ export function ParallaxImage({
         style={transformStyle}
       >
         {fill ? (
-          <Image
+          <OptimizedImage
             src={src}
             alt={alt}
             fill
-            priority={priority}
-            loading={priority ? 'eager' : 'lazy'}
-            quality={quality}
+            imageType={imageType}
             sizes={sizes || '100vw'}
             style={imageStyle}
           />
         ) : (
-          <Image
+          <OptimizedImage
             src={src}
             alt={alt}
             width={width}
             height={height}
-            priority={priority}
-            loading={priority ? 'eager' : 'lazy'}
-            quality={quality}
+            imageType={imageType}
             sizes={sizes}
             style={imageStyle}
           />

@@ -1,0 +1,173 @@
+.navigationPill {
+  /* Pill-shaped container */
+  border-radius: 9999px;
+  padding: 0.5rem;
+  
+  /* Semi-transparent background */
+  background-color: rgba(250, 247, 242, 0.7); /* cream with opacity */
+  
+  /* Dynamic blur backdrop filter */
+  backdrop-filter: blur(var(--blur-amount, 0px));
+  -webkit-backdrop-filter: blur(var(--blur-amount, 0px));
+  
+  /* Smooth transitions between blur states - optimized easing for natural feel */
+  transition: backdrop-filter 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              -webkit-backdrop-filter 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background-color 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Subtle elevation shadow */
+  box-shadow: 0 2px 8px rgba(58, 54, 51, 0.1),
+              0 1px 3px rgba(58, 54, 51, 0.06);
+  
+  /* Border for definition */
+  border: 1px solid rgba(232, 213, 196, 0.3); /* sand with opacity */
+  
+  /* Performance optimizations */
+  will-change: backdrop-filter, background-color;
+  /* Force GPU acceleration for better performance */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Enable hardware acceleration */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Blur state data attributes with smooth transitions */
+.navigationPill[data-scroll-state="scrolling"] {
+  --blur-amount: 5px;
+  background-color: transparent; /* No background when scrolling */
+  border-color: transparent; /* No border when scrolling */
+  box-shadow: none; /* No shadow when scrolling */
+  /* Faster transition when starting to scroll */
+  transition: backdrop-filter 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              -webkit-backdrop-filter 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background-color 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navigationPill[data-scroll-state="idle"] {
+  --blur-amount: 15px;
+  /* Slower, smoother transition when becoming idle */
+  transition: backdrop-filter 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              -webkit-backdrop-filter 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navigationPill[data-scroll-state="top"] {
+  --blur-amount: 0px;
+  /* Quick transition when at top */
+  transition: backdrop-filter 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              -webkit-backdrop-filter 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Fallback for browsers without backdrop-filter support */
+.navigationPill.fallback {
+  background-color: rgba(250, 247, 242, 0.95); /* More opaque cream */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem; /* 12px spacing between items */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.itemWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Sliding active indicator */
+.activeIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #3A3633; /* charcoal */
+  border: 2px solid #4A9FFF; /* blue accent */
+  border-radius: 9999px;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+              width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .navigationPill {
+    max-width: 1000px;
+  }
+  
+  .itemList {
+    gap: 0.75rem; /* 12px spacing to fit more items */
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .navigationPill {
+    max-width: 700px;
+  }
+  
+  .itemList {
+    gap: 0.5rem; /* 8px spacing on tablet */
+  }
+}
+
+/* Mobile (<768px) */
+@media (max-width: 767px) {
+  .navigationPill {
+    max-width: calc(100vw - 32px);
+    padding: 0.375rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    /* Optimize touch interactions on mobile */
+    touch-action: pan-x; /* Allow horizontal scrolling only */
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .navigationPill::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .itemList {
+    gap: 0.5rem; /* 8px spacing on mobile */
+    flex-wrap: nowrap; /* Prevent wrapping, enable horizontal scroll */
+  }
+  
+  .itemWrapper {
+    flex-shrink: 0; /* Prevent items from shrinking */
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .navigationPill {
+    transition: none;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(250, 247, 242, 0.95); /* Use solid fallback */
+  }
+}
