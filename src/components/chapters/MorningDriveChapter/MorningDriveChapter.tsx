@@ -89,6 +89,7 @@ export default function MorningDriveChapter({
   const sectionRef = useRef<HTMLElement>(null);
   const textCardRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
+  const fullScreenImageRef = useRef<HTMLDivElement>(null);
   const animatedOverlayRef = useRef<HTMLDivElement>(null);
   
   // Viewport width state for responsive behavior
@@ -150,23 +151,21 @@ export default function MorningDriveChapter({
       if (imageContainerRef.current) {
         const imageStartWidth = 400;
         const isMobile = viewportWidth < 768;
-        const targetWidthPercentage = isMobile ? 0.9 : 0.8;
+        const targetWidthPercentage = isMobile ? 0.9 : 0.4;
         const targetWidth = viewportWidth * targetWidthPercentage;
         const targetScale = targetWidth / imageStartWidth;
 
         gsap.set(imageContainerRef.current, {
-          position: 'fixed',
-          top: '50vh',
-          left: '50vw',
-          x: '-50%',
-          y: '-50%',
           scale: targetScale,
-          transformOrigin: 'center center',
+          transformOrigin: 'top left',
         });
       }
 
       if (animatedOverlayRef.current) {
-        gsap.set(animatedOverlayRef.current, { opacity: 1 });
+        gsap.set(animatedOverlayRef.current, {
+          opacity: 1,
+          left: '10%'
+        });
       }
 
       setAriaMessage('Morning Safari Drive content is ready. Image and text are now visible.');
@@ -175,125 +174,145 @@ export default function MorningDriveChapter({
 
     // GSAP Context for cleanup
     const ctx = gsap.context(() => {
-      // Calculate target scale for image
+      // Calculate target dimensions
       const imageStartWidth = 400;
       const isMobile = viewportWidth < 768;
-      const targetWidthPercentage = isMobile ? 0.9 : 0.8;
+      // Image grows to 40% viewport width (not 80%)
+      const targetWidthPercentage = isMobile ? 0.9 : 0.4;
       const targetWidth = viewportWidth * targetWidthPercentage;
       const targetScale = targetWidth / imageStartWidth;
 
-      // Main Pin ScrollTrigger
+      // Main Pin ScrollTrigger with manual animation via onUpdate
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top top',
-        end: '+=200vh',
+        end: '+=750vh',
         pin: true,
         pinSpacing: true,
-        scrub: 0.5,
         anticipatePin: 1,
         markers: false,
         onUpdate: (self) => {
           const progress = self.progress;
 
+          // PHASE 1: Pin & Read (0-6.67% = 0-50vh)
+          // No animations, content is static
+
+          // PHASE 2: Everything Fades Up & Out (6.67%-13.33% = 50vh-100vh)
+          if (progress >= 0.0667 && progress < 0.1333) {
+            const fadeProgress = (progress - 0.0667) / 0.0666; // 0 to 1
+
+            // Text card fades up and out
+            if (textCardRef.current) {
+              textCardRef.current.style.opacity = String(1 - fadeProgress);
+              textCardRef.current.style.transform = `translateY(${-100 * fadeProgress}px)`;
+            }
+
+            // Small image fades up and out
+            if (imageContainerRef.current) {
+              imageContainerRef.current.style.opacity = String(1 - fadeProgress);
+              imageContainerRef.current.style.transform = `translateY(${-100 * fadeProgress}px)`;
+            }
+          } else if (progress < 0.0667) {
+            // Reset to initial state when scrolling back before fade
+            if (textCardRef.current) {
+              textCardRef.current.style.opacity = '1';
+              textCardRef.current.style.transform = 'translateY(0)';
+            }
+            if (imageContainerRef.current) {
+              imageContainerRef.current.style.opacity = '1';
+              imageContainerRef.current.style.transform = 'translateY(0)';
+            }
+          } else if (progress >= 0.1333) {
+            // Keep faded out after phase completes
+            if (textCardRef.current) {
+              textCardRef.current.style.opacity = '0';
+              textCardRef.current.style.transform = 'translateY(-100px)';
+            }
+            if (imageContainerRef.current) {
+              imageContainerRef.current.style.opacity = '0';
+              imageContainerRef.current.style.transform = 'translateY(-100px)';
+            }
+          }
+
+          // PHASE 3: Full-Screen Image Slides In (12%-72% = 90vh-540vh)
+          // Now 450vh duration (1.5x slower) - starts when fade is 80% complete
+          if (progress >= 0.12 && progress < 0.72) {
+            const slideProgress = (progress - 0.12) / 0.6; // 0 to 1
+            // Use power-6 easing for extremely smooth, luxurious slide
+            const easedSlide = 1 - Math.pow(1 - slideProgress, 6);
+
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = `translateX(${-100 + (100 * easedSlide)}%)`;
+              fullScreenImageRef.current.style.opacity = '1';
+            }
+          } else if (progress < 0.12) {
+            // Reset to off-screen when scrolling back before slide
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = 'translateX(-100%)';
+              fullScreenImageRef.current.style.opacity = '0';
+            }
+          } else if (progress >= 0.72) {
+            // Keep fully visible after slide completes
+            if (fullScreenImageRef.current) {
+              fullScreenImageRef.current.style.transform = 'translateX(0%)';
+              fullScreenImageRef.current.style.opacity = '1';
+            }
+          }
+
+          // PHASE 4: Pause Before Text (72%-76% = 540vh-570vh)
+          // Full-screen image visible, no text yet
+
+          // PHASE 5: Text Overlay Appears (76%-80% = 570vh-600vh)
+          if (progress >= 0.76 && progress < 0.80) {
+            const textProgress = (progress - 0.76) / 0.04; // 0 to 1
+            const easedText = 1 - Math.pow(1 - textProgress, 3);
+
+            if (animatedOverlayRef.current) {
+              animatedOverlayRef.current.style.opacity = String(easedText);
+            }
+          } else if (progress < 0.76) {
+            // Keep hidden when scrolling back before text appears
+            if (animatedOverlayRef.current) {
+              animatedOverlayRef.current.style.opacity = '0';
+            }
+          } else if (progress >= 0.80) {
+            // Keep fully visible after text fade completes
+            if (animatedOverlayRef.current) {
+              animatedOverlayRef.current.style.opacity = '1';
+            }
+          }
+
+          // PHASE 6: Hold for Reading (80%-93.33% = 600vh-700vh)
+          // Everything stays visible and static
+
+          // PHASE 7: Exit (93.33%-100% = 700vh-750vh)
+          // No animations, just unpinning
+
           // Screen reader announcements
-          if (progress > 0 && progress < 0.05) {
+          if (progress > 0 && progress < 0.03) {
             setAriaMessage('Morning Safari Drive section is now in focus.');
           }
-          else if (progress > 0.48 && progress < 0.52) {
-            setAriaMessage('Safari image is growing and centering.');
+          else if (progress > 0.06 && progress < 0.09) {
+            setAriaMessage('Content is fading away.');
           }
-          else if (progress > 0.73 && progress < 0.77) {
-            setAriaMessage('Safari image is now fully visible and centered.');
+          else if (progress > 0.11 && progress < 0.14) {
+            setAriaMessage('Full safari scene is slowly appearing with Mount Kilimanjaro and elephants.');
           }
-          else if (progress > 0.88 && progress < 0.92) {
-            setAriaMessage('Inspirational message is now visible: This could be your morning.');
+          else if (progress > 0.75 && progress < 0.78) {
+            setAriaMessage('Inspirational message is appearing: This could be your morning.');
           }
         },
       });
 
-      // Master Timeline - All animations in one
-      const masterTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=200vh',
-          scrub: 0.5,
-          invalidateOnRefresh: true,
-        }
-      });
-
-      // Set initial overlay state
-      gsap.set(animatedOverlayRef.current, {
-        opacity: 0,
-        force3D: true,
-      });
-
-      // PHASE 1: Pin & Read (0-50vh) - No animations, just static content
-
-      // PHASE 2: Content Fade (50vh-100vh) - Starts at 25% progress
-      if (textCardRef.current) {
-        masterTimeline
-          .to(textCardRef.current, {
-            opacity: 0,
-            y: -50,
-            duration: 0.25,
-            ease: 'power1.inOut',
-            force3D: true,
-          }, 0.25);
+      // Set initial states
+      if (fullScreenImageRef.current) {
+        fullScreenImageRef.current.style.opacity = '0';
+        fullScreenImageRef.current.style.transform = 'translateX(-100%)';
       }
 
-      // Image subtle scale hint during Phase 2
-      if (imageContainerRef.current) {
-        masterTimeline
-          .to(imageContainerRef.current, {
-            scale: 1.05,
-            opacity: 1,
-            duration: 0.25,
-            ease: 'power1.inOut',
-            transformOrigin: 'center center',
-            force3D: true,
-          }, 0.25);
-
-        // PHASE 3: Image Growth (100vh-150vh)
-        // 3a. Detachment scale bump (100vh-110vh) - Starts at 50% progress
-        masterTimeline
-          .to(imageContainerRef.current, {
-            scale: 1.1,
-            duration: 0.05,
-            ease: 'power1.out',
-          }, 0.5);
-
-        // 3b. Move to center + major growth (110vh-150vh) - Starts at 55% progress
-        masterTimeline
-          .to(imageContainerRef.current, {
-            position: 'fixed',
-            top: '50vh',
-            left: '50vw',
-            x: '-50%',
-            y: '-50%',
-            scale: targetScale,
-            opacity: 1,
-            duration: 0.2,
-            ease: 'expo.out',
-            transformOrigin: 'center center',
-            force3D: true,
-            willChange: 'transform',
-          }, 0.55);
-      }
-
-      // PHASE 4: Overlay Reveal (150vh-175vh) - Starts at 75% progress
       if (animatedOverlayRef.current) {
-        masterTimeline
-          .to(animatedOverlayRef.current, {
-            opacity: 1,
-            duration: 0.125,
-            ease: 'power1.inOut',
-            force3D: true,
-          }, 0.75);
+        animatedOverlayRef.current.style.opacity = '0';
       }
-
-      // PHASE 5: Section Exit (175vh-200vh)
-      // Handled automatically by pin release at 200vh
 
     }, sectionRef);
 
@@ -381,14 +400,24 @@ export default function MorningDriveChapter({
           </div>
         </div>
 
-        {/* Animated heading overlay - Fades in during Phase 4 */}
+        {/* Full-screen safari image - slides in from left */}
+        <div ref={fullScreenImageRef} className={styles.fullScreenImage}>
+          <OptimizedImage
+            src="/images/experiences/game-drive/yourMorning.png"
+            alt="Elephants at sunrise with Mount Kilimanjaro in background, viewed from inside a safari vehicle"
+            width={1920}
+            height={1080}
+            imageType="hero"
+            priority
+            className={styles.fullScreenImageElement}
+          />
+        </div>
+
+        {/* Text overlay - appears at top after full-screen image */}
         <div ref={animatedOverlayRef} className={styles.animatedHeading}>
           <h3 className={styles.animatedHeadingText}>
-            <span className={styles.headingWord1}>This could be</span>{' '}
-            <span className={styles.headingWord2}>your morning.</span>{' '}
-            <span className={styles.headingWord3}>Exciting.</span>{' '}
-            <span className={styles.headingWord4}>Beautiful.</span>{' '}
-            <span className={styles.headingWord5}>Captivating.</span>
+            <span className={styles.textLine1}>This could be your morning</span>
+            <span className={styles.textLine2}>Exciting. Beautiful. Captivating.</span>
           </h3>
         </div>
       </div>
