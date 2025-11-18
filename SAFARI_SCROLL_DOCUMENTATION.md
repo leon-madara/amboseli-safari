@@ -221,12 +221,12 @@ if (progress >= mainSlideStart && progress < mainSlideEnd) {
 1. **Intro Section**:
    - Heading: "Wildlife Encounters"
    - Subtitle: "Meet the Majestic Five of Amboseli"
-2. **Horizontal Scrolling Gallery** - 5 animal cards:
-   - African Elephant
-   - African Lion
-   - Masai Giraffe
-   - Plains Zebra
-   - African Cheetah
+2. **Staggered Fan Display** - 5 animal cards with layered depth:
+   - Card 1: African Elephant (z-index: 1, BACKMOST)
+   - Card 2: African Lion (z-index: 2)
+   - Card 3: Masai Giraffe (z-index: 3, CENTER)
+   - Card 4: Plains Zebra (z-index: 4)
+   - Card 5: African Cheetah (z-index: 5, FRONTMOST)
 3. **Animal Cards** (each contains):
    - Large image (fill container)
    - Conservation status badge
@@ -238,7 +238,31 @@ if (progress >= mainSlideStart && progress < mainSlideEnd) {
 4. **Progress Indicator** - 5 dots showing scroll position
 5. **Scroll Hint** - "Scroll to explore" with right arrow (pulsing animation)
 
-#### Animation Sequence (GSAP Timeline)
+#### Z-Index Layering System
+Cards are layered from back to front to create visual depth:
+
+| Card | Animal | Z-Index | Final Position | Visual Layer |
+|------|--------|---------|----------------|--------------|
+| 1 | Elephant | 1 | Left (-30%, -6°) | BACKMOST (partially covered by all others) |
+| 2 | Lion | 2 | Left (-15%, -3°) | Behind center (covers Elephant) |
+| 3 | Giraffe | 3 | Center (0%, 0°) | CENTER (covers Elephant & Lion) |
+| 4 | Zebra | 4 | Right (+15%, +3°) | Front of center (covers Giraffe partially) |
+| 5 | Cheetah | 5 | Right (+30%, +6°) | FRONTMOST (covers all others) |
+
+**Visual Depth** (Side View):
+```
+                        ┌─────┐ ← Cheetah (z:5, FRONTMOST)
+                    ┌───┤     │
+                ┌───┤   └─────┘ ← Zebra (z:4)
+            ┌───┤   └─────┘
+        ┌───┤   └─────┘ ← Giraffe (z:3, center)
+    ┌───┤   └─────┘
+┌───┤   └─────┘ ← Lion (z:2)
+│   └─────┘
+└─────┘ ← Elephant (z:1, BACKMOST)
+```
+
+#### Animation Sequence - Staggered Fan Reveal
 
 **Pinning Configuration**:
 ```javascript
@@ -255,23 +279,83 @@ const tl = gsap.timeline({
 });
 ```
 
-##### **Phase Breakdown**:
+##### **PHASE 1: Intro Fade In (0-10% = 0-25vh)**
+- Intro section fades in (opacity 0→1)
+- Duration: 0.1 timeline units
 
-| Phase | Timeline % | Duration | Elements | Animation |
-|-------|-----------|----------|----------|-----------|
-| 1 | 0-20% | 0.2 | Intro | Fade in (opacity 0→1) |
-| 2 | 20-50% | 0.3 hold | Intro | Fully visible |
-| 3 | 50-80% | 0.3 | Intro → Gallery | Intro fades out + moves up (-50px)<br>Gallery fades in from below (+50px) |
-| 4 | 80-100% | 0.7 | Gallery | Horizontal scroll: translateX(0 → -scrollDistance) |
+##### **PHASE 2: Hold Intro (10-25% = 25vh-62.5vh)**
+- Intro remains fully visible
+- User reads heading and subtitle
+- Duration: 0.15 timeline units
 
-##### **Horizontal Scroll Calculation**:
-```javascript
-const getScrollDistance = () => {
-  const cardsWidth = cards.scrollWidth;      // Total width of all cards
-  const viewportWidth = window.innerWidth;   // Visible width
-  return cardsWidth - viewportWidth;         // Distance to scroll
-};
+##### **PHASE 3: Transition (25-35% = 62.5vh-87.5vh)**
+- Intro fades out + moves up (Y: 0 → -50px)
+- Fan container fades in (opacity 0→1)
+- Simultaneous transition
+- Duration: 0.1 timeline units each
+
+##### **PHASE 4: Staggered Fan Animation (35-100% = 87.5vh-250vh)**
+
+**All Cards Initial State**:
+- Opacity: 0
+- Y position: 100px (below viewport)
+- Rotation: 0°
+- X position: 0
+- Scale: 0.95
+
+**Step-by-Step Card Reveal**:
+
+| Step | Timeline | Cards Affected | Animation Details |
+|------|----------|----------------|-------------------|
+| **1** | T+0.00 | **Card 1 (Elephant)** | **Appears at center**<br>• opacity: 0→1<br>• y: 100px→0<br>• rotation: 0°<br>• x: 0<br>• scale: 0.95→1<br>• z-index: 1 (back layer) |
+| **2** | T+0.08 | Hold | 0.03 duration pause |
+| **3** | T+0.13 | **Card 2 (Lion)** enters<br>**Card 1 (Elephant)** adjusts | **Lion appears at center:**<br>• opacity: 0→1, y: 100px→0, rotation: 0°, x: 0, scale: 1<br>• z-index: 2 (ON TOP of Elephant)<br><br>**Elephant slides left:**<br>• rotation: 0°→-3°<br>• x: 0→-15% |
+| **4** | T+0.21 | Hold | 0.03 duration pause |
+| **5** | T+0.26 | **Card 3 (Giraffe)** enters<br>**Cards 1-2** adjust | **Giraffe appears at center:**<br>• opacity: 0→1, y: 100px→0, rotation: 0°, x: 0, scale: 1<br>• z-index: 3 (ON TOP of Lion)<br><br>**Elephant slides further left:**<br>• rotation: -3°→-6°<br>• x: -15%→-30%<br><br>**Lion slides left:**<br>• rotation: 0°→-3°<br>• x: 0→-15% |
+| **6** | T+0.34 | Hold | 0.03 duration pause |
+| **7** | T+0.39 | **Card 4 (Zebra)** enters<br>**Cards 1-3** hold | **Zebra appears right of center:**<br>• opacity: 0→1, y: 100px→0<br>• rotation: 0°→+3°<br>• x: 0→+15%<br>• scale: 0.95→1<br>• z-index: 4 (ON TOP of Giraffe)<br><br>**Previous cards maintain positions** |
+| **8** | T+0.47 | Hold | 0.03 duration pause |
+| **9** | T+0.52 | **Card 5 (Cheetah)** enters<br>**Cards 1-4** hold | **Cheetah completes fan at far right:**<br>• opacity: 0→1, y: 100px→0<br>• rotation: 0°→+6°<br>• x: 0→+30%<br>• scale: 0.95→1<br>• z-index: 5 (FRONTMOST, covers all)<br><br>**Previous cards maintain positions** |
+| **10** | T+0.60 | Final Hold | All cards remain in fan formation for 0.22 duration |
+
+**Final Fan Formation**:
 ```
+┌────────────────────────────────────────────────────────────────┐
+│                                                                │
+│  ╔═══╗      ╔═══╗      ╔═══╗      ╔═══╗      ╔═══╗          │
+│  ║Ele║╲     ║Lio║╲     ║Gir║      ║Zeb║╱     ║Che║╱         │
+│  ╚═══╝      ╚═══╝      ╚═══╝      ╚═══╝      ╚═══╝          │
+│  z:1        z:2        z:3        z:4        z:5             │
+│  -30%       -15%       0%         +15%       +30%            │
+│  -6°        -3°        0°         +3°        +6°             │
+│                                                                │
+│  BACK ←──────────────────────────────────→ FRONT             │
+│  (underneath all)           (on top of all)                   │
+└────────────────────────────────────────────────────────────────┘
+```
+
+#### Movement Choreography Details
+
+**Key Animation Principles**:
+1. **Each card enters from bottom-center**: All cards start at `y: 100px, x: 0, rotation: 0°`
+2. **New card appears at center initially**: Card fades in at center position
+3. **Previous cards adjust to make room**: As each new card appears, previous cards slide and tilt
+4. **Higher z-index = on top**: Each new card has higher z-index, covering previous cards
+5. **Left cards tilt left, right cards tilt right**: Creates fan spread effect
+
+**Transform Origin**: Center of each card for rotation
+
+**Timing**:
+- Each card appearance: 0.08 duration with `power2.out` easing
+- Holds between reveals: 0.03 duration
+- Final appreciation hold: 0.22 duration
+
+**Visual Result**:
+- Cheetah (front) overlaps and covers portions of Zebra
+- Zebra overlaps Giraffe
+- Giraffe (center) overlaps Lion
+- Lion overlaps Elephant
+- Elephant (back) is partially hidden by all others
 
 #### Data Source
 `src/data/wildlife.ts` - WILDLIFE_ANIMALS array (5 animals exactly)
@@ -284,9 +368,12 @@ const getScrollDistance = () => {
 
 #### Technical Notes
 - **Pinning**: GSAP ScrollTrigger with `scrub: 1`
+- **Animation Type**: Staggered sequential reveals with synchronized multi-card adjustments
 - **Timeline**: Sequential phases with position labels (`'<'` for simultaneous)
 - **Responsive**: `invalidateOnRefresh: true` recalculates on resize
-- **Horizontal Scroll**: Transforms cards container, not individual cards
+- **Layout**: Fan container uses absolute positioning for card overlap
+- **Visual Depth**: Z-index creates realistic card stack effect (Cheetah overlaps all others)
+- **Transform Origin**: Center point for smooth rotation
 - **Cleanup**: Kills only ScrollTriggers matching section ref on unmount
 - **Pulsing Scroll Hint**: Framer Motion infinite opacity animation (1→0.5→1, 2s duration)
 
