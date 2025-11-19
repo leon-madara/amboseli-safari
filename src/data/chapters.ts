@@ -43,9 +43,9 @@ const getChapterHeight = (baseHeight: number): number => {
  */
 const BASE_HEIGHTS = {
   preDawn: 100,
-  morningDrive: 60,
-  wildlifeEncounters: 80,
-  accommodations: 80,
+  morningDrive: 100,
+  wildlifeEncounters: 100,
+  accommodations: 100,
   dining: 80,
   experiences: 80,
   location: 80,
@@ -253,7 +253,7 @@ export function getPreviousChapter(currentId: string): ChapterConfig | undefined
 /**
  * Total height of all chapters in vh
  * Automatically adjusts for mobile (20% increase)
- * Desktop: 760vh, Mobile: 912vh
+ * Desktop: 3390vh, Mobile: 4068vh
  */
 export const TOTAL_JOURNEY_HEIGHT_VH = CHAPTER_CONFIGS.reduce(
   (total, chapter) => total + chapter.heightVh,

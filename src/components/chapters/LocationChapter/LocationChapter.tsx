@@ -1,226 +1,205 @@
 'use client';
 
-import { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { motion } from 'framer-motion';
-import { ParallaxImage } from '@/components/atoms/ParallaxImage';
-import { InfoCard } from '@/components/atoms/InfoCard';
-import { RouteSelector } from '@/components/molecules/RouteSelector';
-import { InteractiveMap } from '@/components/molecules/InteractiveMap';
-import { JourneyTimeline } from '@/components/molecules/JourneyTimeline';
-import { TransportComparisonTable } from '@/components/molecules/TransportComparisonTable';
-import { PhotoGallery } from '@/components/molecules/PhotoGallery';
+import { useRef } from 'react';
+import { BaseChapterProps } from '@/types/chapter';
+import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import { CHAPTER_IMAGES } from '@/data/images';
-import {
-  JOURNEY_ROUTES,
-  JOURNEY_TIMELINE_STEPS,
-  TRANSFER_OPTIONS,
-  JOURNEY_GALLERY,
-  INFO_CARDS,
-  PROXIMITY_LANDMARKS,
-} from '@/data/locationData';
 import styles from './LocationChapter.module.css';
 
-interface LocationChapterProps {
-  id: string;
-}
+interface LocationChapterProps extends BaseChapterProps {}
 
 /**
- * Enhanced Location Chapter - Interactive Journey Planner
+ * Location Chapter - Getting to Amboseli Safari Club
  *
- * Features:
- * - Interactive route selector with 4 routes
- * - Mapbox interactive map with waypoints
- * - Step-by-step journey timeline
- * - Transport comparison table
- * - Photo gallery with filters
- * - Practical information cards
- * - Booking CTAs
+ * Simplified static version displaying:
+ * - Travel distances and times
+ * - Airport information
+ * - Transport options
+ * - Practical travel information
  */
-function LocationChapter({ id }: LocationChapterProps) {
-  const { ref, inView } = useInView({
-    threshold: 0.2,
-    triggerOnce: false,
-  });
-
-  const [selectedRouteId, setSelectedRouteId] = useState(JOURNEY_ROUTES[0].id);
-
-  const selectedRoute = JOURNEY_ROUTES.find(r => r.id === selectedRouteId) || JOURNEY_ROUTES[0];
-  const currentTimeline = JOURNEY_TIMELINE_STEPS[selectedRouteId] || [];
+export default function LocationChapter({ id, className = '' }: LocationChapterProps) {
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
     <section
-      ref={ref}
+      ref={sectionRef}
       id={id}
-      className={styles.locationChapter}
+      className={`${styles.locationChapter} ${className}`}
       data-chapter="location"
       data-time-of-day="twilight"
+      aria-labelledby="location-heading"
     >
-      {/* Background layer with parallax */}
-      <ParallaxImage
-        src={CHAPTER_IMAGES.location.twilightSky}
-        alt="Twilight sky over Amboseli"
-        speed={0.3}
-        className={styles.backgroundImage}
-        priority={false}
-      />
-
-      {/* Atmospheric overlay for twilight effect */}
-      <div className={styles.atmosphericOverlay} />
+      {/* Background with twilight atmosphere */}
+      <div className={styles.backgroundContainer} aria-hidden="true">
+        <div className={styles.atmosphericOverlay} />
+      </div>
 
       {/* Main content container */}
       <div className={styles.contentContainer}>
-        {/* Section 1: Hero Header */}
+        {/* Section Header */}
         <div className={styles.header}>
-          <motion.h2
-            className={styles.sectionTitle}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <h2 id="location-heading" className={styles.sectionTitle}>
             Getting to Your Safari Adventure
-          </motion.h2>
-          <motion.p
-            className={styles.sectionSubtitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Choose your route below and start planning your journey
-          </motion.p>
+          </h2>
+          <p className={styles.sectionSubtitle}>
+            Located in the heart of Amboseli, just 2km from Kimana Gate
+          </p>
         </div>
 
-        {/* Section 2: Route Selector */}
-        <motion.div
-          className={styles.routeSelectorSection}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <h3 className={styles.subsectionTitle}>Choose Your Journey</h3>
-          <RouteSelector
-            routes={JOURNEY_ROUTES.map(route => ({
-              id: route.id,
-              name: route.name,
-              icon: route.icon,
-              duration: route.totalDuration,
-              distance: route.totalDistance,
-              recommended: route.recommended,
-            }))}
-            onRouteChange={setSelectedRouteId}
-            defaultRoute={JOURNEY_ROUTES[0].id}
-          />
-        </motion.div>
-
-        {/* Section 3: Key Travel Information */}
-        <motion.div
-          className={styles.travelInfoSection}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-        >
+        {/* Key Travel Information */}
+        <div className={styles.travelInfoSection}>
           <div className={styles.travelInfoGrid}>
             <div className={styles.travelInfoCard}>
               <span className={styles.travelInfoIcon}>🏙️</span>
-              <h4 className={styles.travelInfoTitle}>From Nairobi</h4>
+              <h3 className={styles.travelInfoTitle}>From Nairobi</h3>
               <p className={styles.travelInfoDistance}>365 km</p>
               <p className={styles.travelInfoTime}>3-4 hours drive</p>
             </div>
             <div className={styles.travelInfoCard}>
               <span className={styles.travelInfoIcon}>🚪</span>
-              <h4 className={styles.travelInfoTitle}>Kimana Gate</h4>
+              <h3 className={styles.travelInfoTitle}>Kimana Gate</h3>
               <p className={styles.travelInfoDistance}>2 km</p>
               <p className={styles.travelInfoTime}>Main park entrance</p>
             </div>
             <div className={styles.travelInfoCard}>
               <span className={styles.travelInfoIcon}>🏔️</span>
-              <h4 className={styles.travelInfoTitle}>Mount Kilimanjaro</h4>
+              <h3 className={styles.travelInfoTitle}>Mount Kilimanjaro</h3>
               <p className={styles.travelInfoDistance}>45 km</p>
               <p className={styles.travelInfoTime}>Unobstructed views</p>
             </div>
           </div>
-        </motion.div>
-
-        {/* Section 4: Interactive Map + Journey Timeline */}
-        <div className={styles.mapTimelineSection}>
-          <motion.div
-            className={styles.mapColumn}
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <h3 className={styles.subsectionTitle}>Your Route</h3>
-            <InteractiveMap
-              waypoints={selectedRoute.waypoints}
-              showRoute={true}
-              proximityLandmarks={PROXIMITY_LANDMARKS}
-            />
-          </motion.div>
-
-          <motion.div
-            className={styles.timelineColumn}
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
-          >
-            <h3 className={styles.subsectionTitle}>Journey Steps</h3>
-            <JourneyTimeline steps={currentTimeline} />
-          </motion.div>
         </div>
 
-        {/* Section 5: Transport Comparison */}
-        <motion.div
-          className={styles.comparisonSection}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <h3 className={styles.subsectionTitle}>Compare Transportation Options</h3>
-          <TransportComparisonTable options={TRANSFER_OPTIONS} />
-        </motion.div>
+        {/* Transport Options */}
+        <div className={styles.transportSection}>
+          <h3 className={styles.subsectionTitle}>Transport Options</h3>
+          <div className={styles.transportGrid}>
+            <div className={styles.transportCard}>
+              <span className={styles.transportIcon}>🚗</span>
+              <h4 className={styles.transportName}>Private Transfer</h4>
+              <p className={styles.transportDescription}>
+                Comfortable, air-conditioned vehicle with professional driver
+              </p>
+              <div className={styles.transportDetails}>
+                <div className={styles.transportMeta}>
+                  <span className={styles.transportLabel}>Duration:</span>
+                  <span className={styles.transportValue}>3-4 hours</span>
+                </div>
+                <div className={styles.transportMeta}>
+                  <span className={styles.transportLabel}>Price:</span>
+                  <span className={styles.transportValue}>From $150</span>
+                </div>
+              </div>
+              <div className={styles.recommendedBadge}>Recommended</div>
+            </div>
 
-        {/* Section 6: Photo Gallery */}
-        <motion.div
-          className={styles.gallerySection}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-        >
-          <h3 className={styles.subsectionTitle}>What to Expect Along the Way</h3>
-          <p className={styles.expectationsIntro}>
-            Your journey to Amboseli is part of the adventure. Here&apos;s what you&apos;ll experience:
-          </p>
-          <PhotoGallery images={JOURNEY_GALLERY} columns={3} />
-        </motion.div>
+            <div className={styles.transportCard}>
+              <span className={styles.transportIcon}>🚙</span>
+              <h4 className={styles.transportName}>Self-Drive</h4>
+              <p className={styles.transportDescription}>
+                Well-maintained roads, suitable for most vehicles
+              </p>
+              <div className={styles.transportDetails}>
+                <div className={styles.transportMeta}>
+                  <span className={styles.transportLabel}>Duration:</span>
+                  <span className={styles.transportValue}>3-4 hours</span>
+                </div>
+                <div className={styles.transportMeta}>
+                  <span className={styles.transportLabel}>Road Type:</span>
+                  <span className={styles.transportValue}>Tarmac + Gravel</span>
+                </div>
+              </div>
+            </div>
 
-        {/* Section 7: Info Cards */}
-        <motion.div
-          className={styles.infoSection}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
-        >
+            <div className={styles.transportCard}>
+              <span className={styles.transportIcon}>✈️</span>
+              <h4 className={styles.transportName}>Air Transfer</h4>
+              <p className={styles.transportDescription}>
+                Charter flight from Wilson Airport to Amboseli Airstrip
+              </p>
+              <div className={styles.transportDetails}>
+                <div className={styles.transportMeta}>
+                  <span className={styles.transportLabel}>Duration:</span>
+                  <span className={styles.transportValue}>45 minutes</span>
+                </div>
+                <div className={styles.transportMeta}>
+                  <span className={styles.transportLabel}>Price:</span>
+                  <span className={styles.transportValue}>On request</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Airports Section */}
+        <div className={styles.airportsSection}>
+          <h3 className={styles.subsectionTitle}>Nearest Airports</h3>
+          <div className={styles.airportsList}>
+            <div className={styles.airportItem}>
+              <span className={styles.airportIcon}>✈️</span>
+              <div className={styles.airportInfo}>
+                <span className={styles.airportName}>Jomo Kenyatta International Airport</span>
+                <span className={styles.airportCode}>(NBO)</span>
+              </div>
+              <span className={styles.airportDistance}>350 km</span>
+            </div>
+            <div className={styles.airportItem}>
+              <span className={styles.airportIcon}>🛩️</span>
+              <div className={styles.airportInfo}>
+                <span className={styles.airportName}>Wilson Airport</span>
+                <span className={styles.airportCode}>(WIL)</span>
+              </div>
+              <span className={styles.airportDistance}>240 km</span>
+            </div>
+            <div className={styles.airportItem}>
+              <span className={styles.airportIcon}>🛬</span>
+              <div className={styles.airportInfo}>
+                <span className={styles.airportName}>Amboseli Airstrip</span>
+                <span className={styles.airportCode}>(ASV)</span>
+              </div>
+              <span className={styles.airportDistance}>15 km</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Essential Info Cards */}
+        <div className={styles.infoSection}>
           <h3 className={styles.subsectionTitle}>Essential Travel Information</h3>
           <div className={styles.infoGrid}>
-            {INFO_CARDS.map(card => (
-              <InfoCard
-                key={card.id}
-                icon={card.icon}
-                title={card.title}
-                content={card.content}
-              />
-            ))}
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcon}>🕒</span>
+              <h4 className={styles.infoTitle}>Best Time to Travel</h4>
+              <p className={styles.infoContent}>
+                Early morning departures recommended to arrive before midday and enjoy full safari experience
+              </p>
+            </div>
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcon}>🎫</span>
+              <h4 className={styles.infoTitle}>Park Entry</h4>
+              <p className={styles.infoContent}>
+                Valid park fees required. We can arrange park entry and guide services in advance
+              </p>
+            </div>
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcon}>📱</span>
+              <h4 className={styles.infoTitle}>Connectivity</h4>
+              <p className={styles.infoContent}>
+                Mobile network coverage available. Wi-Fi provided at the lodge for guests
+              </p>
+            </div>
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcon}>🧳</span>
+              <h4 className={styles.infoTitle}>What to Bring</h4>
+              <p className={styles.infoContent}>
+                Light clothing, sunscreen, hat, camera, binoculars. Warm layer for early morning drives
+              </p>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Section 8: Booking CTA */}
-        <motion.div
-          className={styles.ctaSection}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.8, delay: 1.8 }}
-        >
-          <h3 className={styles.ctaHeading}>Ready to Book Your Transfer?</h3>
+        {/* Contact CTA */}
+        <div className={styles.ctaSection}>
+          <h3 className={styles.ctaHeading}>Need Help Planning Your Journey?</h3>
           <p className={styles.ctaText}>
             Let us arrange your comfortable, hassle-free transfer to Amboseli Safari Club
           </p>
@@ -232,10 +211,8 @@ function LocationChapter({ id }: LocationChapterProps) {
               Ask Questions
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
-
-export default LocationChapter;

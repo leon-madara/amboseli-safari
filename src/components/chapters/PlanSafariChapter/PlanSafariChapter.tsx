@@ -1,230 +1,23 @@
 'use client';
 
-import { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { ParallaxImage } from '@/components/atoms/ParallaxImage';
-import AtmosphericParticles from '@/components/atoms/AtmosphericParticles/AtmosphericParticles';
-import { CHAPTER_IMAGES } from '@/data/images';
-import {
-  SAFARI_PACKAGES,
-  CONTACT_METHODS,
-  SafariPackage,
-  ContactMethod,
-} from '@/data/safariPackages';
+import { useRef, useState } from 'react';
+import { BaseChapterProps } from '@/types/chapter';
+import { SAFARI_PACKAGES, CONTACT_METHODS } from '@/data/safariPackages';
 import styles from './PlanSafariChapter.module.css';
 
-interface PlanSafariChapterProps {
-  id: string;
-}
+interface PlanSafariChapterProps extends BaseChapterProps {}
 
 /**
- * Chapter 12: Plan Your Safari
+ * Plan Safari Chapter - Reserve Your Stay
  *
- * Final chapter with booking information and call-to-action.
- * Features:
- * - Safari package cards with pricing and details
+ * Simplified static version displaying:
+ * - Safari package options with pricing
  * - Contact form for inquiries
- * - Contact method buttons (phone, email, WhatsApp, etc.)
- * - Journey completion indicator
- * - Night atmosphere with stars
- *
- * Requirements: 14.1-14.6
+ * - Direct contact methods
+ * - Call-to-action buttons
  */
-export default function PlanSafariChapter({ id }: PlanSafariChapterProps) {
-  const { ref, inView } = useInView({
-    threshold: 0.3,
-    triggerOnce: false,
-  });
-
-  return (
-    <section
-      ref={ref}
-      id={id}
-      className={styles.planSafariChapter}
-      data-chapter="plan-safari"
-      data-time-of-day="night"
-    >
-      {/* Background layer with parallax */}
-      <ParallaxImage
-        src={CHAPTER_IMAGES.planSafari.starryNight}
-        alt="Starry night over the savannah"
-        speed={0.3}
-        className={styles.backgroundImage}
-        priority={false}
-      />
-
-      {/* Atmospheric overlay for night effect */}
-      <div className={styles.atmosphericOverlay} />
-
-      {/* Star particles (only when in view) */}
-      {inView && (
-        <AtmosphericParticles
-          type="stars"
-          density={40}
-          speed={1}
-        />
-      )}
-
-      {/* Main content container */}
-      <div className={styles.contentContainer}>
-        {/* Section header */}
-        <div className={styles.header}>
-          <motion.div
-            className={styles.journeyComplete}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            <div className={styles.completionIcon}>✨</div>
-            <div className={styles.completionText}>Journey Complete</div>
-            <div className={styles.completionSubtext}>
-              You&apos;ve experienced a full day at Amboseli Safari Club
-            </div>
-          </motion.div>
-
-          <motion.h2
-            className={styles.sectionTitle}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Plan Your Safari Adventure
-          </motion.h2>
-          <motion.p
-            className={styles.sectionSubtitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Choose your perfect safari package and let us create an unforgettable experience
-          </motion.p>
-        </div>
-
-        {/* Safari Packages Section */}
-        <div className={styles.packagesSection}>
-          <h3 className={styles.sectionHeading}>Safari Packages</h3>
-          <PackageCards
-            packages={SAFARI_PACKAGES}
-            inView={inView}
-          />
-        </div>
-
-        {/* Contact Form Section */}
-        <div className={styles.contactFormSection}>
-          <h3 className={styles.sectionHeading}>Get in Touch</h3>
-          <ContactForm inView={inView} />
-        </div>
-
-        {/* Contact Methods Section */}
-        <div className={styles.contactMethodsSection}>
-          <h3 className={styles.sectionHeading}>Reach Us Directly</h3>
-          <ContactMethods
-            methods={CONTACT_METHODS}
-            inView={inView}
-          />
-        </div>
-
-        {/* Footer CTA */}
-        <motion.div
-          className={styles.footerCTA}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <div className={styles.footerCTAContent}>
-            <h4 className={styles.footerCTATitle}>Ready for Your Safari Adventure?</h4>
-            <p className={styles.footerCTAText}>
-              Our team is standing by to help you plan the trip of a lifetime.
-            </p>
-            <div className={styles.footerCTAButtons}>
-              <button className={styles.primaryCTAButton}>Book Now</button>
-              <button className={styles.secondaryCTAButton}>Download Brochure</button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * Package Cards Component
- * Displays safari packages in a grid
- */
-interface PackageCardsProps {
-  packages: SafariPackage[];
-  inView: boolean;
-}
-
-function PackageCards({ packages, inView }: PackageCardsProps) {
-  return (
-    <div className={styles.packagesGrid}>
-      {packages.map((pkg, index) => (
-        <motion.div
-          key={pkg.id}
-          className={`${styles.packageCard} ${pkg.popular ? styles.packageCardPopular : ''}`}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
-        >
-          {pkg.popular && (
-            <div className={styles.popularBadge}>Most Popular</div>
-          )}
-
-          <div className={styles.packageHeader}>
-            <h4 className={styles.packageName}>{pkg.name}</h4>
-            <div className={styles.packageDuration}>{pkg.duration}</div>
-            <div className={styles.packagePrice}>{pkg.priceRange}</div>
-          </div>
-
-          <div className={styles.packageHighlights}>
-            <div className={styles.highlightsTitle}>Highlights</div>
-            <ul className={styles.highlightsList}>
-              {pkg.highlights.map((highlight, idx) => (
-                <li key={idx} className={styles.highlightItem}>
-                  <span className={styles.highlightIcon}>✓</span>
-                  {highlight}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={styles.packageIncludes}>
-            <div className={styles.includesTitle}>What&apos;s Included</div>
-            <ul className={styles.includesList}>
-              {pkg.includes.map((item, idx) => (
-                <li key={idx} className={styles.includeItem}>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={styles.packageBestFor}>
-            <div className={styles.bestForTitle}>Best For</div>
-            <div className={styles.bestForTags}>
-              {pkg.bestFor.map((tag, idx) => (
-                <span key={idx} className={styles.bestForTag}>{tag}</span>
-              ))}
-            </div>
-          </div>
-
-          <button className={styles.packageButton}>Select Package</button>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-/**
- * Contact Form Component
- * Form for safari inquiries
- */
-interface ContactFormProps {
-  inView: boolean;
-}
-
-function ContactForm({ inView }: ContactFormProps) {
+export default function PlanSafariChapter({ id, className = '' }: PlanSafariChapterProps) {
+  const sectionRef = useRef<HTMLElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -255,175 +48,262 @@ function ContactForm({ inView }: ContactFormProps) {
   };
 
   return (
-    <motion.div
-      className={styles.contactForm}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.8, delay: 0.4 }}
+    <section
+      ref={sectionRef}
+      id={id}
+      className={`${styles.planSafariChapter} ${className}`}
+      data-chapter="plan-safari"
+      data-time-of-day="night"
+      aria-labelledby="plan-safari-heading"
     >
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.formLabel}>Full Name *</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={styles.formInput}
-              required
-              disabled={status === 'loading'}
-            />
+      {/* Background with night atmosphere */}
+      <div className={styles.backgroundContainer} aria-hidden="true">
+        <div className={styles.atmosphericOverlay} />
+      </div>
+
+      {/* Main content container */}
+      <div className={styles.contentContainer}>
+        {/* Section header */}
+        <div className={styles.header}>
+          <div className={styles.journeyComplete}>
+            <div className={styles.completionIcon}>✨</div>
+            <div className={styles.completionText}>Journey Complete</div>
+            <div className={styles.completionSubtext}>
+              You&apos;ve experienced a full day at Amboseli Safari Club
+            </div>
           </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.formLabel}>Email Address *</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={styles.formInput}
-              required
-              disabled={status === 'loading'}
-            />
+
+          <h2 id="plan-safari-heading" className={styles.sectionTitle}>
+            Plan Your Safari Adventure
+          </h2>
+          <p className={styles.sectionSubtitle}>
+            Choose your perfect safari package and let us create an unforgettable experience
+          </p>
+        </div>
+
+        {/* Safari Packages Section */}
+        <div className={styles.packagesSection}>
+          <h3 className={styles.sectionHeading}>Safari Packages</h3>
+          <div className={styles.packagesGrid}>
+            {SAFARI_PACKAGES.map((pkg) => (
+              <div
+                key={pkg.id}
+                className={`${styles.packageCard} ${pkg.popular ? styles.packageCardPopular : ''}`}
+              >
+                {pkg.popular && (
+                  <div className={styles.popularBadge}>Most Popular</div>
+                )}
+
+                <div className={styles.packageHeader}>
+                  <h4 className={styles.packageName}>{pkg.name}</h4>
+                  <div className={styles.packageDuration}>{pkg.duration}</div>
+                  <div className={styles.packagePrice}>{pkg.priceRange}</div>
+                </div>
+
+                <div className={styles.packageHighlights}>
+                  <div className={styles.highlightsTitle}>Highlights</div>
+                  <ul className={styles.highlightsList}>
+                    {pkg.highlights.map((highlight, idx) => (
+                      <li key={idx} className={styles.highlightItem}>
+                        <span className={styles.highlightIcon}>✓</span>
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={styles.packageIncludes}>
+                  <div className={styles.includesTitle}>What&apos;s Included</div>
+                  <ul className={styles.includesList}>
+                    {pkg.includes.map((item, idx) => (
+                      <li key={idx} className={styles.includeItem}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={styles.packageBestFor}>
+                  <div className={styles.bestForTitle}>Best For</div>
+                  <div className={styles.bestForTags}>
+                    {pkg.bestFor.map((tag, idx) => (
+                      <span key={idx} className={styles.bestForTag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <button className={styles.packageButton}>Select Package</button>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label htmlFor="phone" className={styles.formLabel}>Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className={styles.formInput}
-              disabled={status === 'loading'}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="guests" className={styles.formLabel}>Number of Guests *</label>
-            <select
-              id="guests"
-              name="guests"
-              value={formData.guests}
-              onChange={handleChange}
-              className={styles.formSelect}
-              required
-              disabled={status === 'loading'}
-            >
-              <option value="1">1 Guest</option>
-              <option value="2">2 Guests</option>
-              <option value="3">3 Guests</option>
-              <option value="4">4 Guests</option>
-              <option value="5">5 Guests</option>
-              <option value="6+">6+ Guests</option>
-            </select>
+        {/* Contact Form Section */}
+        <div className={styles.contactFormSection}>
+          <h3 className={styles.sectionHeading}>Get in Touch</h3>
+          <div className={styles.contactForm}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="name" className={styles.formLabel}>Full Name *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={styles.formInput}
+                    required
+                    disabled={status === 'loading'}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="email" className={styles.formLabel}>Email Address *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={styles.formInput}
+                    required
+                    disabled={status === 'loading'}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="phone" className={styles.formLabel}>Phone Number</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={styles.formInput}
+                    disabled={status === 'loading'}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="guests" className={styles.formLabel}>Number of Guests *</label>
+                  <select
+                    id="guests"
+                    name="guests"
+                    value={formData.guests}
+                    onChange={handleChange}
+                    className={styles.formSelect}
+                    required
+                    disabled={status === 'loading'}
+                  >
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5 Guests</option>
+                    <option value="6+">6+ Guests</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="dates" className={styles.formLabel}>Preferred Dates</label>
+                  <input
+                    type="date"
+                    id="dates"
+                    name="dates"
+                    value={formData.dates}
+                    onChange={handleChange}
+                    className={styles.formInput}
+                    disabled={status === 'loading'}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="package" className={styles.formLabel}>Interested Package</label>
+                  <select
+                    id="package"
+                    name="package"
+                    value={formData.package}
+                    onChange={handleChange}
+                    className={styles.formSelect}
+                    disabled={status === 'loading'}
+                  >
+                    <option value="">Select a package...</option>
+                    {SAFARI_PACKAGES.map((pkg) => (
+                      <option key={pkg.id} value={pkg.id}>{pkg.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="message" className={styles.formLabel}>Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className={styles.formTextarea}
+                  rows={5}
+                  placeholder="Tell us about your dream safari..."
+                  disabled={status === 'loading'}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={styles.formSubmitButton}
+                disabled={status === 'loading' || status === 'success'}
+              >
+                {status === 'loading' ? 'Sending...' : status === 'success' ? '✓ Sent!' : 'Send Inquiry'}
+              </button>
+
+              {status === 'success' && (
+                <div className={styles.formSuccess}>
+                  Thank you! We&apos;ll get back to you within 24 hours.
+                </div>
+              )}
+            </form>
           </div>
         </div>
 
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label htmlFor="dates" className={styles.formLabel}>Preferred Dates</label>
-            <input
-              type="date"
-              id="dates"
-              name="dates"
-              value={formData.dates}
-              onChange={handleChange}
-              className={styles.formInput}
-              disabled={status === 'loading'}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="package" className={styles.formLabel}>Interested Package</label>
-            <select
-              id="package"
-              name="package"
-              value={formData.package}
-              onChange={handleChange}
-              className={styles.formSelect}
-              disabled={status === 'loading'}
-            >
-              <option value="">Select a package...</option>
-              {SAFARI_PACKAGES.map((pkg) => (
-                <option key={pkg.id} value={pkg.id}>{pkg.name}</option>
-              ))}
-            </select>
+        {/* Contact Methods Section */}
+        <div className={styles.contactMethodsSection}>
+          <h3 className={styles.sectionHeading}>Reach Us Directly</h3>
+          <div className={styles.contactMethodsGrid}>
+            {CONTACT_METHODS.map((method) => (
+              <a
+                key={method.id}
+                href={method.link}
+                className={styles.contactMethod}
+                target={method.type === 'email' ? undefined : '_blank'}
+                rel={method.type === 'email' ? undefined : 'noopener noreferrer'}
+                aria-label={method.label}
+              >
+                <div className={styles.contactMethodIcon}>{method.icon}</div>
+                <div className={styles.contactMethodContent}>
+                  <div className={styles.contactMethodType}>{method.type.toUpperCase()}</div>
+                  <div className={styles.contactMethodValue}>{method.value}</div>
+                  <div className={styles.contactMethodLabel}>{method.label}</div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="message" className={styles.formLabel}>Message</label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            className={styles.formTextarea}
-            rows={5}
-            placeholder="Tell us about your dream safari..."
-            disabled={status === 'loading'}
-          />
-        </div>
-
-        <button
-          type="submit"
-          className={styles.formSubmitButton}
-          disabled={status === 'loading' || status === 'success'}
-        >
-          {status === 'loading' ? 'Sending...' : status === 'success' ? '✓ Sent!' : 'Send Inquiry'}
-        </button>
-
-        {status === 'success' && (
-          <motion.div
-            className={styles.formSuccess}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            Thank you! We&apos;ll get back to you within 24 hours.
-          </motion.div>
-        )}
-      </form>
-    </motion.div>
-  );
-}
-
-/**
- * Contact Methods Component
- * Quick contact buttons
- */
-interface ContactMethodsProps {
-  methods: ContactMethod[];
-  inView: boolean;
-}
-
-function ContactMethods({ methods, inView }: ContactMethodsProps) {
-  return (
-    <div className={styles.contactMethodsGrid}>
-      {methods.map((method, index) => (
-        <motion.a
-          key={method.id}
-          href={method.link}
-          className={styles.contactMethod}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
-          target={method.type === 'email' ? undefined : '_blank'}
-          rel={method.type === 'email' ? undefined : 'noopener noreferrer'}
-          aria-label={method.label}
-        >
-          <div className={styles.contactMethodIcon}>{method.icon}</div>
-          <div className={styles.contactMethodContent}>
-            <div className={styles.contactMethodType}>{method.type.toUpperCase()}</div>
-            <div className={styles.contactMethodValue}>{method.value}</div>
-            <div className={styles.contactMethodLabel}>{method.label}</div>
+        {/* Footer CTA */}
+        <div className={styles.footerCTA}>
+          <div className={styles.footerCTAContent}>
+            <h4 className={styles.footerCTATitle}>Ready for Your Safari Adventure?</h4>
+            <p className={styles.footerCTAText}>
+              Our team is standing by to help you plan the trip of a lifetime.
+            </p>
+            <div className={styles.footerCTAButtons}>
+              <button className={styles.primaryCTAButton}>Book Now</button>
+              <button className={styles.secondaryCTAButton}>Download Brochure</button>
+            </div>
           </div>
-        </motion.a>
-      ))}
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }
