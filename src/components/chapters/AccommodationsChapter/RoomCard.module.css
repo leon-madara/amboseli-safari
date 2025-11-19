@@ -1,0 +1,295 @@
+/**
+ * RoomCard Component Styles
+ * 
+ * Implements responsive layouts:
+ * - Desktop (>= 768px): 60/40 horizontal split (image left, content right)
+ * - Mobile (< 768px): Vertical layout (image top, content bottom)
+ * 
+ * Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 3.1, 3.2, 3.4, 3.5
+ */
+
+/* Base Card Styles */
+.roomCard {
+  position: sticky;
+  top: 80px; /* Requirement 5.1 - Sticky positioning */
+  display: grid;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transform-origin: center top; /* Requirement 5.3 - Transform origin for scaling */
+  will-change: transform, opacity; /* Requirement 10.3 - Performance hint: tells browser to optimize these properties for animation */
+  transition: box-shadow 0.3s ease-out; /* Requirement 12.2 - Smooth transitions for box-shadow only */
+  /* Note: Transform transition removed to avoid interfering with scroll animation (Requirement 12.4) */
+}
+
+/* Desktop Layout - 60/40 Split (>= 768px) - Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 9.1 */
+@media (min-width: 768px) {
+  .roomCard {
+    grid-template-columns: 60% 40%; /* Requirement 2.1 - 60/40 horizontal split */
+    min-width: 800px; /* Requirement 2.2 - Minimum width */
+    max-width: 1200px; /* Requirement 2.2 - Maximum width */
+    width: clamp(800px, 90vw, 1200px); /* Requirement 2.2 - Responsive scaling */
+    min-height: 500px; /* Requirement 2.4 - Minimum height */
+    margin: 0 auto;
+  }
+
+  /* Hover effect - Requirements 12.1, 12.2, 12.4 */
+  /* Enhanced shadow on hover */
+  .roomCard:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Requirement 12.1 - Enhanced shadow */
+  }
+  
+  /* Lift effect using margin to avoid interfering with inline transform (Requirement 12.4) */
+  /* This approach maintains scroll animation integrity while providing visual feedback */
+  .roomCard:hover {
+    margin-top: -4px; /* Requirement 12.1 - 4px lift effect */
+    margin-bottom: 4px; /* Compensate to maintain layout */
+  }
+}
+
+/* Tablet Layout (768px - 1024px) - Requirement 9.2 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .roomCard {
+    max-width: 1000px; /* Requirement 9.2 - Reduced max width for tablet */
+  }
+}
+
+/* Mobile Layout - Vertical Stack (< 768px) - Requirements 3.1, 3.2, 3.4, 3.5, 9.3 */
+@media (max-width: 767px) {
+  .roomCard {
+    grid-template-rows: 50% 50%; /* Requirement 3.1 - Vertical layout (image top, content bottom) */
+    grid-template-columns: 1fr;
+    width: min(90vw, 500px); /* Requirement 3.2 - 90% viewport width, max 500px */
+    max-width: 500px; /* Requirement 3.2 - Maximum width constraint */
+    min-height: 600px; /* Requirement 3.4 - Minimum height */
+    margin: 0 auto;
+  }
+}
+
+/* Image Section - 60% width on desktop, 50% height on mobile */
+.imageSection {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.roomImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content Section - 40% width on desktop, 50% height on mobile */
+.contentSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8, 3rem);
+  background: white;
+}
+
+@media (max-width: 767px) {
+  .contentSection {
+    padding: var(--space-6, 2rem);
+  }
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Room Name - Requirements 8.1, 9.4 */
+.roomName {
+  font-family: var(--font-family-display); /* Requirement 8.1 - Display font (Playfair Display) */
+  font-size: clamp(1.75rem, 4vw, 2rem); /* Requirement 9.4 - Responsive font sizing with clamp() */
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .roomName {
+    font-size: 2rem; /* Requirement 8.1 - 32px (2rem) on desktop */
+  }
+}
+
+@media (max-width: 767px) {
+  .roomName {
+    font-size: 1.75rem; /* Requirement 8.1 - 28px (1.75rem) on mobile */
+  }
+}
+
+/* Room Tagline - Requirements 8.2, 9.4 */
+.roomTagline {
+  font-size: clamp(1rem, 2vw, 1.125rem); /* Requirement 9.4 - Responsive font sizing */
+  font-weight: 300; /* Requirement 8.2 - Lighter weight */
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+/* Room Price - Requirements 8.3, 9.4 */
+.roomPrice {
+  font-size: clamp(1.25rem, 3vw, 1.5rem); /* Requirement 9.4 - Responsive font sizing */
+  font-weight: 700;
+  color: var(--color-primary-terracotta); /* Requirement 8.3 - Terracotta color */
+  margin: 0 0 1.5rem 0;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+/* Room Details (Size and Capacity) - Requirement 8.4 */
+.roomDetails {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.detailIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary-terracotta);
+  flex-shrink: 0;
+}
+
+/* Features List - Requirement 8.5 */
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Two-column grid on desktop, single column on mobile - Requirement 8.5 */
+@media (min-width: 768px) {
+  .featuresList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .featuresList {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary-terracotta);
+  flex-shrink: 0;
+}
+
+/* Learn More Link - Requirements 12.2, 12.3 */
+.learnMoreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease-out; /* Requirement 12.2 - 300ms ease-out transition */
+  margin-top: 0.5rem;
+}
+
+.learnMoreLink:hover {
+  color: var(--color-primary-terracotta); /* Requirement 12.3 - Color change to terracotta */
+}
+
+.learnMoreLink:hover .arrowIcon {
+  transform: translateX(4px); /* Requirement 12.3 - Animated arrow icon */
+}
+
+.learnMoreLink:focus,
+.learnMoreLink:focus-visible {
+  outline: 2px solid var(--color-primary-terracotta);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease-out; /* Requirement 12.2 - Smooth transition */
+}
+
+/* Reduced Motion Support - Requirement 10.1 */
+@media (prefers-reduced-motion: reduce) {
+  .roomCard,
+  .learnMoreLink,
+  .arrowIcon {
+    transition: none;
+    animation: none;
+  }
+
+  .roomCard:hover {
+    transform: none;
+  }
+
+  .learnMoreLink:hover .arrowIcon {
+    transform: none;
+  }
+}
+
+/* Accessibility - Focus States - Requirement 10.2 */
+.roomCard:focus {
+  outline: 3px solid var(--color-primary-terracotta);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(200, 111, 77, 0.2);
+}
+
+.roomCard:focus-visible {
+  outline: 3px solid var(--color-primary-terracotta);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(200, 111, 77, 0.2);
+}
+
+.roomCard:focus-within {
+  outline: 3px solid var(--color-primary-terracotta);
+  outline-offset: 4px;
+}
+
+/* Reduced Motion Class - Requirement 10.1 */
+.roomCard.reducedMotion {
+  position: relative !important;
+  top: 0 !important;
+  transform: none !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Performance Optimizations - Requirement 10.3 */
+/* CSS containment tells browser that card's layout, style, and paint are independent */
+/* This allows browser to optimize rendering by isolating card updates */
+.roomCard {
+  contain: layout style paint; /* Requirement 10.3 - CSS containment for rendering optimization */
+}

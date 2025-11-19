@@ -1,0 +1,30 @@
+{
+  "frameRate": {
+    "avgFps": "60.14",
+    "minFps": "2.61",
+    "droppedFrames": 20,
+    "passed": true
+  },
+  "cls": {
+    "cls": "0.0397",
+    "passed": true
+  },
+  "memory": {
+    "initialMemory": "29.27",
+    "finalMemory": "27.84",
+    "memoryIncrease": "-1.44",
+    "passed": true
+  },
+  "lcp": {
+    "lcp": "1388.00",
+    "passed": true
+  },
+  "tbt": {
+    "tbt": "608.00",
+    "passed": false
+  },
+  "lighthouse": {
+    "skipped": true,
+    "message": "Run Lighthouse manually for comprehensive audit"
+  }
+}

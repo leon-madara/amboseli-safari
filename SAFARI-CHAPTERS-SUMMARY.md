@@ -193,6 +193,34 @@ All elements use:
 **Animation Type**: GSAP via useAccommodationsPinning hook
 **Pinning**: Yes (300vh total)
 
+### Performance Metrics
+**Audit Date**: November 19, 2025
+
+| Metric | Result | Target | Status |
+|--------|--------|--------|--------|
+| Frame Rate | 60.14 fps | ≥ 60 fps | ✓ PASS |
+| Cumulative Layout Shift | 0.0397 | ≤ 0.1 | ✓ PASS |
+| Memory Leak Check | -1.44 MB | ≤ 5 MB | ✓ PASS |
+| Largest Contentful Paint | 1388 ms | ≤ 2500 ms | ✓ PASS |
+| Total Blocking Time | 608 ms | ≤ 300 ms | ⚠ NEEDS IMPROVEMENT |
+
+**Overall Performance**: 4/5 metrics passed (80%)
+
+**Key Optimizations**:
+- CSS `will-change` hints for GPU acceleration
+- `requestAnimationFrame` for smooth scroll calculations
+- Passive event listeners for scroll events
+- Intersection Observer for efficient viewport detection
+- Proper event listener cleanup (no memory leaks)
+- Transform-based animations (no layout thrashing)
+
+**Recommended Improvements**:
+- Code splitting for animation modules to reduce TBT
+- Lazy load GSAP when section enters viewport
+- Consider Web Workers for heavy calculations
+
+**Full Report**: `docs/accommodations-performance-audit-report.md`
+
 ---
 
 ## Chapter 5: Dining

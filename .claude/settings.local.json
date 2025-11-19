@@ -18,7 +18,9 @@
       "Bash(node:*)",
       "Bash(git push:*)",
       "Bash(claude --teleport session_011ZqNokpTiMbPqWeM7NRfo6)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(claude --teleport session_01AmqHN6Diwxvwen8PtYGxpZ)",
+      "Bash(claude --resume:*)"
     ],
     "deny": [],
     "ask": []
