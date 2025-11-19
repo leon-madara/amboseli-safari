@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import AccordionGroup from '@/components/organisms/AccordionGroup';
 import JumpToSection from '@/components/molecules/JumpToSection';
 import PopularQuestions from '@/components/molecules/PopularQuestions';
+import ExpandCollapseControls from '@/components/molecules/ExpandCollapseControls';
+import CategoryFilters from '@/components/molecules/CategoryFilters';
 import { FAQ } from '@/types/faq';
 import styles from './FAQSearchAndContent.module.css';
 
@@ -17,21 +19,66 @@ export default function FAQSearchAndContent({
   categoryConfig,
 }: FAQSearchAndContentProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandAll, setExpandAll] = useState<boolean>(false);
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
+  const [highlightedFaqId, setHighlightedFaqId] = useState<string | null>(null);
 
-  // Filter FAQs based on search query
+  // Handle deep linking to specific FAQs via URL hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove '#'
+      if (hash) {
+        // Check if it's a FAQ ID
+        const faqExists = faqs.some((faq) => faq.id === hash);
+        if (faqExists) {
+          setHighlightedFaqId(hash);
+          // Wait for render, then scroll to element
+          setTimeout(() => {
+            const element = document.getElementById(`faq-${hash}`);
+            if (element) {
+              const offset = 100;
+              const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+              const offsetPosition = elementPosition - offset;
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth',
+              });
+            }
+          }, 300);
+        }
+      }
+    };
+
+    // Handle on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [faqs]);
+
+  // Filter FAQs based on search query and selected categories
   const filteredFaqs = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return faqs;
+    let filtered = faqs;
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (faq) =>
+          faq.question.toLowerCase().includes(query) ||
+          faq.answer.toLowerCase().includes(query) ||
+          (faq.category?.toLowerCase().includes(query) ?? false)
+      );
     }
 
-    const query = searchQuery.toLowerCase();
-    return faqs.filter(
-      (faq) =>
-        faq.question.toLowerCase().includes(query) ||
-        faq.answer.toLowerCase().includes(query) ||
-        (faq.category?.toLowerCase().includes(query) ?? false)
-    );
-  }, [faqs, searchQuery]);
+    // Filter by selected categories
+    if (selectedCategories.size > 0) {
+      filtered = filtered.filter((faq) => selectedCategories.has(faq.category ?? 'General'));
+    }
+
+    return filtered;
+  }, [faqs, searchQuery, selectedCategories]);
 
   // Group filtered FAQs by category
   const faqsByCategory = useMemo(() => {
@@ -90,10 +137,52 @@ export default function FAQSearchAndContent({
     },
   ];
 
+  // All available categories with counts
+  const allCategories = useMemo(() => {
+    const categoryCounts = faqs.reduce((acc, faq) => {
+      const category = faq.category ?? 'General';
+      acc[category] = (acc[category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.keys(categoryConfig).map((categoryName) => ({
+      name: categoryName,
+      icon: categoryConfig[categoryName].icon,
+      count: categoryCounts[categoryName] || 0,
+    }));
+  }, [faqs, categoryConfig]);
+
+  // Category filter handlers
+  const handleToggleCategory = (category: string) => {
+    setSelectedCategories((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(category)) {
+        newSet.delete(category);
+      } else {
+        newSet.add(category);
+      }
+      return newSet;
+    });
+  };
+
+  const handleClearCategories = () => {
+    setSelectedCategories(new Set());
+  };
+
   return (
     <>
       {/* Popular Questions - Only show when not searching */}
       {!isSearching && <PopularQuestions questions={popularQuestions} />}
+
+      {/* Category Filters - Only show when not searching */}
+      {!isSearching && (
+        <CategoryFilters
+          categories={allCategories}
+          selectedCategories={selectedCategories}
+          onToggleCategory={handleToggleCategory}
+          onClearAll={handleClearCategories}
+        />
+      )}
 
       {/* Search Section */}
       <div className={styles.searchContainer}>
@@ -160,6 +249,16 @@ export default function FAQSearchAndContent({
       {/* Jump to Section Navigation */}
       {hasResults && jumpCategories.length > 1 && <JumpToSection categories={jumpCategories} />}
 
+      {/* Expand/Collapse All Controls */}
+      {hasResults && (
+        <ExpandCollapseControls
+          isExpanded={expandAll}
+          onExpandAll={() => setExpandAll(true)}
+          onCollapseAll={() => setExpandAll(false)}
+          totalQuestions={filteredFaqs.length}
+        />
+      )}
+
       {/* FAQ Categories */}
       {hasResults ? (
         <div className={styles.categoriesContainer}>
@@ -203,6 +302,13 @@ export default function FAQSearchAndContent({
                   title: faq.question,
                   content: faq.answer,
                 }))}
+                expandAll={expandAll}
+                initialOpenIds={
+                  highlightedFaqId &&
+                  faqsByCategory[category].some((faq) => faq.id === highlightedFaqId)
+                    ? [highlightedFaqId]
+                    : undefined
+                }
               />
             </div>
           ))}
