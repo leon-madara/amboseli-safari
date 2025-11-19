@@ -1,13 +1,19 @@
 /* Wildlife Encounters Chapter - Horizontal Gallery */
 
-.wildlifeEncounters {
+.wildlifeEncountersChapter {
   position: relative;
   width: 100%;
-  min-height: 250vh;
+  min-height: 100vh;
   overflow: hidden;
   background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc8 100%);
   margin: 0;
   padding: 0;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
 }
 
 /* Background */
@@ -88,6 +94,7 @@
   left: 50%;
   width: clamp(320px, 28vw, 420px);
   transform-origin: center center;
+  transform: translate(-50%, -50%) translateY(100px) scale(0.95);
   background: rgba(255, 255, 255, 0.98);
   border-radius: 20px;
   overflow: hidden;
@@ -96,8 +103,14 @@
   will-change: transform, opacity;
   /* Initial state - GSAP animates from here */
   opacity: 0;
-  /* Z-index set by GSAP (lines 92 in component) */
 }
+
+/* Z-index layering for fan effect - back to front */
+.card:nth-child(1) { z-index: 1; } /* Elephant - backmost */
+.card:nth-child(2) { z-index: 2; } /* Lion */
+.card:nth-child(3) { z-index: 3; } /* Giraffe - center */
+.card:nth-child(4) { z-index: 4; } /* Zebra */
+.card:nth-child(5) { z-index: 5; } /* Cheetah - frontmost */
 
 .card:hover {
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
