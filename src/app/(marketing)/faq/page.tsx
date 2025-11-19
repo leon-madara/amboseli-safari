@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import { PROPERTY_IMAGES } from '@/data/images';
-import AccordionGroup from '@/components/organisms/AccordionGroup';
+import FAQSearchAndContent from '@/components/organisms/FAQSearchAndContent';
 import { FAQ } from '@/types/faq';
 
 export const metadata: Metadata = {
@@ -171,18 +171,6 @@ const faqs: FAQ[] = [
   },
 ];
 
-// Group FAQs by category
-const faqsByCategory = faqs.reduce((acc, faq) => {
-  const category = faq.category || 'General';
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(faq);
-  return acc;
-}, {} as Record<string, FAQ[]>);
-
-const categories = Object.keys(faqsByCategory);
-
 // Category configuration with icons and descriptions
 const categoryConfig: Record<string, { icon: string; description: string }> = {
   'Booking & Reservations': {
@@ -261,85 +249,8 @@ export default function FAQPage() {
             </p>
           </div>
 
-          {/* FAQs organized by category */}
-          {categories.map((category, index) => (
-            <div
-              key={category}
-              id={category.toLowerCase().replace(/\s+/g, '-')}
-              style={{
-                position: 'relative',
-                marginBottom: index < categories.length - 1 ? 'var(--space-20)' : 0,
-                paddingBottom: index < categories.length - 1 ? 'var(--space-12)' : 0,
-                borderBottom: index < categories.length - 1 ? '1px solid var(--color-border-light)' : 'none',
-              }}
-            >
-              {/* Category Header with Icon */}
-              <div style={{ marginBottom: 'var(--space-8)' }}>
-                <h2
-                  style={{
-                    fontFamily: 'var(--font-family-display)',
-                    fontSize: 'var(--heading-h2-size)',
-                    fontWeight: 'var(--heading-h2-weight)',
-                    color: 'var(--color-secondary-deep-green)',
-                    marginBottom: 'var(--space-3)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 'var(--space-4)',
-                    letterSpacing: 'var(--letter-spacing-tight)',
-                  }}
-                >
-                  {/* Icon */}
-                  <span
-                    style={{
-                      fontSize: 'var(--font-size-3xl)',
-                      filter: 'grayscale(10%)',
-                    }}
-                    aria-hidden="true"
-                  >
-                    {categoryConfig[category]?.icon || '❓'}
-                  </span>
-                  {category}
-                </h2>
-
-                {/* Decorative underline */}
-                <div
-                  style={{
-                    height: '3px',
-                    width: '60px',
-                    background: `linear-gradient(
-                      to right,
-                      var(--color-primary-terracotta),
-                      var(--color-accent-gold)
-                    )`,
-                    borderRadius: 'var(--radius-full)',
-                    marginBottom: 'var(--space-3)',
-                  }}
-                  aria-hidden="true"
-                />
-
-                {/* Category description */}
-                <p
-                  style={{
-                    fontSize: 'var(--font-size-base)',
-                    color: 'var(--color-text-tertiary)',
-                    marginBottom: 'var(--space-8)',
-                    fontStyle: 'italic',
-                    fontFamily: 'var(--font-family-body)',
-                  }}
-                >
-                  {categoryConfig[category]?.description || ''}
-                </p>
-              </div>
-
-              {/* Accordion Group */}
-              <AccordionGroup
-                items={faqsByCategory[category].map((faq) => ({
-                  title: faq.question,
-                  content: faq.answer,
-                }))}
-              />
-            </div>
-          ))}
+          {/* FAQ Search and Content */}
+          <FAQSearchAndContent faqs={faqs} categoryConfig={categoryConfig} />
         </div>
       </section>
 

@@ -4,6 +4,7 @@ interface AccordionGroupProps {
   items: Array<{
     title: string;
     content: string;
+    id?: string;
   }>;
 }
 
@@ -11,7 +12,7 @@ export default function AccordionGroup({ items }: AccordionGroupProps) {
   return (
     <div>
       {items.map((item, index) => (
-        <AccordionItem key={index} title={item.title}>
+        <AccordionItem key={item.id || index} title={item.title} questionId={item.id}>
           {item.content}
         </AccordionItem>
       ))}
