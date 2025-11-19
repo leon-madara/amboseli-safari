@@ -6,6 +6,7 @@ import JumpToSection from '@/components/molecules/JumpToSection';
 import PopularQuestions from '@/components/molecules/PopularQuestions';
 import ExpandCollapseControls from '@/components/molecules/ExpandCollapseControls';
 import CategoryFilters from '@/components/molecules/CategoryFilters';
+import RecentlyViewed, { trackFaqView } from '@/components/molecules/RecentlyViewed';
 import { FAQ } from '@/types/faq';
 import styles from './FAQSearchAndContent.module.css';
 
@@ -22,6 +23,7 @@ export default function FAQSearchAndContent({
   const [expandAll, setExpandAll] = useState<boolean>(false);
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
   const [highlightedFaqId, setHighlightedFaqId] = useState<string | null>(null);
+  const [recentlyViewedKey, setRecentlyViewedKey] = useState(0);
 
   // Handle deep linking to specific FAQs via URL hash
   useEffect(() => {
@@ -169,10 +171,25 @@ export default function FAQSearchAndContent({
     setSelectedCategories(new Set());
   };
 
+  // Handle clicking on a recently viewed FAQ
+  const handleRecentFaqClick = (faqId: string) => {
+    // Update URL hash to trigger deep link
+    window.location.hash = faqId;
+  };
+
   return (
     <>
       {/* Popular Questions - Only show when not searching */}
       {!isSearching && <PopularQuestions questions={popularQuestions} />}
+
+      {/* Recently Viewed FAQs - Only show when not searching */}
+      {!isSearching && (
+        <RecentlyViewed
+          key={recentlyViewedKey}
+          faqs={faqs}
+          onFaqClick={handleRecentFaqClick}
+        />
+      )}
 
       {/* Category Filters - Only show when not searching */}
       {!isSearching && (
@@ -261,7 +278,7 @@ export default function FAQSearchAndContent({
 
       {/* FAQ Categories */}
       {hasResults ? (
-        <div className={styles.categoriesContainer}>
+        <div className={`${styles.categoriesContainer} ${styles.staggerChildren}`}>
           {categories.map((category, index) => (
             <div
               key={category}
@@ -309,6 +326,10 @@ export default function FAQSearchAndContent({
                     ? [highlightedFaqId]
                     : undefined
                 }
+                onItemOpen={(itemId) => {
+                  trackFaqView(itemId);
+                  setRecentlyViewedKey((prev) => prev + 1); // Force re-render of RecentlyViewed
+                }}
               />
             </div>
           ))}

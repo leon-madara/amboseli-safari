@@ -3,6 +3,7 @@ import Hero from '@/components/organisms/Hero';
 import { PROPERTY_IMAGES } from '@/data/images';
 import FAQSearchAndContent from '@/components/organisms/FAQSearchAndContent';
 import PrintButton from '@/components/atoms/PrintButton';
+import ExportButton from '@/components/atoms/ExportButton';
 import { FAQ } from '@/types/faq';
 import '@/styles/print.css';
 
@@ -501,7 +502,8 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Print Button */}
+      {/* Action Buttons */}
+      <ExportButton faqs={faqs} />
       <PrintButton />
     </main>
   );

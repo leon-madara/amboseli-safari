@@ -11,9 +11,15 @@ interface AccordionGroupProps {
   }>;
   expandAll?: boolean;
   initialOpenIds?: string[];
+  onItemOpen?: (itemId: string) => void;
 }
 
-export default function AccordionGroup({ items, expandAll, initialOpenIds }: AccordionGroupProps) {
+export default function AccordionGroup({
+  items,
+  expandAll,
+  initialOpenIds,
+  onItemOpen,
+}: AccordionGroupProps) {
   const [openItems, setOpenItems] = useState<Set<string | number>>(() => {
     // Initialize with initialOpenIds if provided
     if (initialOpenIds && initialOpenIds.length > 0) {
@@ -41,10 +47,16 @@ export default function AccordionGroup({ items, expandAll, initialOpenIds }: Acc
   const toggleItem = (itemId: string | number) => {
     setOpenItems((prev) => {
       const newSet = new Set(prev);
+      const isOpening = !newSet.has(itemId);
+
       if (newSet.has(itemId)) {
         newSet.delete(itemId);
       } else {
         newSet.add(itemId);
+        // Track view when opening
+        if (isOpening && typeof itemId === 'string' && onItemOpen) {
+          onItemOpen(itemId);
+        }
       }
       return newSet;
     });
