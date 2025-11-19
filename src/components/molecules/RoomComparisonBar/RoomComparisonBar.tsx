@@ -1,6 +1,5 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import styles from './RoomComparisonBar.module.css';
 
@@ -27,14 +26,7 @@ export default function RoomComparisonBar({
   if (rooms.length === 0) return null;
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className={styles.bar}
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 100, opacity: 0 }}
-        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-      >
+    <div className={styles.bar}>
         <div className={styles.container}>
           <div className={styles.content}>
             <div className={styles.header}>
@@ -100,7 +92,6 @@ export default function RoomComparisonBar({
             Compare {rooms.length > 1 ? `${rooms.length} Rooms` : ''}
           </button>
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
   );
 }

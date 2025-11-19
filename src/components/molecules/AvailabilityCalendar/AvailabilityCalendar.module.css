@@ -1,0 +1,290 @@
+/* Calendar Container */
+.calendar {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-3) 0;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legendAvailable {
+  background: #4caf50;
+}
+
+.legendLimited {
+  background: #ff9800;
+}
+
+.legendUnavailable {
+  background: var(--color-border);
+}
+
+/* Calendar Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  max-height: 400px;
+  overflow-y: auto;
+  padding: var(--space-2);
+}
+
+/* Calendar Day */
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  background: var(--color-bg-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 70px;
+}
+
+.day:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.day:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dayOfWeek {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-1);
+}
+
+.dayNumber {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+/* Day Status Variants */
+.dayAvailable {
+  border-color: #4caf50;
+}
+
+.dayAvailable:hover:not(:disabled) {
+  background: rgba(76, 175, 80, 0.05);
+  border-color: #4caf50;
+}
+
+.dayLimited {
+  border-color: #ff9800;
+}
+
+.dayLimited:hover:not(:disabled) {
+  background: rgba(255, 152, 0, 0.05);
+  border-color: #ff9800;
+}
+
+.dayUnavailable {
+  border-color: var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+.dayUnavailable .dayNumber {
+  color: var(--color-text-tertiary);
+}
+
+/* Today Highlight */
+.dayToday {
+  background: rgba(255, 107, 53, 0.08);
+}
+
+.dayToday::before {
+  content: 'Today';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-terracotta);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dayToday {
+  position: relative;
+  padding-top: var(--space-4);
+}
+
+/* Selected Day */
+.daySelected {
+  background: linear-gradient(135deg, var(--color-primary-terracotta) 0%, #e8682a 100%);
+  border-color: var(--color-primary-terracotta);
+}
+
+.daySelected .dayOfWeek,
+.daySelected .dayNumber {
+  color: white;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-light);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.selectedInfo {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.selectedInfo strong {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.bookButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-inverse);
+  background: linear-gradient(135deg, var(--color-primary-terracotta) 0%, #e8682a 100%);
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+  width: 100%;
+}
+
+.bookButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .calendar {
+    padding: var(--space-4);
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: var(--space-1);
+  }
+
+  .day {
+    min-height: 60px;
+    padding: var(--space-2);
+  }
+
+  .dayNumber {
+    font-size: var(--font-size-lg);
+  }
+
+  .legend {
+    gap: var(--space-2);
+  }
+
+  .legendItem {
+    font-size: 10px;
+  }
+
+  .legendDot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .calendar,
+  .footer,
+  .day,
+  .bookButton {
+    animation: none;
+    transition: none;
+  }
+
+  .day:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .bookButton:hover {
+    transform: none;
+  }
+}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import { SmoothScrollProvider } from '@/providers/SmoothScrollProvider';
 import { SafariProgressProvider } from '@/providers/SafariProgressProvider';
+import { WishlistProvider } from '@/contexts/WishlistContext';
 import { ScrollProgress } from '@/components/organisms/ScrollProgress';
 import './globals.css';
 import '@/styles/gsap-animations.css';
@@ -87,12 +88,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body>
-        <SmoothScrollProvider>
-          <SafariProgressProvider>
-            <ScrollProgress />
-            {children}
-          </SafariProgressProvider>
-        </SmoothScrollProvider>
+        <WishlistProvider>
+          <SmoothScrollProvider>
+            <SafariProgressProvider>
+              <ScrollProgress />
+              {children}
+            </SafariProgressProvider>
+          </SmoothScrollProvider>
+        </WishlistProvider>
       </body>
     </html>
   );

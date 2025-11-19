@@ -3,9 +3,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from '@/components/atoms/Link';
-import { motion } from 'framer-motion';
 import QuickBookingModal from '@/components/molecules/QuickBookingModal';
 import ImageCarousel from '@/components/molecules/ImageCarousel';
+import AvailabilityCalendar from '@/components/molecules/AvailabilityCalendar';
+import VirtualTourModal from '@/components/molecules/VirtualTourModal';
+import OfferTimer from '@/components/atoms/OfferTimer';
+import WishlistButton from '@/components/atoms/WishlistButton';
+import ShareButton from '@/components/atoms/ShareButton';
 import styles from './RoomCard.module.css';
 
 export interface RoomCardProps {
@@ -29,6 +33,15 @@ export interface RoomCardProps {
   // Comparison props
   isComparing?: boolean;
   onCompareToggle?: (slug: string, isSelected: boolean) => void;
+  // Phase 2: Pricing context & social proof
+  avgPrice?: string;
+  priceSavings?: string;
+  priceTrend?: 'rising' | 'falling' | 'stable';
+  viewingCount?: number;
+  lastBookedMinutes?: number;
+  // Phase 3: Advanced features
+  tourImages?: string[];
+  offerExpiresAt?: Date;
 }
 
 export default function RoomCard({
@@ -50,9 +63,18 @@ export default function RoomCard({
   includedItems = ['Breakfast', '2 game drives', 'Park fees', 'Airport transfer'],
   isComparing = false,
   onCompareToggle,
+  avgPrice,
+  priceSavings,
+  priceTrend,
+  viewingCount,
+  lastBookedMinutes,
+  tourImages,
+  offerExpiresAt,
 }: RoomCardProps) {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showTourModal, setShowTourModal] = useState(false);
 
   const displayedFeatures = isFeaturesExpanded ? features : features.slice(0, 4);
   const hasMoreFeatures = features.length > 4;
@@ -63,13 +85,7 @@ export default function RoomCard({
 
   return (
     <>
-      <motion.article
-        className={styles.card}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-      >
+      <article className={styles.card}>
         <Link href={`/accommodations/${slug}`} className={styles.imageLink}>
           <div className={styles.imageContainer}>
             {hasMultipleImages ? (
@@ -118,6 +134,32 @@ export default function RoomCard({
                 <span className={styles.compareLabel}>Compare</span>
               </label>
             )}
+
+            {/* Virtual Tour Button */}
+            {tourImages && tourImages.length > 0 && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowTourModal(true);
+                }}
+                className={styles.tourButton}
+                aria-label="View 360° virtual tour"
+              >
+                🔄 Virtual Tour
+              </button>
+            )}
+
+            {/* Wishlist & Share Actions */}
+            <div className={styles.actionButtons}>
+              <WishlistButton roomSlug={slug} roomTitle={title} variant="icon" />
+              <ShareButton
+                roomSlug={slug}
+                roomTitle={title}
+                roomDescription={description}
+                roomImage={image}
+                variant="icon"
+              />
+            </div>
           </div>
         </Link>
 
@@ -132,8 +174,77 @@ export default function RoomCard({
                 </div>
               )}
             </div>
-            <p className={styles.description}>{description}</p>
           </div>
+
+          {/* Offer Timer */}
+          {offerExpiresAt && (
+            <OfferTimer
+              expiresAt={offerExpiresAt}
+              offerText={specialOffer || 'Special Offer Ends In'}
+            />
+          )}
+
+          {/* Price moved up for better hierarchy */}
+          <div className={styles.pricingTop}>
+            <div className={styles.pricingMain}>
+              <span className={styles.priceLabel}>From</span>
+              <span className={styles.price}>{price}</span>
+              <span className={styles.pricePeriod}>per night</span>
+            </div>
+
+            {/* Pricing Context */}
+            {(priceSavings || avgPrice || priceTrend) && (
+              <div className={styles.pricingContext}>
+                {priceSavings && (
+                  <span className={styles.savings}>💰 Save {priceSavings}</span>
+                )}
+                {avgPrice && (
+                  <span className={styles.avgPrice}>Avg: {avgPrice}</span>
+                )}
+                {priceTrend === 'rising' && (
+                  <span className={styles.trendRising}>📈 Prices rising</span>
+                )}
+                {priceTrend === 'falling' && (
+                  <span className={styles.trendFalling}>📉 Prices falling</span>
+                )}
+              </div>
+            )}
+
+            {/* Availability Calendar Toggle */}
+            <button
+              onClick={() => setShowCalendar(!showCalendar)}
+              className={styles.calendarToggle}
+            >
+              📅 Check Dates
+              {availability === 'limited' && <span className={styles.urgencyDot} />}
+            </button>
+          </div>
+
+          {/* Availability Calendar */}
+          {showCalendar && (
+            <div className={styles.calendarContainer}>
+              <AvailabilityCalendar availability={availability} />
+            </div>
+          )}
+
+          {/* Social Proof */}
+          {(viewingCount || lastBookedMinutes) && (
+            <div className={styles.socialProof}>
+              {viewingCount && viewingCount > 0 && (
+                <div className={styles.liveBooking}>
+                  <span className={styles.pulse} />
+                  <span>{viewingCount} {viewingCount === 1 ? 'person' : 'people'} viewing</span>
+                </div>
+              )}
+              {lastBookedMinutes && (
+                <div className={styles.recentBooking}>
+                  ⚡ Last booked {lastBookedMinutes} minutes ago
+                </div>
+              )}
+            </div>
+          )}
+
+          <p className={styles.description}>{description}</p>
 
           <div className={styles.details}>
             <div className={styles.detailItem}>
@@ -191,12 +302,6 @@ export default function RoomCard({
           )}
 
           <div className={styles.footer}>
-            <div className={styles.pricing}>
-              <span className={styles.priceLabel}>From</span>
-              <span className={styles.price}>{price}</span>
-              <span className={styles.pricePeriod}>per night</span>
-            </div>
-
             <div className={styles.ctaGroup}>
               <button
                 onClick={() => setIsBookingModalOpen(true)}
@@ -240,7 +345,7 @@ export default function RoomCard({
             {availability === 'sold-out' ? 'Sold Out' : 'Book Now'}
           </button>
         </div>
-      </motion.article>
+      </article>
 
       {/* Quick Booking Modal */}
       <QuickBookingModal
@@ -250,6 +355,16 @@ export default function RoomCard({
         roomPrice={price}
         roomId={slug}
       />
+
+      {/* Virtual Tour Modal */}
+      {tourImages && tourImages.length > 0 && (
+        <VirtualTourModal
+          isOpen={showTourModal}
+          onClose={() => setShowTourModal(false)}
+          roomTitle={title}
+          tourImages={tourImages}
+        />
+      )}
     </>
   );
 }
