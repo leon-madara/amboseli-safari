@@ -90,13 +90,24 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
     max: maxPrice,
   });
 
-  // Enhance rooms with Phase 2 data (pricing context & social proof)
+  // Enhance rooms with Phase 2 & Phase 3 data (pricing context, social proof, tours, offers)
   const enhancedRooms = useMemo(() => {
     return rooms.map((room, index) => {
       // Simulate pricing context and social proof (in real app, from API)
       const basePrice = parseInt(room.price.replace(/\D/g, ''));
       const avgPrice = Math.round(basePrice * 1.18);
       const savings = avgPrice - basePrice;
+
+      // Phase 3: Add virtual tour images to select rooms
+      const tourImages = index % 2 === 0 ? [
+        room.image,
+        ...(room.images || []),
+      ].slice(0, 5) : undefined;
+
+      // Phase 3: Add offer timer to first few rooms (expires in 2-48 hours)
+      const offerExpiresAt = index < 3
+        ? new Date(Date.now() + (2 + index * 12) * 60 * 60 * 1000)
+        : undefined;
 
       return {
         ...room,
@@ -105,6 +116,8 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
         priceTrend: (index % 3 === 0 ? 'rising' : index % 3 === 1 ? 'stable' : 'falling') as 'rising' | 'falling' | 'stable',
         viewingCount: index % 2 === 0 ? Math.floor(Math.random() * 5) + 1 : undefined,
         lastBookedMinutes: index % 3 === 0 ? Math.floor(Math.random() * 60) + 10 : undefined,
+        tourImages,
+        offerExpiresAt,
       };
     });
   }, [rooms]);

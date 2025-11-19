@@ -6,6 +6,10 @@ import Link from '@/components/atoms/Link';
 import QuickBookingModal from '@/components/molecules/QuickBookingModal';
 import ImageCarousel from '@/components/molecules/ImageCarousel';
 import AvailabilityCalendar from '@/components/molecules/AvailabilityCalendar';
+import VirtualTourModal from '@/components/molecules/VirtualTourModal';
+import OfferTimer from '@/components/atoms/OfferTimer';
+import WishlistButton from '@/components/atoms/WishlistButton';
+import ShareButton from '@/components/atoms/ShareButton';
 import styles from './RoomCard.module.css';
 
 export interface RoomCardProps {
@@ -35,6 +39,9 @@ export interface RoomCardProps {
   priceTrend?: 'rising' | 'falling' | 'stable';
   viewingCount?: number;
   lastBookedMinutes?: number;
+  // Phase 3: Advanced features
+  tourImages?: string[];
+  offerExpiresAt?: Date;
 }
 
 export default function RoomCard({
@@ -61,10 +68,13 @@ export default function RoomCard({
   priceTrend,
   viewingCount,
   lastBookedMinutes,
+  tourImages,
+  offerExpiresAt,
 }: RoomCardProps) {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showTourModal, setShowTourModal] = useState(false);
 
   const displayedFeatures = isFeaturesExpanded ? features : features.slice(0, 4);
   const hasMoreFeatures = features.length > 4;
@@ -124,6 +134,32 @@ export default function RoomCard({
                 <span className={styles.compareLabel}>Compare</span>
               </label>
             )}
+
+            {/* Virtual Tour Button */}
+            {tourImages && tourImages.length > 0 && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowTourModal(true);
+                }}
+                className={styles.tourButton}
+                aria-label="View 360° virtual tour"
+              >
+                🔄 Virtual Tour
+              </button>
+            )}
+
+            {/* Wishlist & Share Actions */}
+            <div className={styles.actionButtons}>
+              <WishlistButton roomSlug={slug} roomTitle={title} variant="icon" />
+              <ShareButton
+                roomSlug={slug}
+                roomTitle={title}
+                roomDescription={description}
+                roomImage={image}
+                variant="icon"
+              />
+            </div>
           </div>
         </Link>
 
@@ -139,6 +175,14 @@ export default function RoomCard({
               )}
             </div>
           </div>
+
+          {/* Offer Timer */}
+          {offerExpiresAt && (
+            <OfferTimer
+              expiresAt={offerExpiresAt}
+              offerText={specialOffer || 'Special Offer Ends In'}
+            />
+          )}
 
           {/* Price moved up for better hierarchy */}
           <div className={styles.pricingTop}>
@@ -311,6 +355,16 @@ export default function RoomCard({
         roomPrice={price}
         roomId={slug}
       />
+
+      {/* Virtual Tour Modal */}
+      {tourImages && tourImages.length > 0 && (
+        <VirtualTourModal
+          isOpen={showTourModal}
+          onClose={() => setShowTourModal(false)}
+          roomTitle={title}
+          tourImages={tourImages}
+        />
+      )}
     </>
   );
 }

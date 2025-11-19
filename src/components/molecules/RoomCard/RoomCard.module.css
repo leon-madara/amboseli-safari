@@ -585,6 +585,19 @@
     height: 16px;
   }
 
+  .tourButton {
+    bottom: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
+  .actionButtons {
+    top: var(--space-3);
+    right: var(--space-3);
+    gap: var(--space-1);
+  }
+
   .titleRow {
     flex-direction: column;
     gap: var(--space-2);
@@ -669,6 +682,51 @@
 
 .compareLabel {
   user-select: none;
+}
+
+/* Virtual Tour Button */
+.tourButton {
+  position: absolute;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 107, 53, 0.95);
+  backdrop-filter: blur(8px);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 3;
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.tourButton:hover {
+  background: rgba(255, 107, 53, 1);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+}
+
+.tourButton:active {
+  transform: scale(0.98);
+}
+
+/* Action Buttons (Wishlist & Share) */
+.actionButtons {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  gap: var(--space-2);
+  z-index: 3;
+  pointer-events: auto;
 }
 
 .badge {
@@ -925,7 +983,8 @@
   .primaryCTA,
   .compareCheckbox,
   .expandButton,
-  .badge {
+  .badge,
+  .tourButton {
     transition: none;
     animation: none;
   }
