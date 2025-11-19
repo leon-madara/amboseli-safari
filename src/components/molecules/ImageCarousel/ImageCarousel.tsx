@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ImageCarousel.module.css';
 
 export interface ImageCarouselProps {
@@ -45,25 +44,16 @@ export default function ImageCarousel({
 
   return (
     <div className={styles.carousel}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          className={styles.imageWrapper}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Image
-            src={images[currentIndex]}
-            alt={`${alt} - Image ${currentIndex + 1}`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className={styles.image}
-            priority={currentIndex === 0}
-          />
-        </motion.div>
-      </AnimatePresence>
+      <div key={currentIndex} className={styles.imageWrapper}>
+        <Image
+          src={images[currentIndex]}
+          alt={`${alt} - Image ${currentIndex + 1}`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className={styles.image}
+          priority={currentIndex === 0}
+        />
+      </div>
 
       {images.length > 1 && (
         <>

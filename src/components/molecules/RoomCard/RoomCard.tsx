@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from '@/components/atoms/Link';
-import { motion } from 'framer-motion';
 import QuickBookingModal from '@/components/molecules/QuickBookingModal';
 import ImageCarousel from '@/components/molecules/ImageCarousel';
 import styles from './RoomCard.module.css';
@@ -63,13 +62,7 @@ export default function RoomCard({
 
   return (
     <>
-      <motion.article
-        className={styles.card}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-      >
+      <article className={styles.card}>
         <Link href={`/accommodations/${slug}`} className={styles.imageLink}>
           <div className={styles.imageContainer}>
             {hasMultipleImages ? (
@@ -132,8 +125,16 @@ export default function RoomCard({
                 </div>
               )}
             </div>
-            <p className={styles.description}>{description}</p>
           </div>
+
+          {/* Price moved up for better hierarchy */}
+          <div className={styles.pricingTop}>
+            <span className={styles.priceLabel}>From</span>
+            <span className={styles.price}>{price}</span>
+            <span className={styles.pricePeriod}>per night</span>
+          </div>
+
+          <p className={styles.description}>{description}</p>
 
           <div className={styles.details}>
             <div className={styles.detailItem}>
@@ -191,12 +192,6 @@ export default function RoomCard({
           )}
 
           <div className={styles.footer}>
-            <div className={styles.pricing}>
-              <span className={styles.priceLabel}>From</span>
-              <span className={styles.price}>{price}</span>
-              <span className={styles.pricePeriod}>per night</span>
-            </div>
-
             <div className={styles.ctaGroup}>
               <button
                 onClick={() => setIsBookingModalOpen(true)}
@@ -240,7 +235,7 @@ export default function RoomCard({
             {availability === 'sold-out' ? 'Sold Out' : 'Book Now'}
           </button>
         </div>
-      </motion.article>
+      </article>
 
       {/* Quick Booking Modal */}
       <QuickBookingModal

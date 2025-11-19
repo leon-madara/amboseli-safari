@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import RoomCard from '@/components/molecules/RoomCard';
+import RoomCardSkeleton from '@/components/molecules/RoomCardSkeleton';
 import RoomComparisonBar, { type ComparisonRoom } from '@/components/molecules/RoomComparisonBar';
 import RoomComparisonModal, { type ComparisonRoomDetails } from '@/components/molecules/RoomComparisonModal';
 import PriceFilter, { type PriceRange } from '@/components/molecules/PriceFilter';
@@ -32,6 +33,15 @@ interface RoomsSectionProps {
 export default function RoomsSection({ rooms }: RoomsSectionProps) {
   const [comparedRooms, setComparedRooms] = useState<string[]>([]);
   const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate initial loading (in real app, this would be actual data fetching)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Extract price values for filtering
   const prices = useMemo(() => {
@@ -177,18 +187,28 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
               gap: 'var(--space-10)',
             }}
           >
-            {filteredRooms.map((room) => (
-              <RoomCard
-                key={room.slug}
-                {...room}
-                isComparing={comparedRooms.includes(room.slug)}
-                onCompareToggle={handleCompareToggle}
-              />
-            ))}
+            {isLoading ? (
+              <>
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <RoomCardSkeleton key={`skeleton-${index}`} />
+                ))}
+              </>
+            ) : (
+              <>
+                {filteredRooms.map((room) => (
+                  <RoomCard
+                    key={room.slug}
+                    {...room}
+                    isComparing={comparedRooms.includes(room.slug)}
+                    onCompareToggle={handleCompareToggle}
+                  />
+                ))}
+              </>
+            )}
           </div>
 
           {/* No Results Message */}
-          {filteredRooms.length === 0 && (
+          {!isLoading && filteredRooms.length === 0 && (
             <div style={{ textAlign: 'center', padding: 'var(--space-12) 0' }}>
               <p
                 style={{
