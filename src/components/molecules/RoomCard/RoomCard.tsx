@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from '@/components/atoms/Link';
 import QuickBookingModal from '@/components/molecules/QuickBookingModal';
 import ImageCarousel from '@/components/molecules/ImageCarousel';
+import AvailabilityCalendar from '@/components/molecules/AvailabilityCalendar';
 import styles from './RoomCard.module.css';
 
 export interface RoomCardProps {
@@ -28,6 +29,12 @@ export interface RoomCardProps {
   // Comparison props
   isComparing?: boolean;
   onCompareToggle?: (slug: string, isSelected: boolean) => void;
+  // Phase 2: Pricing context & social proof
+  avgPrice?: string;
+  priceSavings?: string;
+  priceTrend?: 'rising' | 'falling' | 'stable';
+  viewingCount?: number;
+  lastBookedMinutes?: number;
 }
 
 export default function RoomCard({
@@ -49,9 +56,15 @@ export default function RoomCard({
   includedItems = ['Breakfast', '2 game drives', 'Park fees', 'Airport transfer'],
   isComparing = false,
   onCompareToggle,
+  avgPrice,
+  priceSavings,
+  priceTrend,
+  viewingCount,
+  lastBookedMinutes,
 }: RoomCardProps) {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const displayedFeatures = isFeaturesExpanded ? features : features.slice(0, 4);
   const hasMoreFeatures = features.length > 4;
@@ -129,10 +142,63 @@ export default function RoomCard({
 
           {/* Price moved up for better hierarchy */}
           <div className={styles.pricingTop}>
-            <span className={styles.priceLabel}>From</span>
-            <span className={styles.price}>{price}</span>
-            <span className={styles.pricePeriod}>per night</span>
+            <div className={styles.pricingMain}>
+              <span className={styles.priceLabel}>From</span>
+              <span className={styles.price}>{price}</span>
+              <span className={styles.pricePeriod}>per night</span>
+            </div>
+
+            {/* Pricing Context */}
+            {(priceSavings || avgPrice || priceTrend) && (
+              <div className={styles.pricingContext}>
+                {priceSavings && (
+                  <span className={styles.savings}>💰 Save {priceSavings}</span>
+                )}
+                {avgPrice && (
+                  <span className={styles.avgPrice}>Avg: {avgPrice}</span>
+                )}
+                {priceTrend === 'rising' && (
+                  <span className={styles.trendRising}>📈 Prices rising</span>
+                )}
+                {priceTrend === 'falling' && (
+                  <span className={styles.trendFalling}>📉 Prices falling</span>
+                )}
+              </div>
+            )}
+
+            {/* Availability Calendar Toggle */}
+            <button
+              onClick={() => setShowCalendar(!showCalendar)}
+              className={styles.calendarToggle}
+            >
+              📅 Check Dates
+              {availability === 'limited' && <span className={styles.urgencyDot} />}
+            </button>
           </div>
+
+          {/* Availability Calendar */}
+          {showCalendar && (
+            <div className={styles.calendarContainer}>
+              <AvailabilityCalendar availability={availability} />
+            </div>
+          )}
+
+          {/* Social Proof */}
+          {(viewingCount || lastBookedMinutes) && (
+            <div className={styles.socialProof}>
+              {viewingCount && viewingCount > 0 && (
+                <div className={styles.liveBooking}>
+                  <span className={styles.pulse} />
+                  <span>{viewingCount} {viewingCount === 1 ? 'person' : 'people'} viewing</span>
+                </div>
+              )}
+              {lastBookedMinutes && (
+                <div className={styles.recentBooking}>
+                  ⚡ Last booked {lastBookedMinutes} minutes ago
+                </div>
+              )}
+            </div>
+          )}
 
           <p className={styles.description}>{description}</p>
 
