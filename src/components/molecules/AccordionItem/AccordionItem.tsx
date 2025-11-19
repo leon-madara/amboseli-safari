@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect, ReactNode, useRef } from 'react';
 import FeedbackButtons from '@/components/atoms/FeedbackButtons';
 import styles from './AccordionItem.module.css';
 
@@ -11,6 +11,8 @@ interface AccordionItemProps {
   questionId?: string;
   isOpen?: boolean;
   onToggle?: () => void;
+  onNavigateNext?: () => void;
+  onNavigatePrevious?: () => void;
 }
 
 export default function AccordionItem({
@@ -20,9 +22,12 @@ export default function AccordionItem({
   questionId,
   isOpen: controlledIsOpen,
   onToggle,
+  onNavigateNext,
+  onNavigatePrevious,
 }: AccordionItemProps) {
   const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
   const [showCopied, setShowCopied] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Use controlled state if provided, otherwise use internal state
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
@@ -55,12 +60,47 @@ export default function AccordionItem({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        onNavigateNext?.();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        onNavigatePrevious?.();
+        break;
+      case 'Home':
+        e.preventDefault();
+        // Navigate to first item - handled by parent
+        break;
+      case 'End':
+        e.preventDefault();
+        // Navigate to last item - handled by parent
+        break;
+      case 'Escape':
+        if (isOpen) {
+          e.preventDefault();
+          handleToggle();
+        }
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        handleToggle();
+        break;
+    }
+  };
+
   return (
     <div className={`${styles.accordionItem} ${isOpen ? styles.open : ''}`}>
       <button
+        ref={buttonRef}
         className={styles.trigger}
         onClick={handleToggle}
+        onKeyDown={handleKeyDown}
         aria-expanded={isOpen}
+        aria-controls={questionId ? `faq-content-${questionId}` : undefined}
       >
         <span>{title}</span>
         <div className={styles.controls}>
@@ -123,7 +163,12 @@ export default function AccordionItem({
         </div>
       </button>
       {isOpen && (
-        <div className={styles.content}>
+        <div
+          id={questionId ? `faq-content-${questionId}` : undefined}
+          className={styles.content}
+          role="region"
+          aria-labelledby={questionId ? `faq-trigger-${questionId}` : undefined}
+        >
           <div className={styles.answer}>{children}</div>
           {questionId && <FeedbackButtons questionId={questionId} />}
         </div>

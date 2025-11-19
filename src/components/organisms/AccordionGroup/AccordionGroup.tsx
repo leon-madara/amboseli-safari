@@ -50,8 +50,19 @@ export default function AccordionGroup({ items, expandAll, initialOpenIds }: Acc
     });
   };
 
+  // Focus specific item button
+  const focusItem = (index: number) => {
+    const itemId = items[index]?.id || index;
+    const element = document.querySelector(
+      `#faq-${items[index]?.id} button`
+    ) as HTMLButtonElement | null;
+    if (element) {
+      element.focus();
+    }
+  };
+
   return (
-    <div>
+    <div role="group" aria-label="FAQ accordions">
       {items.map((item, index) => {
         const itemId = item.id || index;
         return (
@@ -61,6 +72,16 @@ export default function AccordionGroup({ items, expandAll, initialOpenIds }: Acc
               questionId={item.id}
               isOpen={expandAll !== undefined ? expandAll : openItems.has(itemId)}
               onToggle={() => toggleItem(itemId)}
+              onNavigateNext={() => {
+                if (index < items.length - 1) {
+                  focusItem(index + 1);
+                }
+              }}
+              onNavigatePrevious={() => {
+                if (index > 0) {
+                  focusItem(index - 1);
+                }
+              }}
             >
               {item.content}
             </AccordionItem>

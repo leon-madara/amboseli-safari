@@ -1,0 +1,234 @@
+/* Print Styles for FAQ Page */
+@media print {
+  /* Hide interactive elements that don't make sense in print */
+  .searchContainer,
+  .jumpNav,
+  .controls,
+  .popularContainer,
+  .container:has(.filters),
+  .copyButton,
+  .feedbackContainer,
+  button,
+  nav,
+  header,
+  footer,
+  .noResults {
+    display: none !important;
+  }
+
+  /* Reset page margins and colors for printing */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Expand all accordions for printing */
+  .accordionItem {
+    border: 1px solid #ccc !important;
+    background: white !important;
+    page-break-inside: avoid;
+    margin-bottom: 1rem !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .trigger {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 0.5rem !important;
+    background: #f5f5f5 !important;
+    border-bottom: 1px solid #ccc !important;
+    color: black !important;
+    font-weight: bold !important;
+  }
+
+  .trigger .icon,
+  .trigger .controls {
+    display: none !important;
+  }
+
+  /* Always show content when printing */
+  .content {
+    display: block !important;
+    padding: 0.5rem !important;
+    animation: none !important;
+  }
+
+  .answer {
+    color: #333 !important;
+    font-size: 11pt !important;
+  }
+
+  /* Category headers */
+  .categoryTitle {
+    color: black !important;
+    font-size: 16pt !important;
+    font-weight: bold !important;
+    page-break-after: avoid;
+    margin-top: 1.5rem !important;
+  }
+
+  .categoryIcon {
+    display: none !important;
+  }
+
+  .countBadge {
+    background: #ddd !important;
+    color: #333 !important;
+    border: 1px solid #999 !important;
+  }
+
+  .decorativeUnderline {
+    display: none !important;
+  }
+
+  .categoryDescription {
+    color: #666 !important;
+    font-style: italic !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .categorySection {
+    page-break-inside: avoid;
+    border-bottom: 2px solid #ccc !important;
+    padding-bottom: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Page title */
+  h1 {
+    font-size: 20pt !important;
+    color: black !important;
+    page-break-after: avoid;
+  }
+
+  /* Prevent orphans and widows */
+  p,
+  .answer {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Page breaks */
+  .categorySection:not(:last-child) {
+    page-break-after: auto;
+  }
+
+  /* Links */
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+
+  /* Show URLs for important links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Header for each printed page */
+  @page {
+    margin: 2cm;
+    size: auto;
+
+    @top-center {
+      content: "Amboseli Safari Club - Frequently Asked Questions";
+      font-size: 10pt;
+      color: #666;
+    }
+
+    @bottom-right {
+      content: "Page " counter(page);
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+
+  /* First page no header */
+  @page :first {
+    @top-center {
+      content: none;
+    }
+  }
+
+  /* Add print date */
+  .categoriesContainer:before {
+    content: "Printed: " attr(data-print-date);
+    display: block;
+    text-align: right;
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Print button styles (visible on screen, hidden in print) */
+.printButton {
+  position: fixed;
+  bottom: var(--space-8);
+  right: var(--space-8);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background: linear-gradient(
+    135deg,
+    var(--color-secondary-deep-green),
+    var(--color-secondary-deep-green-dark, #1f3530)
+  );
+  color: var(--color-text-inverse);
+  border: 2px solid var(--color-secondary-deep-green);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--duration-medium) var(--ease-out);
+}
+
+.printButton:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+.printButton:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.printButton svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media print {
+  .printButton {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .printButton {
+    bottom: var(--space-6);
+    right: var(--space-6);
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--font-size-xs);
+  }
+
+  .printButton svg {
+    width: 16px;
+    height: 16px;
+  }
+}

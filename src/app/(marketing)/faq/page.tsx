@@ -2,7 +2,9 @@ import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import { PROPERTY_IMAGES } from '@/data/images';
 import FAQSearchAndContent from '@/components/organisms/FAQSearchAndContent';
+import PrintButton from '@/components/atoms/PrintButton';
 import { FAQ } from '@/types/faq';
+import '@/styles/print.css';
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
@@ -498,6 +500,9 @@ export default function FAQPage() {
           </div>
         </div>
       </section>
+
+      {/* Print Button */}
+      <PrintButton />
     </main>
   );
 }
