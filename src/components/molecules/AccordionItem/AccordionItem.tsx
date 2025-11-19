@@ -17,7 +17,7 @@ export default function AccordionItem({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className={styles.accordionItem}>
+    <div className={`${styles.accordionItem} ${isOpen ? styles.open : ''}`}>
       <button
         className={styles.trigger}
         onClick={() => setIsOpen(!isOpen)}
@@ -25,7 +25,7 @@ export default function AccordionItem({
       >
         <span>{title}</span>
         <span className={`${styles.icon} ${isOpen ? styles.open : ''}`}>
-          ▼
+          {isOpen ? '−' : '+'}
         </span>
       </button>
       {isOpen && <div className={styles.content}>{children}</div>}

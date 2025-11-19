@@ -183,6 +183,34 @@ const faqsByCategory = faqs.reduce((acc, faq) => {
 
 const categories = Object.keys(faqsByCategory);
 
+// Category configuration with icons and descriptions
+const categoryConfig: Record<string, { icon: string; description: string }> = {
+  'Booking & Reservations': {
+    icon: '📅',
+    description: 'Everything about making your reservation and our policies',
+  },
+  'Accommodations': {
+    icon: '🏕️',
+    description: 'Details about our rooms, suites, and amenities',
+  },
+  'Safari Experiences': {
+    icon: '🦁',
+    description: 'Wildlife viewing, game drives, and adventure activities',
+  },
+  'Dining & Amenities': {
+    icon: '🍽️',
+    description: 'Culinary experiences and property facilities',
+  },
+  'Travel & Location': {
+    icon: '✈️',
+    description: 'Getting here, visas, health, and packing tips',
+  },
+  'General': {
+    icon: '💡',
+    description: 'Sustainability, currency, and other important information',
+  },
+};
+
 export default function FAQPage() {
   return (
     <main>
@@ -202,10 +230,11 @@ export default function FAQPage() {
       <section
         style={{
           padding: 'var(--space-section-xl) var(--space-container-padding)',
+          background: 'var(--color-bg-primary)',
         }}
       >
         <div style={{ maxWidth: 'var(--container-max-width-lg)', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-16)' }}>
+          <div style={{ textAlign: 'center', marginBottom: 'var(--space-20)' }}>
             <p
               style={{
                 fontFamily: 'var(--font-family-body)',
@@ -223,6 +252,7 @@ export default function FAQPage() {
                 style={{
                   color: 'var(--color-primary-terracotta)',
                   textDecoration: 'underline',
+                  fontWeight: 'var(--font-weight-semibold)',
                 }}
               >
                 contact us
@@ -235,23 +265,73 @@ export default function FAQPage() {
           {categories.map((category, index) => (
             <div
               key={category}
+              id={category.toLowerCase().replace(/\s+/g, '-')}
               style={{
-                marginBottom: index < categories.length - 1 ? 'var(--space-16)' : 0,
+                position: 'relative',
+                marginBottom: index < categories.length - 1 ? 'var(--space-20)' : 0,
+                paddingBottom: index < categories.length - 1 ? 'var(--space-12)' : 0,
+                borderBottom: index < categories.length - 1 ? '1px solid var(--color-border-light)' : 'none',
               }}
             >
-              <h2
-                style={{
-                  fontFamily: 'var(--font-family-display)',
-                  fontSize: 'var(--heading-h3-size)',
-                  fontWeight: 'var(--heading-h3-weight)',
-                  color: 'var(--color-primary-terracotta)',
-                  marginBottom: 'var(--space-8)',
-                  paddingBottom: 'var(--space-4)',
-                  borderBottom: '2px solid var(--color-primary-terracotta)',
-                }}
-              >
-                {category}
-              </h2>
+              {/* Category Header with Icon */}
+              <div style={{ marginBottom: 'var(--space-8)' }}>
+                <h2
+                  style={{
+                    fontFamily: 'var(--font-family-display)',
+                    fontSize: 'var(--heading-h2-size)',
+                    fontWeight: 'var(--heading-h2-weight)',
+                    color: 'var(--color-secondary-deep-green)',
+                    marginBottom: 'var(--space-3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 'var(--space-4)',
+                    letterSpacing: 'var(--letter-spacing-tight)',
+                  }}
+                >
+                  {/* Icon */}
+                  <span
+                    style={{
+                      fontSize: 'var(--font-size-3xl)',
+                      filter: 'grayscale(10%)',
+                    }}
+                    aria-hidden="true"
+                  >
+                    {categoryConfig[category]?.icon || '❓'}
+                  </span>
+                  {category}
+                </h2>
+
+                {/* Decorative underline */}
+                <div
+                  style={{
+                    height: '3px',
+                    width: '60px',
+                    background: `linear-gradient(
+                      to right,
+                      var(--color-primary-terracotta),
+                      var(--color-accent-gold)
+                    )`,
+                    borderRadius: 'var(--radius-full)',
+                    marginBottom: 'var(--space-3)',
+                  }}
+                  aria-hidden="true"
+                />
+
+                {/* Category description */}
+                <p
+                  style={{
+                    fontSize: 'var(--font-size-base)',
+                    color: 'var(--color-text-tertiary)',
+                    marginBottom: 'var(--space-8)',
+                    fontStyle: 'italic',
+                    fontFamily: 'var(--font-family-body)',
+                  }}
+                >
+                  {categoryConfig[category]?.description || ''}
+                </p>
+              </div>
+
+              {/* Accordion Group */}
               <AccordionGroup
                 items={faqsByCategory[category].map((faq) => ({
                   title: faq.question,
@@ -266,85 +346,244 @@ export default function FAQPage() {
       {/* CTA Section */}
       <section
         style={{
-          padding: 'var(--space-section-lg) var(--space-container-padding)',
-          backgroundColor: 'var(--color-neutral-cream)',
-          textAlign: 'center',
+          position: 'relative',
+          padding: 'var(--space-section-xl) var(--space-container-padding)',
+          background: `linear-gradient(
+            135deg,
+            var(--color-neutral-cream) 0%,
+            var(--color-primary-sand-light) 100%
+          )`,
+          borderTop: '3px solid var(--color-accent-gold)',
+          overflow: 'hidden',
         }}
       >
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        {/* Decorative pattern overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: '0',
+            opacity: 0.05,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%23C86F4D' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundSize: '60px 60px',
+            pointerEvents: 'none',
+          }}
+          aria-hidden="true"
+        />
+
+        <div
+          style={{
+            maxWidth: '900px',
+            margin: '0 auto',
+            position: 'relative',
+            zIndex: 1,
+            textAlign: 'center',
+          }}
+        >
+          {/* Safari-themed decoration */}
+          <div
+            style={{
+              fontSize: 'var(--font-size-6xl)',
+              marginBottom: 'var(--space-6)',
+              filter: 'grayscale(10%)',
+              lineHeight: 1,
+            }}
+            aria-hidden="true"
+          >
+            🦒🦁🐘
+          </div>
+
           <h2
             style={{
               fontFamily: 'var(--font-family-display)',
               fontSize: 'var(--heading-h2-size)',
               fontWeight: 'var(--heading-h2-weight)',
-              color: 'var(--color-text-primary)',
+              color: 'var(--color-secondary-deep-green)',
               marginBottom: 'var(--space-6)',
+              letterSpacing: 'var(--letter-spacing-tight)',
             }}
           >
             Still Have Questions?
           </h2>
+
           <p
             style={{
               fontFamily: 'var(--font-family-body)',
               fontSize: 'var(--body-large-size)',
               lineHeight: 'var(--line-height-relaxed)',
               color: 'var(--color-text-secondary)',
-              marginBottom: 'var(--space-10)',
+              marginBottom: 'var(--space-12)',
+              maxWidth: '700px',
+              margin: '0 auto var(--space-12)',
             }}
           >
-            Our team is here to help you plan the perfect safari experience. Get in touch with us
-            and we&apos;ll answer any questions you may have.
+            Our safari experts are here to help you plan the perfect adventure. Whether you need
+            assistance with bookings, itineraries, or special requests, we&apos;re just a message away.
           </p>
+
           <div
             style={{
               display: 'flex',
               gap: 'var(--space-4)',
               justifyContent: 'center',
               flexWrap: 'wrap',
+              marginBottom: 'var(--space-12)',
             }}
           >
+            {/* Enhanced primary button */}
             <a
               href="/contact"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: 'var(--space-3)',
                 fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--font-size-base)',
+                fontSize: 'var(--font-size-lg)',
                 fontWeight: 'var(--font-weight-semibold)',
                 color: 'var(--color-text-inverse)',
-                backgroundColor: 'var(--color-primary-terracotta)',
+                background: `linear-gradient(
+                  135deg,
+                  var(--color-primary-terracotta),
+                  var(--color-primary-terracotta-dark)
+                )`,
                 textDecoration: 'none',
-                padding: 'var(--space-4) var(--space-8)',
-                borderRadius: 'var(--radius-button)',
-                transition: 'var(--transition-all)',
-                boxShadow: 'var(--shadow-button)',
-                minWidth: '200px',
+                padding: 'var(--space-5) var(--space-10)',
+                borderRadius: 'var(--radius-xl)',
+                transition: 'all var(--duration-medium) var(--ease-out)',
+                boxShadow: 'var(--shadow-terracotta)',
+                minWidth: '220px',
               }}
             >
+              <span aria-hidden="true">💬</span>
               Contact Us
             </a>
+
+            {/* Secondary button */}
             <a
               href="/accommodations"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: 'var(--space-3)',
                 fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--font-size-base)',
+                fontSize: 'var(--font-size-lg)',
                 fontWeight: 'var(--font-weight-semibold)',
-                color: 'var(--color-primary-terracotta)',
-                backgroundColor: 'transparent',
+                color: 'var(--color-secondary-deep-green)',
+                background: 'var(--color-bg-secondary)',
                 textDecoration: 'none',
-                padding: 'var(--space-4) var(--space-8)',
-                border: '2px solid var(--color-primary-terracotta)',
-                borderRadius: 'var(--radius-button)',
+                padding: 'var(--space-5) var(--space-10)',
+                border: '2px solid var(--color-secondary-deep-green)',
+                borderRadius: 'var(--radius-xl)',
                 transition: 'var(--transition-all)',
-                minWidth: '200px',
+                minWidth: '220px',
               }}
             >
+              <span aria-hidden="true">🏕️</span>
               View Accommodations
             </a>
+          </div>
+
+          {/* Contact methods */}
+          <div
+            style={{
+              display: 'flex',
+              gap: 'var(--space-12)',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              paddingTop: 'var(--space-10)',
+              borderTop: '1px solid var(--color-border-light)',
+            }}
+          >
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-2xl)',
+                  marginBottom: 'var(--space-2)',
+                }}
+                aria-hidden="true"
+              >
+                📞
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-sm)',
+                  color: 'var(--color-text-tertiary)',
+                  marginBottom: 'var(--space-1)',
+                }}
+              >
+                Call Us
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-primary)',
+                }}
+              >
+                +254 123 456 789
+              </div>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-2xl)',
+                  marginBottom: 'var(--space-2)',
+                }}
+                aria-hidden="true"
+              >
+                📧
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-sm)',
+                  color: 'var(--color-text-tertiary)',
+                  marginBottom: 'var(--space-1)',
+                }}
+              >
+                Email Us
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-primary)',
+                }}
+              >
+                info@amboselisafariclub.com
+              </div>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-2xl)',
+                  marginBottom: 'var(--space-2)',
+                }}
+                aria-hidden="true"
+              >
+                💬
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-sm)',
+                  color: 'var(--color-text-tertiary)',
+                  marginBottom: 'var(--space-1)',
+                }}
+              >
+                WhatsApp
+              </div>
+              <div
+                style={{
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-primary)',
+                }}
+              >
+                Available 24/7
+              </div>
+            </div>
           </div>
         </div>
       </section>
