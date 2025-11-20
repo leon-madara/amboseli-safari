@@ -100,21 +100,14 @@ export default function RoomCard({
               />
             )}
 
-            {/* Trust & Urgency Badges */}
+            {/* Category & Availability Badges */}
             <div className={styles.badgeContainer}>
+              <span className={`${styles.badge} ${styles.badgeCategory}`}>
+                Luxury Room
+              </span>
               {availability === 'limited' && (
                 <span className={`${styles.badge} ${styles.badgeLimited}`}>
-                  ⚠️ Only 2 rooms left
-                </span>
-              )}
-              {recentlyBooked && (
-                <span className={`${styles.badge} ${styles.badgeHot}`}>
-                  🔥 Booked 3 times today
-                </span>
-              )}
-              {specialOffer && (
-                <span className={`${styles.badge} ${styles.badgeOffer}`}>
-                  💰 {specialOffer}
+                  Limited Availability
                 </span>
               )}
             </div>

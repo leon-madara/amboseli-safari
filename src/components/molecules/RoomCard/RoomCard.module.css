@@ -696,18 +696,13 @@
   transition: opacity 0.2s ease;
 }
 
-.badgeLimited {
-  background: rgba(255, 193, 7, 0.95);
-  color: #1a1f3a;
-}
-
-.badgeHot {
-  background: rgba(244, 67, 54, 0.95);
+.badgeCategory {
+  background: rgba(39, 174, 96, 0.9);
   color: white;
 }
 
-.badgeOffer {
-  background: rgba(76, 175, 80, 0.95);
+.badgeLimited {
+  background: rgba(255, 152, 0, 0.9);
   color: white;
 }
 
