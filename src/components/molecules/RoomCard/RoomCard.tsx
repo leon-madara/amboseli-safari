@@ -91,16 +91,13 @@ export default function RoomCard({
             {hasMultipleImages ? (
               <ImageCarousel images={roomImages} alt={title} />
             ) : (
-              <>
-                <Image
-                  src={image}
-                  alt={imageAlt}
-                  fill
-                  className={styles.image}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                <div className={styles.overlay} />
-              </>
+              <Image
+                src={image}
+                alt={imageAlt}
+                fill
+                className={styles.image}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             )}
 
             {/* Trust & Urgency Badges */}
