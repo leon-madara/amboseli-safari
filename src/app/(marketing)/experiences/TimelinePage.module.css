@@ -1,0 +1,48 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-neutral-cream, #f3e9d7);
+}
+
+/* All Experiences Section */
+.allExperiencesSection {
+  padding: var(--space-section-xl, 8rem) 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  background: var(--color-bg-secondary, #FFFFFF);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-display, 'Playfair Display', Georgia, serif);
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary, #3A3633);
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #6E6965);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .allExperiencesSection {
+    padding: 4rem 1.5rem;
+  }
+
+  .sectionHeader {
+    margin-bottom: 3rem;
+  }
+}
