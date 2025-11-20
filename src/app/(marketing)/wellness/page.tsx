@@ -5,6 +5,10 @@ import CurvedDivider from '@/components/atoms/CurvedDivider';
 import BentoServiceGrid from '@/components/organisms/BentoServiceGrid';
 import MorphingBlob from '@/components/atoms/MorphingBlob';
 import AnimatedSection from '@/components/atoms/AnimatedSection';
+import StaggeredGrid from '@/components/atoms/StaggeredGrid';
+import ActivityCard from '@/components/molecules/ActivityCard';
+import PackageCard from '@/components/molecules/PackageCard';
+import FacilityCard from '@/components/molecules/FacilityCard';
 import styles from './wellness.module.css';
 
 export const metadata: Metadata = {
@@ -363,72 +367,22 @@ export default function WellnessPage() {
             </div>
           </AnimatedSection>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 'var(--space-8)',
-            }}
+          <StaggeredGrid
+            columns="repeat(auto-fit, minmax(280px, 1fr))"
+            gap="var(--space-8)"
+            baseDelay={0.2}
+            staggerDelay={0.1}
           >
             {wellnessActivities.map((activity, index) => (
-              <div
+              <ActivityCard
                 key={index}
-                style={{
-                  padding: 'var(--space-8)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-xl)',
-                  borderTop: '4px solid var(--color-primary-terracotta)',
-                }}
-              >
-                <div
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    marginBottom: 'var(--space-4)',
-                    color: 'var(--color-primary-terracotta)',
-                  }}
-                >
-                  {activity.icon}
-                </div>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-lg)',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    color: 'var(--color-text-primary)',
-                    marginBottom: 'var(--space-2)',
-                  }}
-                >
-                  {activity.title}
-                </h3>
-                <div
-                  style={{
-                    display: 'inline-block',
-                    padding: 'var(--space-1) var(--space-3)',
-                    backgroundColor: 'var(--color-neutral-cream)',
-                    borderRadius: 'var(--radius-md)',
-                    fontSize: 'var(--font-size-xs)',
-                    fontWeight: 'var(--font-weight-medium)',
-                    color: 'var(--color-primary-terracotta)',
-                    marginBottom: 'var(--space-4)',
-                  }}
-                >
-                  {activity.schedule}
-                </div>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-base)',
-                    lineHeight: 'var(--line-height-relaxed)',
-                    color: 'var(--color-text-secondary)',
-                    margin: 0,
-                  }}
-                >
-                  {activity.description}
-                </p>
-              </div>
+                title={activity.title}
+                description={activity.description}
+                schedule={activity.schedule}
+                icon={activity.icon}
+              />
             ))}
-          </div>
+          </StaggeredGrid>
         </div>
       </section>
 
@@ -464,99 +418,22 @@ export default function WellnessPage() {
             </div>
           </AnimatedSection>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: 'var(--space-10)',
-            }}
+          <StaggeredGrid
+            columns="repeat(auto-fit, minmax(320px, 1fr))"
+            gap="var(--space-10)"
+            baseDelay={0.2}
+            staggerDelay={0.15}
           >
             {wellnessPackages.map((pkg, index) => (
-              <div
+              <PackageCard
                 key={index}
-                style={{
-                  padding: 'var(--space-10)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-xl)',
-                  boxShadow: 'var(--shadow-lg)',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                    marginBottom: 'var(--space-4)',
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-family-display)',
-                      fontSize: 'var(--heading-h3-size)',
-                      fontWeight: 'var(--heading-h3-weight)',
-                      color: 'var(--color-text-primary)',
-                      margin: 0,
-                    }}
-                  >
-                    {pkg.title}
-                  </h3>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-family-body)',
-                      fontSize: 'var(--font-size-2xl)',
-                      fontWeight: 'var(--font-weight-bold)',
-                      color: 'var(--color-primary-terracotta)',
-                    }}
-                  >
-                    {pkg.price}
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-sm)',
-                    color: 'var(--color-text-secondary)',
-                    marginBottom: 'var(--space-6)',
-                  }}
-                >
-                  {pkg.duration}
-                </p>
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                  }}
-                >
-                  {pkg.includes.map((item, idx) => (
-                    <li
-                      key={idx}
-                      style={{
-                        fontFamily: 'var(--font-family-body)',
-                        fontSize: 'var(--font-size-base)',
-                        lineHeight: 'var(--line-height-relaxed)',
-                        color: 'var(--color-text-secondary)',
-                        paddingLeft: 'var(--space-6)',
-                        position: 'relative',
-                        marginBottom: 'var(--space-3)',
-                      }}
-                    >
-                      <span
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          color: 'var(--color-primary-terracotta)',
-                        }}
-                      >
-                        ✓
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                title={pkg.title}
+                duration={pkg.duration}
+                price={pkg.price}
+                includes={pkg.includes}
+              />
             ))}
-          </div>
+          </StaggeredGrid>
         </div>
 
         <CurvedDivider variant="wave2" color="white" flip className={styles.dividerBottom} />
@@ -574,48 +451,20 @@ export default function WellnessPage() {
             </div>
           </AnimatedSection>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: 'var(--space-6)',
-            }}
+          <StaggeredGrid
+            columns="repeat(auto-fill, minmax(280px, 1fr))"
+            gap="var(--space-6)"
+            baseDelay={0.2}
+            staggerDelay={0.08}
           >
             {facilities.map((facility, index) => (
-              <div
+              <FacilityCard
                 key={index}
-                style={{
-                  padding: 'var(--space-6)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-lg)',
-                  borderLeft: '4px solid var(--color-primary-terracotta)',
-                }}
-              >
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-base)',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    color: 'var(--color-text-primary)',
-                    marginBottom: 'var(--space-2)',
-                  }}
-                >
-                  {facility.name}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-sm)',
-                    lineHeight: 'var(--line-height-relaxed)',
-                    color: 'var(--color-text-secondary)',
-                    margin: 0,
-                  }}
-                >
-                  {facility.description}
-                </p>
-              </div>
+                name={facility.name}
+                description={facility.description}
+              />
             ))}
-          </div>
+          </StaggeredGrid>
         </div>
       </section>
 
@@ -627,7 +476,7 @@ export default function WellnessPage() {
         <MorphingBlob
           color="peach"
           size="large"
-          position={{ top: '30%', left: '50%', transform: 'translateX(-50%)' }}
+          position={{ top: '30%', left: '40%' }}
           duration={31}
           delay={3}
           blur={80}
