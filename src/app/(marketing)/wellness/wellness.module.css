@@ -1,252 +1,355 @@
-/* wellness.module.css - Organic Flow Design System */
-
 /* ============================================
-   CSS Custom Properties - Color Gradients
+   Design 1: Modern Wellness Sanctuary
+   Clean, minimalist spa-focused design
    ============================================ */
+
+/* CSS Custom Properties */
 .wellnessPage {
-  --gradient-terracotta-peach: linear-gradient(135deg, #c86f47 0%, #e89b7e 50%, #feb47b 100%);
-  --gradient-peach-cream: linear-gradient(135deg, #feb47b 0%, #f5dac4 50%, #f5f0e8 100%);
-  --gradient-cream-terracotta: linear-gradient(135deg, #f5f0e8 0%, #e89b7e 50%, #c86f47 100%);
-  --gradient-radial-warm: radial-gradient(circle at center, rgba(254, 180, 123, 0.3) 0%, transparent 70%);
+  --color-spa-primary: #e8d5c4;
+  --color-spa-secondary: #c9b8a8;
+  --color-spa-accent: #a89080;
+  --color-spa-dark: #6b5d54;
+  --color-spa-light: #f5f0eb;
 
-  /* Spacing system */
-  --section-padding-y: clamp(4rem, 8vw, 8rem);
-  --section-padding-x: clamp(1.5rem, 5vw, 3rem);
-  --section-gap: clamp(3rem, 6vw, 6rem);
-
-  /* Z-index management */
-  --z-background: 0;
-  --z-blobs: 1;
-  --z-divider: 10;
-  --z-content: 20;
-
-  /* Organic border radius values */
-  --radius-organic-sm: 20px;
-  --radius-organic-md: 30px;
-  --radius-organic-lg: 40px;
-
-  /* Animation timing */
-  --transition-organic: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --section-padding: clamp(4rem, 8vw, 8rem);
+  --container-max: 1200px;
   --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
-   Main Page Container
+   Page Container
    ============================================ */
 .wellnessPage {
   position: relative;
   width: 100%;
-  overflow-x: hidden;
-  background-color: var(--color-bg-primary, #ffffff);
-}
-
-/* ============================================
-   Section Base Styles
-   ============================================ */
-.section {
-  position: relative;
-  padding: var(--section-padding-y) var(--section-padding-x);
-  z-index: var(--z-content);
-}
-
-.sectionWithCurve {
-  position: relative;
-  padding-top: calc(var(--section-padding-y) + 80px);
-  padding-bottom: calc(var(--section-padding-y) + 80px);
-}
-
-/* Section backgrounds */
-.sectionCream {
-  background-color: var(--color-neutral-cream, #f5f0e8);
-}
-
-.sectionWhite {
-  background-color: var(--color-bg-secondary, #ffffff);
-}
-
-.sectionGradient {
-  background: var(--gradient-peach-cream);
+  min-height: 100vh;
+  background-color: #ffffff;
 }
 
 /* ============================================
    Hero Section
    ============================================ */
-.heroSection {
+.hero {
   position: relative;
-  padding-bottom: calc(var(--section-padding-y) + 100px);
-  overflow: visible;
+  width: 100%;
+  height: 85vh;
+  min-height: 600px;
+  max-height: 900px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Position curve at bottom of hero */
-.heroSection .dividerBottom {
+.heroImage {
   position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
+  inset: 0;
+  z-index: 1;
+}
+
+.heroImg {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 2;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  max-width: 800px;
+  padding: 0 2rem;
+}
+
+.heroTitle {
+  font-family: var(--font-family-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-family: var(--font-family-body);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-bottom: 3rem;
+  opacity: 0.95;
+}
+
+.heroButton {
+  display: inline-block;
+  padding: 1rem 3rem;
+  background-color: white;
+  color: var(--color-spa-dark);
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-transform: uppercase;
+}
+
+.heroButton:hover {
+  background-color: var(--color-spa-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
    Introduction Section
    ============================================ */
-.introSection {
-  position: relative;
-  padding-top: var(--section-padding-y);
-  padding-bottom: var(--section-padding-y);
-  background-color: var(--color-bg-secondary, #ffffff);
-  overflow: hidden;
+.intro {
+  padding: var(--section-padding) 2rem;
+  background-color: white;
 }
 
 .introContent {
-  max-width: var(--container-max-width-lg, 1024px);
+  max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
 
-.introHeading {
+.introTitle {
   font-family: var(--font-family-display);
-  font-size: var(--heading-h2-size);
-  font-weight: var(--heading-h2-weight);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-6);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--color-spa-dark);
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
 }
 
 .introText {
   font-family: var(--font-family-body);
-  font-size: var(--body-large-size);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-secondary);
-  max-width: 800px;
-  margin: 0 auto var(--space-8);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.8;
+  color: var(--color-spa-accent);
+  font-weight: 300;
 }
 
 /* ============================================
-   Services Section (Bento Grid - Phase 2)
+   Services Section
    ============================================ */
-.servicesSection {
-  position: relative;
-  padding-top: calc(var(--section-padding-y) + 80px);
-  padding-bottom: calc(var(--section-padding-y) + 80px);
-  background-color: var(--color-neutral-cream, #f5f0e8);
-  overflow: hidden;
-}
-
-.servicesSection .dividerTop {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-}
-
-.servicesSection .dividerBottom {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-}
-
-.servicesContainer {
-  max-width: var(--container-max-width-xl, 1280px);
-  margin: 0 auto;
+.services {
+  padding: var(--section-padding) 2rem;
+  background-color: var(--color-spa-light);
 }
 
 .sectionHeader {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: 4rem;
 }
 
 .sectionTitle {
   font-family: var(--font-family-display);
-  font-size: var(--heading-h2-size);
-  font-weight: var(--heading-h2-weight);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-4);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--color-spa-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
 }
 
 .sectionSubtitle {
   font-family: var(--font-family-body);
-  font-size: var(--body-large-size);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-secondary);
-  max-width: 700px;
-  margin: 0 auto;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--color-spa-accent);
+  font-weight: 300;
+}
+
+.serviceCard {
+  background: white;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.serviceCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.serviceImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background-color: var(--color-spa-secondary);
+}
+
+.serviceImage {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.serviceCard:hover .serviceImage {
+  transform: scale(1.05);
+}
+
+.serviceContent {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.serviceTitle {
+  font-family: var(--font-family-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-spa-dark);
+  margin-bottom: 1rem;
+}
+
+.serviceDescription {
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-spa-accent);
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.serviceDuration {
+  font-family: var(--font-family-body);
+  font-size: 0.875rem;
+  color: var(--color-spa-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* ============================================
    Activities Section
    ============================================ */
-.activitiesSection {
-  position: relative;
-  padding: var(--section-padding-y) var(--section-padding-x);
-  background-color: var(--color-bg-secondary, #ffffff);
-  overflow: hidden;
+.activities {
+  padding: var(--section-padding) 2rem;
+  background-color: white;
 }
 
-.activitiesContainer {
-  max-width: var(--container-max-width-xl, 1280px);
-  margin: 0 auto;
+.activityCard {
+  padding: 3rem 2rem;
+  background-color: var(--color-spa-light);
+  text-align: center;
+  transition: var(--transition-smooth);
+  height: 100%;
 }
 
-/* ============================================
-   Packages Section
-   ============================================ */
-.packagesSection {
-  position: relative;
-  padding-top: calc(var(--section-padding-y) + 80px);
-  padding-bottom: calc(var(--section-padding-y) + 80px);
-  background-color: var(--color-neutral-cream, #f5f0e8);
-  overflow: hidden;
+.activityCard:hover {
+  background-color: var(--color-spa-primary);
+  transform: translateY(-4px);
 }
 
-.packagesSection .dividerTop {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
+.activityIcon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1.5rem;
 }
 
-.packagesSection .dividerBottom {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
+.activityTitle {
+  font-family: var(--font-family-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-spa-dark);
+  margin-bottom: 1rem;
 }
 
-.packagesContainer {
-  max-width: var(--container-max-width-xl, 1280px);
-  margin: 0 auto;
+.activityDescription {
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-spa-accent);
+  margin-bottom: 1rem;
+}
+
+.activityTime {
+  font-family: var(--font-family-body);
+  font-size: 0.875rem;
+  color: var(--color-spa-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* ============================================
    Facilities Section
    ============================================ */
-.facilitiesSection {
-  position: relative;
-  padding: var(--section-padding-y) var(--section-padding-x);
-  background-color: var(--color-bg-secondary, #ffffff);
+.facilities {
+  padding: var(--section-padding) 2rem;
+  background-color: var(--color-spa-dark);
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  align-items: center;
 }
 
-.facilitiesContainer {
-  max-width: var(--container-max-width-lg, 1024px);
-  margin: 0 auto;
+.facilitiesContent {
+  max-width: 600px;
+}
+
+.facilitiesList {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.facilityItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-family-body);
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
+.facilityCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-spa-primary);
+  border-radius: 50%;
+  color: var(--color-spa-primary);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.facilitiesImage {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.facilityImg {
+  object-fit: cover;
 }
 
 /* ============================================
    CTA Section
    ============================================ */
-.ctaSection {
-  position: relative;
-  padding-top: calc(var(--section-padding-y) + 80px);
-  padding-bottom: var(--section-padding-y);
-  background-color: var(--color-neutral-cream, #f5f0e8);
+.cta {
+  padding: var(--section-padding) 2rem;
+  background: linear-gradient(135deg, var(--color-spa-primary) 0%, var(--color-spa-secondary) 100%);
   text-align: center;
-  overflow: hidden;
-}
-
-.ctaSection .dividerTop {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
 }
 
 .ctaContent {
@@ -254,71 +357,113 @@
   margin: 0 auto;
 }
 
-.ctaHeading {
+.ctaTitle {
   font-family: var(--font-family-display);
-  font-size: var(--heading-h2-size);
-  font-weight: var(--heading-h2-weight);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-6);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--color-spa-dark);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
 }
 
 .ctaText {
   font-family: var(--font-family-body);
-  font-size: var(--body-large-size);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-10);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--color-spa-dark);
+  margin-bottom: 3rem;
+  opacity: 0.9;
 }
 
 .ctaButtons {
   display: flex;
-  gap: var(--space-4);
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 3rem;
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+  min-width: 200px;
+}
+
+.ctaPrimary {
+  background-color: var(--color-spa-dark);
+  color: white;
+  border: 2px solid var(--color-spa-dark);
+}
+
+.ctaPrimary:hover {
+  background-color: transparent;
+  color: var(--color-spa-dark);
+}
+
+.ctaSecondary {
+  background-color: transparent;
+  color: var(--color-spa-dark);
+  border: 2px solid var(--color-spa-dark);
+}
+
+.ctaSecondary:hover {
+  background-color: var(--color-spa-dark);
+  color: white;
+}
+
 /* ============================================
-   Responsive Adjustments
+   Responsive Design
    ============================================ */
 @media (max-width: 768px) {
-  .wellnessPage {
-    --section-padding-y: clamp(3rem, 6vw, 5rem);
-    --section-padding-x: 1.5rem;
+  .hero {
+    height: 70vh;
+    min-height: 500px;
   }
 
-  .sectionWithCurve {
-    padding-top: calc(var(--section-padding-y) + 40px);
-    padding-bottom: calc(var(--section-padding-y) + 40px);
+  .heroTitle {
+    font-size: 2.5rem;
   }
 
-  .servicesSection,
-  .packagesSection,
-  .ctaSection {
-    padding-top: calc(var(--section-padding-y) + 40px);
-    padding-bottom: calc(var(--section-padding-y) + 40px);
+  .heroSubtitle {
+    font-size: 1.125rem;
   }
 
-  .heroSection {
-    padding-bottom: calc(var(--section-padding-y) + 60px);
+  .facilities {
+    grid-template-columns: 1fr;
+  }
+
+  .facilitiesImage {
+    height: 300px;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
 @media (max-width: 480px) {
-  .wellnessPage {
-    --section-padding-y: 2.5rem;
-    --section-padding-x: 1rem;
+  .hero {
+    height: 60vh;
+    min-height: 450px;
   }
 
-  .sectionWithCurve {
-    padding-top: calc(var(--section-padding-y) + 30px);
-    padding-bottom: calc(var(--section-padding-y) + 30px);
+  .serviceImageWrapper {
+    height: 250px;
   }
 
-  .servicesSection,
-  .packagesSection,
-  .ctaSection {
-    padding-top: calc(var(--section-padding-y) + 30px);
-    padding-bottom: calc(var(--section-padding-y) + 30px);
+  .serviceContent,
+  .activityCard {
+    padding: 1.5rem;
   }
 }
 
@@ -326,7 +471,7 @@
    Accessibility
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .wellnessPage * {
+  .wellnessPage :global(*) {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
