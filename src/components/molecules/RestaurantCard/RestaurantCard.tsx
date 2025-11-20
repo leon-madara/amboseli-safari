@@ -11,6 +11,28 @@ interface RestaurantCardProps {
   index: number;
 }
 
+interface AvailabilityStatus {
+  available: boolean;
+  nextAvailable?: string;
+  popular?: boolean;
+}
+
+function getAvailabilityStatus(restaurant: Restaurant): AvailabilityStatus {
+  // Mock logic - in real implementation, this would fetch from API
+  const now = new Date();
+  const hour = now.getHours();
+
+  // Lunch: 12-15, Dinner: 18-22
+  const isLunchTime = hour >= 12 && hour < 15;
+  const isDinnerTime = hour >= 18 && hour < 22;
+
+  return {
+    available: isLunchTime || isDinnerTime,
+    nextAvailable: !isLunchTime && !isDinnerTime ? (hour < 12 ? '12:00 PM' : '6:00 PM') : undefined,
+    popular: restaurant.title === 'Kilimanjaro Restaurant',
+  };
+}
+
 function getFeatureIcon(feature: string): string {
   const iconMap: Record<string, string> = {
     'indoor': '🪑',
@@ -58,6 +80,8 @@ export default function RestaurantCard({ restaurant, index }: RestaurantCardProp
   const [isExpanded, setIsExpanded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+
+  const availability = getAvailabilityStatus(restaurant);
 
   // Parallax effect for image
   const { scrollYProgress } = useScroll({
@@ -121,6 +145,33 @@ export default function RestaurantCard({ restaurant, index }: RestaurantCardProp
         >
           {restaurant.title}
         </motion.h3>
+
+        {/* Availability Badges */}
+        <div className={styles.badges}>
+          {availability.available && (
+            <motion.span
+              className={styles.badgeAvailable}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", delay: 0.3 }}
+            >
+              <span className={styles.badgeDot} />
+              Available Now
+            </motion.span>
+          )}
+
+          {!availability.available && availability.nextAvailable && (
+            <span className={styles.badgeNext}>
+              Next: {availability.nextAvailable}
+            </span>
+          )}
+
+          {availability.popular && (
+            <span className={styles.badgePopular}>
+              ⭐ Popular Choice
+            </span>
+          )}
+        </div>
 
         <p className={styles.description}>{restaurant.description}</p>
 
