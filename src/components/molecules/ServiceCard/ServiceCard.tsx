@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ReactNode } from 'react';
+import { useRipple } from '@/hooks/useRipple';
 import styles from './ServiceCard.module.css';
 
 export type CardSize = 'small' | 'medium' | 'large';
@@ -45,8 +46,10 @@ export default function ServiceCard({
   size = 'medium',
   className = '',
 }: ServiceCardProps) {
+  const { ripples, createRipple } = useRipple();
+
   return (
-    <div className={`${styles.card} ${styles[size]} ${className}`}>
+    <div className={`${styles.card} ${styles[size]} ${className}`} onClick={createRipple}>
       {/* Icon Container */}
       <div className={styles.iconContainer}>
         <div className={styles.icon}>{icon}</div>
@@ -70,6 +73,20 @@ export default function ServiceCard({
 
       {/* Decorative gradient overlay */}
       <div className={styles.gradientOverlay} aria-hidden="true" />
+
+      {/* Ripple effects */}
+      {ripples.map((ripple) => (
+        <span
+          key={ripple.id}
+          className={styles.ripple}
+          style={{
+            left: ripple.x,
+            top: ripple.y,
+            width: ripple.size,
+            height: ripple.size,
+          }}
+        />
+      ))}
     </div>
   );
 }

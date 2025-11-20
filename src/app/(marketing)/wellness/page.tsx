@@ -4,6 +4,7 @@ import Link from '@/components/atoms/Link';
 import CurvedDivider from '@/components/atoms/CurvedDivider';
 import BentoServiceGrid from '@/components/organisms/BentoServiceGrid';
 import MorphingBlob from '@/components/atoms/MorphingBlob';
+import AnimatedSection from '@/components/atoms/AnimatedSection';
 import styles from './wellness.module.css';
 
 export const metadata: Metadata = {
@@ -281,15 +282,17 @@ export default function WellnessPage() {
           blur={70}
         />
 
-        <div className={styles.introContent}>
-          <h2 className={styles.introHeading}>A Sanctuary for Body and Mind</h2>
-          <p className={styles.introText}>
-            Our wellness center combines traditional African healing practices with contemporary spa
-            therapies. Using indigenous ingredients and time-honored techniques, we create
-            transformative experiences that nurture your well-being while honoring the natural world
-            around us.
-          </p>
-        </div>
+        <AnimatedSection variant="fadeUp" delay={0.2}>
+          <div className={styles.introContent}>
+            <h2 className={styles.introHeading}>A Sanctuary for Body and Mind</h2>
+            <p className={styles.introText}>
+              Our wellness center combines traditional African healing practices with contemporary spa
+              therapies. Using indigenous ingredients and time-honored techniques, we create
+              transformative experiences that nurture your well-being while honoring the natural world
+              around us.
+            </p>
+          </div>
+        </AnimatedSection>
       </section>
 
       {/* Spa Services Section */}
@@ -323,12 +326,14 @@ export default function WellnessPage() {
         />
 
         <div className={styles.servicesContainer}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Spa Services</h2>
-            <p className={styles.sectionSubtitle}>
-              Indulge in luxurious treatments using natural, locally sourced ingredients.
-            </p>
-          </div>
+          <AnimatedSection variant="fadeUp" delay={0.1}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Spa Services</h2>
+              <p className={styles.sectionSubtitle}>
+                Indulge in luxurious treatments using natural, locally sourced ingredients.
+              </p>
+            </div>
+          </AnimatedSection>
 
           <BentoServiceGrid services={spaServices} />
         </div>
@@ -349,12 +354,14 @@ export default function WellnessPage() {
         />
 
         <div className={styles.activitiesContainer}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Wellness Activities</h2>
-            <p className={styles.sectionSubtitle}>
-              Complement your spa experience with activities that nurture mind, body, and spirit.
-            </p>
-          </div>
+          <AnimatedSection variant="fadeUp" delay={0.1}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Wellness Activities</h2>
+              <p className={styles.sectionSubtitle}>
+                Complement your spa experience with activities that nurture mind, body, and spirit.
+              </p>
+            </div>
+          </AnimatedSection>
 
           <div
             style={{
@@ -448,12 +455,14 @@ export default function WellnessPage() {
         />
 
         <div className={styles.packagesContainer}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Wellness Packages</h2>
-            <p className={styles.sectionSubtitle}>
-              Curated experiences combining multiple treatments for the ultimate wellness journey.
-            </p>
-          </div>
+          <AnimatedSection variant="fadeUp" delay={0.1}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Wellness Packages</h2>
+              <p className={styles.sectionSubtitle}>
+                Curated experiences combining multiple treatments for the ultimate wellness journey.
+              </p>
+            </div>
+          </AnimatedSection>
 
           <div
             style={{
@@ -556,12 +565,14 @@ export default function WellnessPage() {
       {/* Facilities Section */}
       <section className={styles.facilitiesSection} data-section="facilities">
         <div className={styles.facilitiesContainer}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Wellness Facilities</h2>
-            <p className={styles.sectionSubtitle}>
-              State-of-the-art amenities designed for your complete relaxation and rejuvenation.
-            </p>
-          </div>
+          <AnimatedSection variant="fadeUp" delay={0.1}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Wellness Facilities</h2>
+              <p className={styles.sectionSubtitle}>
+                State-of-the-art amenities designed for your complete relaxation and rejuvenation.
+              </p>
+            </div>
+          </AnimatedSection>
 
           <div
             style={{
@@ -622,13 +633,14 @@ export default function WellnessPage() {
           blur={80}
         />
 
-        <div className={styles.ctaContent}>
-          <h2 className={styles.ctaHeading}>Begin Your Wellness Journey</h2>
-          <p className={styles.ctaText}>
-            Book your wellness experience and discover the perfect balance between adventure and
-            relaxation. Advance reservations recommended for spa treatments.
-          </p>
-          <div className={styles.ctaButtons}>
+        <AnimatedSection variant="fadeUp" delay={0.2}>
+          <div className={styles.ctaContent}>
+            <h2 className={styles.ctaHeading}>Begin Your Wellness Journey</h2>
+            <p className={styles.ctaText}>
+              Book your wellness experience and discover the perfect balance between adventure and
+              relaxation. Advance reservations recommended for spa treatments.
+            </p>
+            <div className={styles.ctaButtons}>
             <Link
               href="/contact"
               style={{
@@ -673,6 +685,7 @@ export default function WellnessPage() {
             </Link>
           </div>
         </div>
+        </AnimatedSection>
       </section>
     </main>
   );
