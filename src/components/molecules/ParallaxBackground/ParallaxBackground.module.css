@@ -1,0 +1,66 @@
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Sky layer - slowest parallax movement */
+.skyLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Mountain silhouette layer - medium speed */
+.mountainLayer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  z-index: 1;
+  will-change: transform;
+}
+
+.mountainSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Ground layer - moves with content */
+.groundLayer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: var(--color-neutral-cream, #f3e9d7);
+  z-index: 2;
+}
+
+/* Responsive: Mobile */
+@media (max-width: 768px) {
+  .mountainLayer {
+    height: 200px;
+  }
+
+  .groundLayer {
+    height: 100px;
+  }
+}
+
+/* Reduced motion support - disable transitions */
+@media (prefers-reduced-motion: reduce) {
+  .skyLayer {
+    transition: none;
+  }
+}

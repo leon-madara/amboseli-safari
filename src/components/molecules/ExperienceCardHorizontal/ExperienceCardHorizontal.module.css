@@ -1,0 +1,280 @@
+.card {
+  position: relative;
+  width: 380px;
+  flex-shrink: 0;
+  background: var(--color-bg-secondary, #FFFFFF);
+  border-radius: var(--radius-3xl, 24px);
+  overflow: hidden;
+  box-shadow:
+    0 4px 12px rgba(58, 54, 51, 0.08),
+    0 2px 4px rgba(58, 54, 51, 0.04);
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease;
+  will-change: transform;
+  contain: layout style paint;
+
+  /* Initial state for reveal animation */
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+
+/* Revealed state - will be added by IntersectionObserver */
+.card.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.card:hover {
+  transform: translate3d(0, -12px, 0);
+  box-shadow:
+    0 20px 40px rgba(58, 54, 51, 0.12),
+    0 4px 12px rgba(58, 54, 51, 0.08);
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+/* Image container */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: var(--color-neutral-cream, #f3e9d7);
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.card:hover .image {
+  transform: scale3d(1.07, 1.07, 1);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  transition: background 0.4s ease;
+  z-index: 1;
+}
+
+.card:hover .overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+/* Badge */
+.badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  padding: 0.5rem 0.875rem;
+  background: var(--badge-gradient);
+  border-radius: var(--radius-full, 9999px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card:hover .badge {
+  transform: scale3d(1.05, 1.05, 1);
+}
+
+.badgeText {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: white;
+}
+
+/* CTA Container */
+.ctaContainer {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition:
+    opacity 0.3s ease 0.1s,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+}
+
+.ctaContainer.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-terracotta, #C86F4D);
+  color: white;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-full, 9999px);
+  box-shadow: 0 4px 12px rgba(200, 111, 77, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.ctaButton:hover {
+  transform: scale3d(1.05, 1.05, 1);
+}
+
+.ctaArrow {
+  transition: transform 0.2s ease;
+}
+
+.ctaButton:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+/* Content section */
+.content {
+  padding: 1.5rem;
+}
+
+.title {
+  font-family: var(--font-display, 'Playfair Display', Georgia, serif);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary, #3A3633);
+  margin-bottom: 0.75rem;
+
+  /* Truncate to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  transition: color 0.3s ease;
+}
+
+.card:hover .title {
+  color: var(--chapter-primary);
+}
+
+.description {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #6E6965);
+  margin-bottom: 1rem;
+
+  /* Truncate to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Meta information */
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-light, rgba(58, 54, 51, 0.1));
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6E6965);
+}
+
+.metaIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--chapter-primary);
+}
+
+.price {
+  font-family: var(--font-display, 'Playfair Display', Georgia, serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--chapter-primary);
+}
+
+.priceLabel {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-secondary, #6E6965);
+}
+
+/* Responsive: Mobile */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+
+  .imageContainer {
+    height: 240px;
+  }
+
+  .content {
+    padding: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .description {
+    font-size: 0.875rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .image,
+  .badge,
+  .ctaContainer,
+  .title {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .card:hover .image {
+    transform: none;
+  }
+}
