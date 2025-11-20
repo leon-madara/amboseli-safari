@@ -10,17 +10,6 @@
   }
 }
 
-/* Keyframes for badge entrance animation */
-@keyframes badgePop {
-  0% {
-    opacity: 0;
-    transform: scale(0) translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
 
 /* Room Card Container */
 .card {
@@ -356,7 +345,7 @@
 
 .expandButton:hover {
   color: #e8682a;
-  transform: translateX(6px);
+  transform: translateX(3px);
 }
 
 /* Footer */
@@ -391,27 +380,6 @@
   position: relative;
 }
 
-/* Underline animation for price */
-.price::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-gold),
-    var(--color-primary-terracotta)
-  );
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.card:hover .price::after {
-  transform: scaleX(1);
-}
 
 .pricePeriod {
   font-family: var(--font-family-body);
@@ -725,19 +693,7 @@
   backdrop-filter: blur(8px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   width: fit-content;
-  animation: badgePop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
-}
-
-.badge:nth-child(1) {
-  animation-delay: 0.2s;
-}
-
-.badge:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.badge:nth-child(3) {
-  animation-delay: 0.4s;
+  transition: opacity 0.2s ease;
 }
 
 .badgeLimited {
@@ -852,45 +808,6 @@
   overflow: hidden;
 }
 
-/* Ripple effect on click */
-.primaryCTA::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.primaryCTA:active::before {
-  width: 300px;
-  height: 300px;
-}
-
-/* Shine effect */
-.primaryCTA::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transition: left 0.5s;
-}
-
-.primaryCTA:hover:not(:disabled)::after {
-  left: 100%;
-}
 
 .primaryCTA:hover:not(:disabled) {
   transform: translateY(-2px);
@@ -962,7 +879,6 @@
 @media (prefers-reduced-motion: reduce) {
   .card,
   .image,
-  .overlay,
   .button,
   .primaryCTA,
   .compareCheckbox,
@@ -990,10 +906,5 @@
   .expandButton:hover,
   .primaryCTA:hover {
     transform: none;
-  }
-
-  .primaryCTA::before,
-  .primaryCTA::after {
-    display: none;
   }
 }
