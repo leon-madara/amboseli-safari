@@ -1,0 +1,70 @@
+/* CurvedDivider.module.css */
+
+.curvedDivider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 80px;
+  line-height: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Flip the divider vertically */
+.flip {
+  transform: scaleY(-1);
+}
+
+/* Subtle wave animation */
+.animated .svg {
+  animation: wave 20s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-2%);
+  }
+}
+
+/* Responsive heights */
+@media (max-width: 1024px) {
+  .curvedDivider {
+    height: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .curvedDivider {
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .curvedDivider {
+    height: 30px;
+  }
+}
+
+/* Performance optimization */
+.animated .svg {
+  will-change: transform;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animated .svg {
+    animation: none;
+  }
+}

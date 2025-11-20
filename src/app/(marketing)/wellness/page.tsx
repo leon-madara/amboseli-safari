@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import Link from '@/components/atoms/Link';
+import CurvedDivider from '@/components/atoms/CurvedDivider';
+import styles from './wellness.module.css';
 
 export const metadata: Metadata = {
   title: 'Wellness & Spa',
@@ -241,43 +243,27 @@ const facilities = [
 
 export default function WellnessPage() {
   return (
-    <main>
+    <main className={styles.wellnessPage}>
       {/* Page Hero */}
-      <Hero
-        title="Wellness & Rejuvenation"
-        subtitle="Harmony in the Wild"
-        description="Reconnect with yourself through holistic wellness experiences designed to restore balance and vitality in the peaceful embrace of nature"
-        backgroundImage="/images/wellness/spa-exterior.jpg"
-        backgroundImageAlt="Amboseli Safari Club wellness center"
-        height="medium"
-        overlay="medium"
-        priority={true}
-      />
+      <section className={styles.heroSection}>
+        <Hero
+          title="Wellness & Rejuvenation"
+          subtitle="Harmony in the Wild"
+          description="Reconnect with yourself through holistic wellness experiences designed to restore balance and vitality in the peaceful embrace of nature"
+          backgroundImage="/images/wellness/spa-exterior.jpg"
+          backgroundImageAlt="Amboseli Safari Club wellness center"
+          height="medium"
+          overlay="medium"
+          priority={true}
+        />
+        <CurvedDivider variant="wave1" color="white" className={styles.dividerBottom} />
+      </section>
 
       {/* Introduction Section */}
-      <section style={{ padding: 'var(--space-section-lg) var(--space-container-padding)' }}>
-        <div style={{ maxWidth: 'var(--container-max-width-lg)', margin: '0 auto', textAlign: 'center' }}>
-          <h2
-            style={{
-              fontFamily: 'var(--font-family-display)',
-              fontSize: 'var(--heading-h2-size)',
-              fontWeight: 'var(--heading-h2-weight)',
-              color: 'var(--color-text-primary)',
-              marginBottom: 'var(--space-6)',
-            }}
-          >
-            A Sanctuary for Body and Mind
-          </h2>
-          <p
-            style={{
-              fontFamily: 'var(--font-family-body)',
-              fontSize: 'var(--body-large-size)',
-              lineHeight: 'var(--line-height-relaxed)',
-              color: 'var(--color-text-secondary)',
-              maxWidth: '800px',
-              margin: '0 auto var(--space-8)',
-            }}
-          >
+      <section className={styles.introSection} data-section="introduction">
+        <div className={styles.introContent}>
+          <h2 className={styles.introHeading}>A Sanctuary for Body and Mind</h2>
+          <p className={styles.introText}>
             Our wellness center combines traditional African healing practices with contemporary spa
             therapies. Using indigenous ingredients and time-honored techniques, we create
             transformative experiences that nurture your well-being while honoring the natural world
@@ -287,35 +273,13 @@ export default function WellnessPage() {
       </section>
 
       {/* Spa Services Section */}
-      <section
-        style={{
-          padding: 'var(--space-section-xl) var(--space-container-padding)',
-          backgroundColor: 'var(--color-neutral-cream)',
-        }}
-      >
-        <div style={{ maxWidth: 'var(--container-max-width-xl)', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-16)' }}>
-            <h2
-              style={{
-                fontFamily: 'var(--font-family-display)',
-                fontSize: 'var(--heading-h2-size)',
-                fontWeight: 'var(--heading-h2-weight)',
-                color: 'var(--color-text-primary)',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              Spa Services
-            </h2>
-            <p
-              style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--body-large-size)',
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'var(--color-text-secondary)',
-                maxWidth: '700px',
-                margin: '0 auto',
-              }}
-            >
+      <section className={styles.servicesSection} data-section="services">
+        <CurvedDivider variant="wave2" color="cream" className={styles.dividerTop} />
+
+        <div className={styles.servicesContainer}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Spa Services</h2>
+            <p className={styles.sectionSubtitle}>
               Indulge in luxurious treatments using natural, locally sourced ingredients.
             </p>
           </div>
@@ -410,33 +374,16 @@ export default function WellnessPage() {
             ))}
           </div>
         </div>
+
+        <CurvedDivider variant="wave3" color="white" flip className={styles.dividerBottom} />
       </section>
 
       {/* Wellness Activities Section */}
-      <section style={{ padding: 'var(--space-section-xl) var(--space-container-padding)' }}>
-        <div style={{ maxWidth: 'var(--container-max-width-xl)', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-16)' }}>
-            <h2
-              style={{
-                fontFamily: 'var(--font-family-display)',
-                fontSize: 'var(--heading-h2-size)',
-                fontWeight: 'var(--heading-h2-weight)',
-                color: 'var(--color-text-primary)',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              Wellness Activities
-            </h2>
-            <p
-              style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--body-large-size)',
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'var(--color-text-secondary)',
-                maxWidth: '700px',
-                margin: '0 auto',
-              }}
-            >
+      <section className={styles.activitiesSection} data-section="activities">
+        <div className={styles.activitiesContainer}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Wellness Activities</h2>
+            <p className={styles.sectionSubtitle}>
               Complement your spa experience with activities that nurture mind, body, and spirit.
             </p>
           </div>
@@ -511,35 +458,13 @@ export default function WellnessPage() {
       </section>
 
       {/* Wellness Packages Section */}
-      <section
-        style={{
-          padding: 'var(--space-section-xl) var(--space-container-padding)',
-          backgroundColor: 'var(--color-neutral-cream)',
-        }}
-      >
-        <div style={{ maxWidth: 'var(--container-max-width-xl)', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-16)' }}>
-            <h2
-              style={{
-                fontFamily: 'var(--font-family-display)',
-                fontSize: 'var(--heading-h2-size)',
-                fontWeight: 'var(--heading-h2-weight)',
-                color: 'var(--color-text-primary)',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              Wellness Packages
-            </h2>
-            <p
-              style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--body-large-size)',
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'var(--color-text-secondary)',
-                maxWidth: '700px',
-                margin: '0 auto',
-              }}
-            >
+      <section className={styles.packagesSection} data-section="packages">
+        <CurvedDivider variant="wave1" color="cream" className={styles.dividerTop} />
+
+        <div className={styles.packagesContainer}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Wellness Packages</h2>
+            <p className={styles.sectionSubtitle}>
               Curated experiences combining multiple treatments for the ultimate wellness journey.
             </p>
           </div>
@@ -638,31 +563,16 @@ export default function WellnessPage() {
             ))}
           </div>
         </div>
+
+        <CurvedDivider variant="wave2" color="white" flip className={styles.dividerBottom} />
       </section>
 
       {/* Facilities Section */}
-      <section style={{ padding: 'var(--space-section-lg) var(--space-container-padding)' }}>
-        <div style={{ maxWidth: 'var(--container-max-width-lg)', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
-            <h2
-              style={{
-                fontFamily: 'var(--font-family-display)',
-                fontSize: 'var(--heading-h2-size)',
-                fontWeight: 'var(--heading-h2-weight)',
-                color: 'var(--color-text-primary)',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              Wellness Facilities
-            </h2>
-            <p
-              style={{
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--body-large-size)',
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'var(--color-text-secondary)',
-              }}
-            >
+      <section className={styles.facilitiesSection} data-section="facilities">
+        <div className={styles.facilitiesContainer}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Wellness Facilities</h2>
+            <p className={styles.sectionSubtitle}>
               State-of-the-art amenities designed for your complete relaxation and rejuvenation.
             </p>
           </div>
@@ -713,45 +623,16 @@ export default function WellnessPage() {
       </section>
 
       {/* CTA Section */}
-      <section
-        style={{
-          padding: 'var(--space-section-xl) var(--space-container-padding)',
-          backgroundColor: 'var(--color-neutral-cream)',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2
-            style={{
-              fontFamily: 'var(--font-family-display)',
-              fontSize: 'var(--heading-h2-size)',
-              fontWeight: 'var(--heading-h2-weight)',
-              color: 'var(--color-text-primary)',
-              marginBottom: 'var(--space-6)',
-            }}
-          >
-            Begin Your Wellness Journey
-          </h2>
-          <p
-            style={{
-              fontFamily: 'var(--font-family-body)',
-              fontSize: 'var(--body-large-size)',
-              lineHeight: 'var(--line-height-relaxed)',
-              color: 'var(--color-text-secondary)',
-              marginBottom: 'var(--space-10)',
-            }}
-          >
+      <section className={styles.ctaSection} data-section="cta">
+        <CurvedDivider variant="wave3" color="cream" className={styles.dividerTop} />
+
+        <div className={styles.ctaContent}>
+          <h2 className={styles.ctaHeading}>Begin Your Wellness Journey</h2>
+          <p className={styles.ctaText}>
             Book your wellness experience and discover the perfect balance between adventure and
             relaxation. Advance reservations recommended for spa treatments.
           </p>
-          <div
-            style={{
-              display: 'flex',
-              gap: 'var(--space-4)',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className={styles.ctaButtons}>
             <Link
               href="/contact"
               style={{
