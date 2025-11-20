@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import type { Restaurant } from '@/data/dining';
@@ -55,7 +55,16 @@ function getFeatureIcon(feature: string): string {
 
 export default function RestaurantCard({ restaurant, index }: RestaurantCardProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isExpanded, setIsExpanded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  // Parallax effect for image
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "end start"]
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -87,14 +96,16 @@ export default function RestaurantCard({ restaurant, index }: RestaurantCardProp
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
     >
       {restaurant.image && (
-        <div className={styles.imageContainer}>
-          <Image
-            src={restaurant.image}
-            alt={restaurant.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className={styles.image}
-          />
+        <div ref={imageRef} className={styles.imageContainer}>
+          <motion.div style={{ y: imageY }} className={styles.imageWrapper}>
+            <Image
+              src={restaurant.image}
+              alt={restaurant.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className={styles.image}
+            />
+          </motion.div>
           <div className={styles.imageVignette} />
           <div className={styles.imageGradient} />
         </div>
@@ -113,15 +124,35 @@ export default function RestaurantCard({ restaurant, index }: RestaurantCardProp
 
         <p className={styles.description}>{restaurant.description}</p>
 
-        <ul className={styles.features}>
-          {restaurant.features.map((feature, idx) => (
+        <motion.ul
+          className={styles.features}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+        >
+          {restaurant.features.slice(0, isExpanded ? undefined : 3).map((feature, idx) => (
             <motion.li
               key={idx}
               className={styles.feature}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 + 0.3 + idx * 0.05 }}
+              variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                  }
+                }
+              }}
             >
               <span className={styles.featureIcon}>
                 {getFeatureIcon(feature)}
@@ -129,7 +160,45 @@ export default function RestaurantCard({ restaurant, index }: RestaurantCardProp
               <span>{feature}</span>
             </motion.li>
           ))}
-        </ul>
+        </motion.ul>
+
+        {restaurant.features.length > 3 && (
+          <motion.button
+            className={styles.expandButton}
+            onClick={() => setIsExpanded(!isExpanded)}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {isExpanded
+              ? 'Show Less'
+              : `Show ${restaurant.features.length - 3} More`
+            }
+          </motion.button>
+        )}
+
+        <motion.button
+          className={styles.ctaButton}
+          whileHover={{
+            scale: 1.05,
+            transition: { duration: 0.2 }
+          }}
+          whileTap={{ scale: 0.95 }}
+          animate={{
+            boxShadow: [
+              "0 0 0 0 rgba(200, 111, 77, 0.4)",
+              "0 0 0 10px rgba(200, 111, 77, 0)",
+            ],
+          }}
+          transition={{
+            boxShadow: {
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+            }
+          }}
+        >
+          <span style={{ position: 'relative', zIndex: 1 }}>View Menu & Book</span>
+        </motion.button>
       </div>
     </motion.div>
   );
