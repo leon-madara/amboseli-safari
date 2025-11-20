@@ -1,8 +1,24 @@
+export interface MenuItem {
+  name: string;
+  price: number;
+  description?: string;
+  dietary?: string[];
+}
+
+export interface MenuCategory {
+  name: string;
+  items: MenuItem[];
+}
+
 export interface Restaurant {
   title: string;
   description: string;
   features: string[];
   image?: string;
+  category?: 'fine-dining' | 'casual' | 'bar';
+  capacity?: number;
+  menuItems?: MenuItem[];
+  menuCategories?: MenuCategory[];
 }
 
 export interface DiningExperience {
@@ -11,7 +27,7 @@ export interface DiningExperience {
   time: string;
 }
 
-export interface MenuCategory {
+export interface MenuHighlight {
   category: string;
   items: string[];
 }
@@ -30,6 +46,34 @@ export const restaurants: Restaurant[] = [
       'Private dining available',
     ],
     image: '/images/dining/kilimanjaro-restaurant.jpg',
+    category: 'fine-dining',
+    capacity: 60,
+    menuCategories: [
+      {
+        name: 'Appetizers',
+        items: [
+          { name: 'Kenyan Samosas', price: 12, description: 'Spiced lamb and vegetable samosas with tamarind chutney', dietary: ['halal'] },
+          { name: 'Caprese Salad', price: 14, description: 'Fresh mozzarella, heirloom tomatoes, basil, balsamic reduction', dietary: ['vegetarian', 'gluten-free'] },
+          { name: 'Grilled Prawns', price: 18, description: 'Jumbo prawns with garlic butter and lemon', dietary: ['gluten-free'] },
+        ],
+      },
+      {
+        name: 'Main Courses',
+        items: [
+          { name: 'Nyama Choma', price: 32, description: 'Traditional grilled meat platter with ugali and kachumbari', dietary: ['gluten-free'] },
+          { name: 'Grilled Beef Fillet', price: 42, description: 'Prime beef with truffle mash and red wine jus', dietary: ['gluten-free'] },
+          { name: 'Pan-Seared Sea Bass', price: 38, description: 'Wild-caught sea bass with saffron risotto and asparagus' },
+          { name: 'Wild Mushroom Risotto', price: 28, description: 'Creamy arborio rice with seasonal mushrooms and parmesan', dietary: ['vegetarian'] },
+        ],
+      },
+      {
+        name: 'Desserts',
+        items: [
+          { name: 'Chocolate Lava Cake', price: 12, description: 'Warm chocolate cake with vanilla ice cream', dietary: ['vegetarian'] },
+          { name: 'Tropical Fruit Pavlova', price: 10, description: 'Meringue with passion fruit, mango, and coconut cream', dietary: ['vegetarian', 'gluten-free'] },
+        ],
+      },
+    ],
   },
   {
     title: 'Savannah Terrace',
@@ -44,6 +88,14 @@ export const restaurants: Restaurant[] = [
       'Wildlife viewing opportunities',
     ],
     image: '/images/dining/savannah-terrace.jpg',
+    category: 'casual',
+    capacity: 40,
+    menuItems: [
+      { name: 'BBQ Platter', price: 28 },
+      { name: 'Grilled Chicken Skewers', price: 22 },
+      { name: 'Vegetable Kebabs', price: 18 },
+      { name: 'Sunset Burger', price: 20 },
+    ],
   },
   {
     title: 'The Safari Bar',
@@ -58,6 +110,14 @@ export const restaurants: Restaurant[] = [
       'Open until late',
     ],
     image: '/images/dining/safari-bar.jpg',
+    category: 'bar',
+    capacity: 30,
+    menuItems: [
+      { name: 'Kilimanjaro Sunset', price: 15 },
+      { name: 'Safari Mule', price: 14 },
+      { name: 'Tusker Beer', price: 8 },
+      { name: 'Premium Whisky Selection', price: 18 },
+    ],
   },
 ];
 
@@ -88,7 +148,7 @@ export const diningExperiences: DiningExperience[] = [
   },
 ];
 
-export const menuHighlights: MenuCategory[] = [
+export const menuHighlights: MenuHighlight[] = [
   {
     category: 'Kenyan Specialties',
     items: [

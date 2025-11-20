@@ -20,7 +20,9 @@
       "Bash(claude --teleport session_011ZqNokpTiMbPqWeM7NRfo6)",
       "Bash(git checkout:*)",
       "Bash(claude --teleport session_01AmqHN6Diwxvwen8PtYGxpZ)",
-      "Bash(claude --resume:*)"
+      "Bash(claude --resume:*)",
+      "Bash(claude --teleport session_01QGhxxWRonQH1yoVD8P8XMj)",
+      "Bash(claude --teleport session_01QGhxxWRonQH1yoVD8P8XMj --print)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,347 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: #2C2416;
+}
+
+.closeButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: rgba(200, 111, 77, 0.1);
+  color: #C86F4D;
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid #C86F4D;
+  outline-offset: 2px;
+}
+
+.categories {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.categories::-webkit-scrollbar {
+  height: 4px;
+}
+
+.categories::-webkit-scrollbar-thumb {
+  background: rgba(200, 111, 77, 0.3);
+  border-radius: 2px;
+}
+
+.categoryTab {
+  padding: 0.625rem 1.25rem;
+  background: rgba(0, 0, 0, 0.03);
+  border: none;
+  border-radius: 20px;
+  font-family: var(--font-family-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.categoryTab:hover {
+  background: rgba(200, 111, 77, 0.1);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.categoryTab:focus-visible {
+  outline: 2px solid #C86F4D;
+  outline-offset: 2px;
+}
+
+.categoryTabActive {
+  background: linear-gradient(135deg, #C86F4D, #E88D5A);
+  color: white;
+}
+
+.categoryTabActive:hover {
+  background: linear-gradient(135deg, #E88D5A, #C86F4D);
+}
+
+.menuContent {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.menuContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.menuContent::-webkit-scrollbar-thumb {
+  background: rgba(200, 111, 77, 0.3);
+  border-radius: 4px;
+}
+
+.menuItem {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.menuItem:last-child {
+  border-bottom: none;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.itemName {
+  font-family: var(--font-family-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  color: #2C2416;
+}
+
+.itemPrice {
+  font-family: var(--font-family-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #C86F4D;
+}
+
+.itemDescription {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0.5rem 0;
+}
+
+.dietaryTags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.dietaryTag {
+  padding: 0.25rem 0.75rem;
+  background: rgba(200, 111, 77, 0.1);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #C86F4D;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bookButton,
+.downloadButton {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 12px;
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bookButton {
+  background: linear-gradient(135deg, #C86F4D, #E88D5A);
+  color: white;
+  border: none;
+}
+
+.bookButton:hover {
+  box-shadow: 0 4px 12px rgba(200, 111, 77, 0.3);
+  transform: translateY(-1px);
+}
+
+.bookButton:focus-visible {
+  outline: 2px solid #C86F4D;
+  outline-offset: 2px;
+}
+
+.downloadButton {
+  background: white;
+  border: 2px solid #C86F4D;
+  color: #C86F4D;
+}
+
+.downloadButton:hover {
+  background: rgba(200, 111, 77, 0.05);
+}
+
+.downloadButton:focus-visible {
+  outline: 2px solid #C86F4D;
+  outline-offset: 2px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .modal {
+    background: #1a1a1a;
+  }
+
+  .header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .title {
+    color: #f5f5f5;
+  }
+
+  .closeButton {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .closeButton:hover {
+    background: rgba(200, 111, 77, 0.2);
+    color: #E88D5A;
+  }
+
+  .categories {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .categoryTab {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .categoryTab:hover {
+    background: rgba(200, 111, 77, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .menuItem {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .itemName {
+    color: #f5f5f5;
+  }
+
+  .itemDescription {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .footer {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .downloadButton {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .downloadButton:hover {
+    background: rgba(200, 111, 77, 0.15);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .header {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .categories {
+    padding: 1rem 1.5rem;
+  }
+
+  .menuContent {
+    padding: 1.5rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+  }
+
+  .bookButton,
+  .downloadButton {
+    width: 100%;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .categoryTab,
+  .bookButton,
+  .downloadButton {
+    transition: none;
+  }
+}
