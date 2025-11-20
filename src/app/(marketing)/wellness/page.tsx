@@ -3,6 +3,7 @@ import Hero from '@/components/organisms/Hero';
 import Link from '@/components/atoms/Link';
 import CurvedDivider from '@/components/atoms/CurvedDivider';
 import BentoServiceGrid from '@/components/organisms/BentoServiceGrid';
+import MorphingBlob from '@/components/atoms/MorphingBlob';
 import styles from './wellness.module.css';
 
 export const metadata: Metadata = {
@@ -257,11 +258,29 @@ export default function WellnessPage() {
           overlay="medium"
           priority={true}
         />
-        <CurvedDivider variant="wave1" color="white" className={styles.dividerBottom} />
+        <CurvedDivider variant="wave1" color="white" animated className={styles.dividerBottom} />
       </section>
 
       {/* Introduction Section */}
       <section className={styles.introSection} data-section="introduction">
+        {/* Morphing blobs for visual interest */}
+        <MorphingBlob
+          color="peach"
+          size="large"
+          position={{ top: '10%', right: '5%' }}
+          duration={28}
+          delay={0}
+          blur={80}
+        />
+        <MorphingBlob
+          color="cream"
+          size="medium"
+          position={{ bottom: '15%', left: '8%' }}
+          duration={32}
+          delay={5}
+          blur={70}
+        />
+
         <div className={styles.introContent}>
           <h2 className={styles.introHeading}>A Sanctuary for Body and Mind</h2>
           <p className={styles.introText}>
@@ -275,7 +294,33 @@ export default function WellnessPage() {
 
       {/* Spa Services Section */}
       <section className={styles.servicesSection} data-section="services">
-        <CurvedDivider variant="wave2" color="cream" className={styles.dividerTop} />
+        <CurvedDivider variant="wave2" color="cream" animated className={styles.dividerTop} />
+
+        {/* Background blobs for services section */}
+        <MorphingBlob
+          color="terracotta"
+          size="xlarge"
+          position={{ top: '20%', left: '-10%' }}
+          duration={30}
+          delay={2}
+          blur={90}
+        />
+        <MorphingBlob
+          color="warmGradient"
+          size="large"
+          position={{ bottom: '10%', right: '-5%' }}
+          duration={35}
+          delay={8}
+          blur={85}
+        />
+        <MorphingBlob
+          color="peach"
+          size="medium"
+          position={{ top: '50%', right: '10%' }}
+          duration={26}
+          delay={12}
+          blur={75}
+        />
 
         <div className={styles.servicesContainer}>
           <div className={styles.sectionHeader}>
@@ -288,11 +333,21 @@ export default function WellnessPage() {
           <BentoServiceGrid services={spaServices} />
         </div>
 
-        <CurvedDivider variant="wave3" color="white" flip className={styles.dividerBottom} />
+        <CurvedDivider variant="wave3" color="white" flip animated className={styles.dividerBottom} />
       </section>
 
       {/* Wellness Activities Section */}
       <section className={styles.activitiesSection} data-section="activities">
+        {/* Subtle blobs for activities section */}
+        <MorphingBlob
+          color="peach"
+          size="medium"
+          position={{ top: '5%', left: '15%' }}
+          duration={29}
+          delay={4}
+          blur={70}
+        />
+
         <div className={styles.activitiesContainer}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Wellness Activities</h2>
@@ -372,7 +427,25 @@ export default function WellnessPage() {
 
       {/* Wellness Packages Section */}
       <section className={styles.packagesSection} data-section="packages">
-        <CurvedDivider variant="wave1" color="cream" className={styles.dividerTop} />
+        <CurvedDivider variant="wave1" color="cream" animated className={styles.dividerTop} />
+
+        {/* Elegant blobs for packages section */}
+        <MorphingBlob
+          color="cream"
+          size="large"
+          position={{ top: '15%', right: '10%' }}
+          duration={33}
+          delay={6}
+          blur={75}
+        />
+        <MorphingBlob
+          color="terracotta"
+          size="medium"
+          position={{ bottom: '20%', left: '5%' }}
+          duration={27}
+          delay={10}
+          blur={65}
+        />
 
         <div className={styles.packagesContainer}>
           <div className={styles.sectionHeader}>
@@ -537,7 +610,17 @@ export default function WellnessPage() {
 
       {/* CTA Section */}
       <section className={styles.ctaSection} data-section="cta">
-        <CurvedDivider variant="wave3" color="cream" className={styles.dividerTop} />
+        <CurvedDivider variant="wave3" color="cream" animated className={styles.dividerTop} />
+
+        {/* Final blob for CTA section */}
+        <MorphingBlob
+          color="peach"
+          size="large"
+          position={{ top: '30%', left: '50%', transform: 'translateX(-50%)' }}
+          duration={31}
+          delay={3}
+          blur={80}
+        />
 
         <div className={styles.ctaContent}>
           <h2 className={styles.ctaHeading}>Begin Your Wellness Journey</h2>

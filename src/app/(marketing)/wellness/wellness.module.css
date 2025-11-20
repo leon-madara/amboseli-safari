@@ -93,6 +93,7 @@
   padding-top: var(--section-padding-y);
   padding-bottom: var(--section-padding-y);
   background-color: var(--color-bg-secondary, #ffffff);
+  overflow: hidden;
 }
 
 .introContent {
@@ -126,6 +127,7 @@
   padding-top: calc(var(--section-padding-y) + 80px);
   padding-bottom: calc(var(--section-padding-y) + 80px);
   background-color: var(--color-neutral-cream, #f5f0e8);
+  overflow: hidden;
 }
 
 .servicesSection .dividerTop {
@@ -176,6 +178,7 @@
   position: relative;
   padding: var(--section-padding-y) var(--section-padding-x);
   background-color: var(--color-bg-secondary, #ffffff);
+  overflow: hidden;
 }
 
 .activitiesContainer {
@@ -191,6 +194,7 @@
   padding-top: calc(var(--section-padding-y) + 80px);
   padding-bottom: calc(var(--section-padding-y) + 80px);
   background-color: var(--color-neutral-cream, #f5f0e8);
+  overflow: hidden;
 }
 
 .packagesSection .dividerTop {
@@ -235,6 +239,7 @@
   padding-bottom: var(--section-padding-y);
   background-color: var(--color-neutral-cream, #f5f0e8);
   text-align: center;
+  overflow: hidden;
 }
 
 .ctaSection .dividerTop {
