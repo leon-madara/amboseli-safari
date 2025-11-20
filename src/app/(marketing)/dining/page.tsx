@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Hero from '@/components/organisms/Hero';
 import Link from '@/components/atoms/Link';
-import RestaurantCard from '@/components/molecules/RestaurantCard/RestaurantCard';
+import RestaurantGrid from '@/components/organisms/RestaurantGrid/RestaurantGrid';
+import StickyDiningNav from '@/components/organisms/StickyDiningNav/StickyDiningNav';
 import MenuCard from '@/components/molecules/MenuCard/MenuCard';
 import ExperienceCard from '@/components/molecules/ExperienceCard/ExperienceCard';
 import { restaurants, menuHighlights, diningExperiences, dietaryOptions } from '@/data/dining';
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
 export default function DiningPage() {
   return (
     <main className={styles.main}>
+      {/* Sticky Navigation */}
+      <StickyDiningNav />
+
       {/* Page Hero */}
       <Hero
         title="Culinary Excellence in the Wild"
@@ -30,7 +34,7 @@ export default function DiningPage() {
       />
 
       {/* Restaurants Section */}
-      <section className={styles.section}>
+      <section id="restaurants" className={styles.section}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.heading}>Our Dining Venues</h2>
@@ -40,16 +44,12 @@ export default function DiningPage() {
             </p>
           </div>
 
-          <div className={styles.restaurantsGrid}>
-            {restaurants.map((restaurant, index) => (
-              <RestaurantCard key={index} restaurant={restaurant} index={index} />
-            ))}
-          </div>
+          <RestaurantGrid restaurants={restaurants} />
         </div>
       </section>
 
       {/* Menu Highlights Section */}
-      <section className={styles.sectionAlt}>
+      <section id="menu" className={styles.sectionAlt}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.heading}>Menu Highlights</h2>
@@ -68,7 +68,7 @@ export default function DiningPage() {
       </section>
 
       {/* Special Dining Experiences Section */}
-      <section className={styles.section}>
+      <section id="experiences" className={styles.section}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.heading}>Special Dining Experiences</h2>
