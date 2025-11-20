@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import Link from '@/components/atoms/Link';
 import CurvedDivider from '@/components/atoms/CurvedDivider';
+import BentoServiceGrid from '@/components/organisms/BentoServiceGrid';
 import styles from './wellness.module.css';
 
 export const metadata: Metadata = {
@@ -284,95 +285,7 @@ export default function WellnessPage() {
             </p>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-              gap: 'var(--space-10)',
-            }}
-          >
-            {spaServices.map((service, index) => (
-              <div
-                key={index}
-                style={{
-                  padding: 'var(--space-10)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-xl)',
-                  boxShadow: 'var(--shadow-md)',
-                }}
-              >
-                <div
-                  style={{
-                    width: '64px',
-                    height: '64px',
-                    marginBottom: 'var(--space-6)',
-                    color: 'var(--color-primary-terracotta)',
-                  }}
-                >
-                  {service.icon}
-                </div>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-family-display)',
-                    fontSize: 'var(--heading-h3-size)',
-                    fontWeight: 'var(--heading-h3-weight)',
-                    color: 'var(--color-text-primary)',
-                    marginBottom: 'var(--space-6)',
-                  }}
-                >
-                  {service.title}
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-                  {service.treatments.map((treatment, idx) => (
-                    <div key={idx}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'flex-start',
-                          marginBottom: 'var(--space-2)',
-                        }}
-                      >
-                        <h4
-                          style={{
-                            fontFamily: 'var(--font-family-body)',
-                            fontSize: 'var(--font-size-base)',
-                            fontWeight: 'var(--font-weight-semibold)',
-                            color: 'var(--color-text-primary)',
-                            margin: 0,
-                          }}
-                        >
-                          {treatment.name}
-                        </h4>
-                        <span
-                          style={{
-                            fontFamily: 'var(--font-family-body)',
-                            fontSize: 'var(--font-size-xs)',
-                            color: 'var(--color-primary-terracotta)',
-                            whiteSpace: 'nowrap',
-                            marginLeft: 'var(--space-4)',
-                          }}
-                        >
-                          {treatment.duration}
-                        </span>
-                      </div>
-                      <p
-                        style={{
-                          fontFamily: 'var(--font-family-body)',
-                          fontSize: 'var(--font-size-sm)',
-                          lineHeight: 'var(--line-height-relaxed)',
-                          color: 'var(--color-text-secondary)',
-                          margin: 0,
-                        }}
-                      >
-                        {treatment.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <BentoServiceGrid services={spaServices} />
         </div>
 
         <CurvedDivider variant="wave3" color="white" flip className={styles.dividerBottom} />

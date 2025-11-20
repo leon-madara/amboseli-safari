@@ -1,0 +1,128 @@
+/* BentoServiceGrid.module.css - Asymmetric Bento box layout */
+
+.bentoGrid {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: var(--container-max-width-xl, 1280px);
+  margin: 0 auto;
+}
+
+/* Desktop Layout - Asymmetric Bento Grid */
+@media (min-width: 1025px) {
+  .bentoGrid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      'massage massage body'
+      'facial facial body';
+    gap: var(--space-10);
+  }
+
+  /* Grid area assignments */
+  .gridArea1 {
+    grid-area: massage;
+  }
+
+  .gridArea2 {
+    grid-area: body;
+  }
+
+  .gridArea3 {
+    grid-area: facial;
+  }
+
+  /* If there's a 4th item, place it separately */
+  .gridArea4 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Tablet Layout - 2 Column Grid */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      'massage massage'
+      'body facial';
+    gap: var(--space-8);
+  }
+
+  .gridArea1 {
+    grid-area: massage;
+  }
+
+  .gridArea2 {
+    grid-area: body;
+  }
+
+  .gridArea3 {
+    grid-area: facial;
+  }
+
+  .gridArea4 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile Layout - Single Column Stack */
+@media (max-width: 768px) {
+  .bentoGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .gridArea1,
+  .gridArea2,
+  .gridArea3,
+  .gridArea4 {
+    grid-column: 1;
+  }
+}
+
+/* Small Mobile - Tighter spacing */
+@media (max-width: 480px) {
+  .bentoGrid {
+    gap: var(--space-5);
+  }
+}
+
+/* Staggered animation on load - will be enhanced in Phase 4 */
+.bentoGrid > div {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+.gridArea1 {
+  animation-delay: 0.1s;
+}
+
+.gridArea2 {
+  animation-delay: 0.2s;
+}
+
+.gridArea3 {
+  animation-delay: 0.3s;
+}
+
+.gridArea4 {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .bentoGrid > div {
+    animation: none;
+  }
+}
