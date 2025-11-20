@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { ExperiencesPageClient } from './ExperiencesPageClient';
+import { TimelinePageClient } from './TimelinePageClient';
 import { experiences } from '@/data/experiences';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://amboselisafariclub.com';
@@ -115,7 +115,7 @@ export default function ExperiencesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <ExperiencesPageClient experiences={experiences} />
+      <TimelinePageClient experiences={experiences} />
     </>
   );
 }
