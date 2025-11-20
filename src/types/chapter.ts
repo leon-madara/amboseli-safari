@@ -11,6 +11,7 @@ import { ComponentType } from 'react';
 export type TimeOfDay =
   | 'pre-dawn'
   | 'dawn'
+  | 'sunrise'
   | 'morning'
   | 'midday'
   | 'afternoon'

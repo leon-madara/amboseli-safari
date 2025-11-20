@@ -11,11 +11,16 @@ import dynamic from 'next/dynamic';
 import PreDawnHero from '@/components/chapters/PreDawnHero/PreDawnHero';
 
 // Dynamically import other chapter components for code splitting
+const SunriseChapter = dynamic(() => import('@/components/chapters/SunriseChapter/SunriseChapter'));
 const MorningDriveChapter = dynamic(() => import('@/components/chapters/MorningDriveChapter/MorningDriveChapter'));
+const BushBreakfastChapter = dynamic(() => import('@/components/chapters/BushBreakfastChapter/BushBreakfastChapter'));
 const WildlifeEncountersChapter = dynamic(() => import('@/components/chapters/WildlifeEncountersChapter/WildlifeEncountersChapter'));
 const AccommodationsChapter = dynamic(() => import('@/components/chapters/AccommodationsChapter/AccommodationsChapter'));
 const DiningChapter = dynamic(() => import('@/components/chapters/DiningChapter/DiningChapter'));
 const ExperiencesChapter = dynamic(() => import('@/components/chapters/ExperiencesChapter/ExperiencesChapter'));
+const WellnessChapter = dynamic(() => import('@/components/chapters/WellnessChapter/WellnessChapter'));
+const GuestStoriesChapter = dynamic(() => import('@/components/chapters/GuestStoriesChapter/GuestStoriesChapter'));
+const JournalChapter = dynamic(() => import('@/components/chapters/JournalChapter/JournalChapter'));
 const LocationChapter = dynamic(() => import('@/components/chapters/LocationChapter/LocationChapter'));
 const PlanSafariChapter = dynamic(() => import('@/components/chapters/PlanSafariChapter/PlanSafariChapter'));
 
@@ -39,17 +44,22 @@ const getChapterHeight = (baseHeight: number): number => {
 /**
  * Base chapter heights (desktop)
  * Mobile devices get 20% increase for better content layout
- * Reduced heights for shorter scroll journey
+ * Expanded 12-chapter cinematic journey
  */
 const BASE_HEIGHTS = {
   preDawn: 100,
+  sunrise: 100,
   morningDrive: 100,
+  bushBreakfast: 100,
   wildlifeEncounters: 100,
   accommodations: 100,
-  dining: 80,
-  experiences: 80,
-  location: 80,
-  contact: 80,
+  dining: 100,
+  experiences: 100,
+  wellness: 100,
+  guestStories: 150,
+  journal: 150,
+  location: 100,
+  contact: 150,
 };
 
 /**
@@ -58,11 +68,16 @@ const BASE_HEIGHTS = {
 const calculateChapterPositions = () => {
   const heights = {
     preDawn: getChapterHeight(BASE_HEIGHTS.preDawn),
+    sunrise: getChapterHeight(BASE_HEIGHTS.sunrise),
     morningDrive: getChapterHeight(BASE_HEIGHTS.morningDrive),
+    bushBreakfast: getChapterHeight(BASE_HEIGHTS.bushBreakfast),
     wildlifeEncounters: getChapterHeight(BASE_HEIGHTS.wildlifeEncounters),
     accommodations: getChapterHeight(BASE_HEIGHTS.accommodations),
     dining: getChapterHeight(BASE_HEIGHTS.dining),
     experiences: getChapterHeight(BASE_HEIGHTS.experiences),
+    wellness: getChapterHeight(BASE_HEIGHTS.wellness),
+    guestStories: getChapterHeight(BASE_HEIGHTS.guestStories),
+    journal: getChapterHeight(BASE_HEIGHTS.journal),
     location: getChapterHeight(BASE_HEIGHTS.location),
     contact: getChapterHeight(BASE_HEIGHTS.contact),
   };
@@ -70,12 +85,17 @@ const calculateChapterPositions = () => {
   let currentPosition = 0;
   const positions = {
     preDawn: { start: currentPosition, end: currentPosition + heights.preDawn },
-    morningDrive: { start: currentPosition += heights.preDawn, end: currentPosition + heights.morningDrive },
-    wildlifeEncounters: { start: currentPosition += heights.morningDrive, end: currentPosition + heights.wildlifeEncounters },
+    sunrise: { start: currentPosition += heights.preDawn, end: currentPosition + heights.sunrise },
+    morningDrive: { start: currentPosition += heights.sunrise, end: currentPosition + heights.morningDrive },
+    bushBreakfast: { start: currentPosition += heights.morningDrive, end: currentPosition + heights.bushBreakfast },
+    wildlifeEncounters: { start: currentPosition += heights.bushBreakfast, end: currentPosition + heights.wildlifeEncounters },
     accommodations: { start: currentPosition += heights.wildlifeEncounters, end: currentPosition + heights.accommodations },
     dining: { start: currentPosition += heights.accommodations, end: currentPosition + heights.dining },
     experiences: { start: currentPosition += heights.dining, end: currentPosition + heights.experiences },
-    location: { start: currentPosition += heights.experiences, end: currentPosition + heights.location },
+    wellness: { start: currentPosition += heights.experiences, end: currentPosition + heights.wellness },
+    guestStories: { start: currentPosition += heights.wellness, end: currentPosition + heights.guestStories },
+    journal: { start: currentPosition += heights.guestStories, end: currentPosition + heights.journal },
+    location: { start: currentPosition += heights.journal, end: currentPosition + heights.location },
     contact: { start: currentPosition += heights.location, end: currentPosition + heights.contact },
   };
 
@@ -83,11 +103,11 @@ const calculateChapterPositions = () => {
 };
 
 /**
- * Simplified 8-chapter configuration
- * Core safari journey: Dawn, Morning Drive, Wildlife Encounters, Accommodations, Dining, Experiences, Location, Contact
- * Optimized for pacing and engagement
+ * Expanded 12-chapter cinematic configuration
+ * Complete safari journey from pre-dawn to booking
+ * Optimized for engagement, pacing, and conversion
  * Heights automatically adjust for mobile (20% increase)
- * Total: ~760vh desktop, ~912vh mobile
+ * Total: ~1450vh desktop, ~1740vh mobile
  */
 export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
   const { heights, positions } = calculateChapterPositions();
@@ -108,10 +128,24 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         colorGradient: ['#0a0e27', '#1a1f3a'],
       },
     },
-    // Chapter 2: Morning Drive - Wildlife Experience
+    // Chapter 2: Sunrise - Golden Hour Awakening
+    {
+      id: 'sunrise',
+      number: 2,
+      title: 'Golden Hour Awakening',
+      timeOfDay: 'sunrise',
+      heightVh: heights.sunrise,
+      startVh: positions.sunrise.start,
+      endVh: positions.sunrise.end,
+      component: SunriseChapter,
+      atmosphericEffects: {
+        colorGradient: ['#ffd89b', '#ff6b35'],
+      },
+    },
+    // Chapter 3: Morning Drive - Wildlife Experience
     {
       id: 'morning-drive',
-      number: 2,
+      number: 3,
       title: 'Wildlife Experience',
       timeOfDay: 'morning',
       heightVh: heights.morningDrive,
@@ -124,10 +158,24 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         cursor: 'binoculars',
       },
     },
-    // Chapter 3: Wildlife Encounters - Meet the Magnificent Five
+    // Chapter 4: Bush Breakfast - Savannah Dining
+    {
+      id: 'bush-breakfast',
+      number: 4,
+      title: 'Savannah Dining',
+      timeOfDay: 'morning',
+      heightVh: heights.bushBreakfast,
+      startVh: positions.bushBreakfast.start,
+      endVh: positions.bushBreakfast.end,
+      component: BushBreakfastChapter,
+      atmosphericEffects: {
+        colorGradient: ['#f5d76e', '#e8c547'],
+      },
+    },
+    // Chapter 5: Wildlife Encounters - Meet the Magnificent Five
     {
       id: 'wildlife-encounters',
-      number: 3,
+      number: 5,
       title: 'Meet the Magnificent Five',
       timeOfDay: 'morning',
       heightVh: heights.wildlifeEncounters,
@@ -138,10 +186,10 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         colorGradient: ['#f5f1e8', '#d2bea0'],
       },
     },
-    // Chapter 4: Accommodations - Your Rooms
+    // Chapter 6: Accommodations - Your Rooms
     {
       id: 'accommodations',
-      number: 4,
+      number: 6,
       title: 'Your Rooms',
       timeOfDay: 'midday',
       heightVh: heights.accommodations,
@@ -152,10 +200,10 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         colorGradient: ['#87ceeb', '#f0e68c'],
       },
     },
-    // Chapter 5: Dining - Dining & Pool
+    // Chapter 7: Dining - Dining & Pool
     {
       id: 'dining',
-      number: 5,
+      number: 7,
       title: 'Dining & Pool',
       timeOfDay: 'afternoon',
       heightVh: heights.dining,
@@ -166,10 +214,10 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         colorGradient: ['#ffa500', '#ff6347'],
       },
     },
-    // Chapter 6: Experiences - Safari Adventures
+    // Chapter 8: Experiences - Safari Adventures
     {
       id: 'experiences',
-      number: 6,
+      number: 8,
       title: 'Safari Adventures',
       timeOfDay: 'golden-hour',
       heightVh: heights.experiences,
@@ -180,10 +228,53 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         colorGradient: ['#ff8c00', '#ff4500'],
       },
     },
-    // Chapter 7: Location - Getting Here
+    // Chapter 9: Wellness - Spa & Relaxation
+    {
+      id: 'wellness',
+      number: 9,
+      title: 'Spa & Relaxation',
+      timeOfDay: 'afternoon',
+      heightVh: heights.wellness,
+      startVh: positions.wellness.start,
+      endVh: positions.wellness.end,
+      component: WellnessChapter,
+      atmosphericEffects: {
+        colorGradient: ['#e8d5c4', '#c9b8a8'],
+      },
+    },
+    // Chapter 10: Guest Stories - Stories from the Savannah
+    {
+      id: 'guest-stories',
+      number: 10,
+      title: 'Stories from the Savannah',
+      timeOfDay: 'dusk',
+      heightVh: heights.guestStories,
+      startVh: positions.guestStories.start,
+      endVh: positions.guestStories.end,
+      component: GuestStoriesChapter,
+      atmosphericEffects: {
+        particles: 'fireflies',
+        colorGradient: ['#ee9ca7', '#ffdde1'],
+      },
+    },
+    // Chapter 11: Journal - Safari Journal & Conservation
+    {
+      id: 'journal',
+      number: 11,
+      title: 'Safari Journal & Conservation',
+      timeOfDay: 'twilight',
+      heightVh: heights.journal,
+      startVh: positions.journal.start,
+      endVh: positions.journal.end,
+      component: JournalChapter,
+      atmosphericEffects: {
+        colorGradient: ['#34495e', '#2c3e50'],
+      },
+    },
+    // Chapter 12: Location - Getting Here
     {
       id: 'location',
-      number: 7,
+      number: 12,
       title: 'Getting Here',
       timeOfDay: 'twilight',
       heightVh: heights.location,
@@ -194,10 +285,10 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = (() => {
         colorGradient: ['#2c3e50', '#3498db'],
       },
     },
-    // Chapter 8: Contact - Reserve Your Stay
+    // Chapter 13: Contact - Reserve Your Stay
     {
       id: 'contact',
-      number: 8,
+      number: 13,
       title: 'Reserve Your Stay',
       timeOfDay: 'night',
       heightVh: heights.contact,
