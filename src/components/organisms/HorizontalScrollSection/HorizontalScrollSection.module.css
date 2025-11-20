@@ -1,0 +1,57 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-neutral-cream, #f3e9d7);
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Desktop: Horizontal scroll enabled */
+@media (min-width: 768px) {
+  .wrapper {
+    height: 100vh;
+  }
+
+  .container {
+    height: 100vh;
+  }
+}
+
+/* Mobile: Vertical stacked layout */
+@media (max-width: 767px) {
+  .wrapper.mobile {
+    height: auto;
+    position: relative;
+  }
+
+  .mobile .container {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+}
+
+/* Reduced motion: Disable horizontal scroll, use vertical */
+@media (prefers-reduced-motion: reduce) {
+  .wrapper {
+    position: relative !important;
+    height: auto !important;
+  }
+
+  .container {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+}
