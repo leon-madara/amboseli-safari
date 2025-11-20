@@ -3,7 +3,8 @@
 .card {
   position: relative;
   padding: var(--space-10);
-  background-color: var(--color-bg-secondary, #ffffff);
+  /* Subtle gradient background */
+  background: linear-gradient(135deg, #ffffff 0%, #fdfbf8 100%);
   border-radius: 28px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -254,6 +255,7 @@
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   .card,
   .price,
   .duration,

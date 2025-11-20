@@ -3,7 +3,8 @@
 .card {
   position: relative;
   padding: var(--space-8);
-  background-color: var(--color-bg-secondary, #ffffff);
+  /* Subtle gradient background */
+  background: linear-gradient(135deg, #ffffff 0%, #fdfbf8 100%);
   border-radius: 24px;
   border-top: 4px solid var(--color-primary-terracotta, #c86f47);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
@@ -31,12 +32,14 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, rgba(200, 111, 71, 0.1) 0%, rgba(254, 180, 123, 0.12) 100%);
+  /* Enhanced gradient */
+  background: linear-gradient(135deg, rgba(200, 111, 71, 0.12) 0%, rgba(254, 180, 123, 0.15) 50%, rgba(212, 175, 55, 0.08) 100%);
   border-radius: 50%;
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
   margin-bottom: var(--space-2);
+  box-shadow: 0 2px 6px rgba(200, 111, 71, 0.08);
 }
 
 /* Icon gradient background animation on hover */
@@ -103,8 +106,9 @@
 }
 
 .card:hover .schedule {
-  background-color: rgba(200, 111, 71, 0.14);
+  background: linear-gradient(135deg, rgba(200, 111, 71, 0.14) 0%, rgba(254, 180, 123, 0.18) 100%);
   transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(200, 111, 71, 0.1);
 }
 
 /* Description */
@@ -191,6 +195,7 @@
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   .card,
   .iconContainer,
   .icon,

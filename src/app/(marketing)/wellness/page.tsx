@@ -257,8 +257,8 @@ export default function WellnessPage() {
           title="Wellness & Rejuvenation"
           subtitle="Harmony in the Wild"
           description="Reconnect with yourself through holistic wellness experiences designed to restore balance and vitality in the peaceful embrace of nature"
-          backgroundImage="/images/wellness/spa-exterior.jpg"
-          backgroundImageAlt="Amboseli Safari Club wellness center"
+          backgroundImage="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1920&q=80"
+          backgroundImageAlt="Luxury spa treatment room with serene mountain views"
           height="medium"
           overlay="medium"
           priority={true}
@@ -490,50 +490,50 @@ export default function WellnessPage() {
               relaxation. Advance reservations recommended for spa treatments.
             </p>
             <div className={styles.ctaButtons}>
-            <Link
-              href="/contact"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--font-size-base)',
-                fontWeight: 'var(--font-weight-semibold)',
-                color: 'var(--color-text-inverse)',
-                backgroundColor: 'var(--color-primary-terracotta)',
-                textDecoration: 'none',
-                padding: 'var(--space-4) var(--space-8)',
-                borderRadius: 'var(--radius-button)',
-                transition: 'var(--transition-all)',
-                boxShadow: 'var(--shadow-button)',
-                minWidth: '200px',
-              }}
-            >
-              Book Spa Treatment
-            </Link>
-            <Link
-              href="/accommodations"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontFamily: 'var(--font-family-body)',
-                fontSize: 'var(--font-size-base)',
-                fontWeight: 'var(--font-weight-semibold)',
-                color: 'var(--color-primary-terracotta)',
-                backgroundColor: 'transparent',
-                textDecoration: 'none',
-                padding: 'var(--space-4) var(--space-8)',
-                border: '2px solid var(--color-primary-terracotta)',
-                borderRadius: 'var(--radius-button)',
-                transition: 'var(--transition-all)',
-                minWidth: '200px',
-              }}
-            >
-              View Accommodations
-            </Link>
+              <Link
+                href="/contact"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-text-inverse)',
+                  backgroundColor: 'var(--color-primary-terracotta)',
+                  textDecoration: 'none',
+                  padding: 'var(--space-4) var(--space-8)',
+                  borderRadius: 'var(--radius-button)',
+                  transition: 'var(--transition-all)',
+                  boxShadow: 'var(--shadow-button)',
+                  minWidth: '200px',
+                }}
+              >
+                Book Spa Treatment
+              </Link>
+              <Link
+                href="/accommodations"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: 'var(--font-family-body)',
+                  fontSize: 'var(--font-size-base)',
+                  fontWeight: 'var(--font-weight-semibold)',
+                  color: 'var(--color-primary-terracotta)',
+                  backgroundColor: 'transparent',
+                  textDecoration: 'none',
+                  padding: 'var(--space-4) var(--space-8)',
+                  border: '2px solid var(--color-primary-terracotta)',
+                  borderRadius: 'var(--radius-button)',
+                  transition: 'var(--transition-all)',
+                  minWidth: '200px',
+                }}
+              >
+                View Accommodations
+              </Link>
+            </div>
           </div>
-        </div>
         </AnimatedSection>
       </section>
     </main>
