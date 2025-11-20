@@ -1,0 +1,113 @@
+/* WellnessBackgroundSymbols.module.css - Subtle wellness-themed background symbols */
+
+.symbol {
+  position: absolute;
+  pointer-events: none;
+  z-index: var(--z-blobs, 1);
+  color: var(--color-primary-terracotta, #c86f47);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Gentle floating animation */
+.symbol {
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(5px) rotate(-2deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
+/* Subtle pulse animation for some symbols */
+.leaf,
+.flower {
+  animation: float 20s ease-in-out infinite, pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+  50% {
+    opacity: 0.12;
+  }
+}
+
+/* Slow rotation for mandala */
+.mandala {
+  animation: float 20s ease-in-out infinite, rotate 30s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Wave animation */
+.wave {
+  animation: float 20s ease-in-out infinite, wave 6s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* Spiral subtle rotation */
+.spiral {
+  animation: float 20s ease-in-out infinite, spiralRotate 25s linear infinite;
+}
+
+@keyframes spiralRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .symbol {
+    opacity: 0.06 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .symbol {
+    opacity: 0.04 !important;
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .symbol {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+

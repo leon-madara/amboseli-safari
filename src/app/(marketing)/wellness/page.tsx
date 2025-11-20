@@ -9,6 +9,7 @@ import StaggeredGrid from '@/components/atoms/StaggeredGrid';
 import ActivityCard from '@/components/molecules/ActivityCard';
 import PackageCard from '@/components/molecules/PackageCard';
 import FacilityCard from '@/components/molecules/FacilityCard';
+import WellnessBackgroundSymbols from '@/components/atoms/WellnessBackgroundSymbols';
 import styles from './wellness.module.css';
 
 export const metadata: Metadata = {
@@ -187,6 +188,8 @@ const wellnessPackages = [
     title: 'Half-Day Retreat',
     duration: '4 hours',
     price: '$220',
+    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+    imageAlt: 'Luxury spa treatment room with massage table',
     includes: [
       '90-minute massage of choice',
       '60-minute facial treatment',
@@ -199,6 +202,8 @@ const wellnessPackages = [
     title: 'Full-Day Sanctuary',
     duration: '8 hours',
     price: '$380',
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80',
+    imageAlt: 'Serene wellness sanctuary with natural lighting',
     includes: [
       '90-minute massage therapy',
       '75-minute body wrap',
@@ -212,6 +217,8 @@ const wellnessPackages = [
     title: 'Couples Escape',
     duration: '3 hours',
     price: '$380',
+    image: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80',
+    imageAlt: 'Couples relaxing in luxury spa jacuzzi',
     includes: [
       'Side-by-side couples massage (90 min)',
       'Private jacuzzi session',
@@ -286,6 +293,35 @@ export default function WellnessPage() {
           blur={70}
         />
 
+        {/* Wellness symbols for complementary background */}
+        <WellnessBackgroundSymbols
+          type="leaf"
+          position={{ top: '20%', left: '15%' }}
+          size={140}
+          opacity={0.06}
+          duration={22}
+          delay={0}
+          rotation={-15}
+        />
+        <WellnessBackgroundSymbols
+          type="mandala"
+          position={{ bottom: '25%', right: '12%' }}
+          size={100}
+          opacity={0.05}
+          duration={30}
+          delay={3}
+          rotation={0}
+        />
+        <WellnessBackgroundSymbols
+          type="flower"
+          position={{ top: '60%', left: '5%' }}
+          size={80}
+          opacity={0.07}
+          duration={18}
+          delay={6}
+          rotation={25}
+        />
+
         <AnimatedSection variant="fadeUp" delay={0.2}>
           <div className={styles.introContent}>
             <h2 className={styles.introHeading}>A Sanctuary for Body and Mind</h2>
@@ -329,6 +365,35 @@ export default function WellnessPage() {
           blur={75}
         />
 
+        {/* Wellness symbols for services section */}
+        <WellnessBackgroundSymbols
+          type="spiral"
+          position={{ top: '30%', left: '8%' }}
+          size={120}
+          opacity={0.06}
+          duration={25}
+          delay={2}
+          rotation={45}
+        />
+        <WellnessBackgroundSymbols
+          type="leaf"
+          position={{ bottom: '20%', right: '8%' }}
+          size={110}
+          opacity={0.05}
+          duration={20}
+          delay={8}
+          rotation={30}
+        />
+        <WellnessBackgroundSymbols
+          type="wave"
+          position={{ top: '65%', left: '3%' }}
+          size={90}
+          opacity={0.06}
+          duration={15}
+          delay={4}
+          rotation={-10}
+        />
+
         <div className={styles.servicesContainer}>
           <AnimatedSection variant="fadeUp" delay={0.1}>
             <div className={styles.sectionHeader}>
@@ -355,6 +420,35 @@ export default function WellnessPage() {
           duration={29}
           delay={4}
           blur={70}
+        />
+
+        {/* Wellness symbols for activities section */}
+        <WellnessBackgroundSymbols
+          type="flower"
+          position={{ top: '15%', right: '10%' }}
+          size={95}
+          opacity={0.06}
+          duration={19}
+          delay={1}
+          rotation={-20}
+        />
+        <WellnessBackgroundSymbols
+          type="mandala"
+          position={{ bottom: '15%', left: '10%' }}
+          size={85}
+          opacity={0.05}
+          duration={28}
+          delay={5}
+          rotation={0}
+        />
+        <WellnessBackgroundSymbols
+          type="leaf"
+          position={{ top: '50%', right: '5%' }}
+          size={75}
+          opacity={0.07}
+          duration={21}
+          delay={3}
+          rotation={15}
         />
 
         <div className={styles.activitiesContainer}>
@@ -408,6 +502,35 @@ export default function WellnessPage() {
           blur={65}
         />
 
+        {/* Wellness symbols for packages section */}
+        <WellnessBackgroundSymbols
+          type="spiral"
+          position={{ top: '25%', right: '15%' }}
+          size={105}
+          opacity={0.06}
+          duration={24}
+          delay={2}
+          rotation={60}
+        />
+        <WellnessBackgroundSymbols
+          type="wave"
+          position={{ bottom: '30%', left: '8%' }}
+          size={100}
+          opacity={0.05}
+          duration={16}
+          delay={7}
+          rotation={-5}
+        />
+        <WellnessBackgroundSymbols
+          type="flower"
+          position={{ top: '55%', right: '5%' }}
+          size={85}
+          opacity={0.06}
+          duration={17}
+          delay={4}
+          rotation={35}
+        />
+
         <div className={styles.packagesContainer}>
           <AnimatedSection variant="fadeUp" delay={0.1}>
             <div className={styles.sectionHeader}>
@@ -431,6 +554,8 @@ export default function WellnessPage() {
                 duration={pkg.duration}
                 price={pkg.price}
                 includes={pkg.includes}
+                image={pkg.image}
+                imageAlt={pkg.imageAlt}
               />
             ))}
           </StaggeredGrid>
@@ -441,6 +566,35 @@ export default function WellnessPage() {
 
       {/* Facilities Section */}
       <section className={styles.facilitiesSection} data-section="facilities">
+        {/* Wellness symbols for facilities section */}
+        <WellnessBackgroundSymbols
+          type="leaf"
+          position={{ top: '10%', left: '12%' }}
+          size={110}
+          opacity={0.06}
+          duration={23}
+          delay={0}
+          rotation={-25}
+        />
+        <WellnessBackgroundSymbols
+          type="mandala"
+          position={{ bottom: '20%', right: '10%' }}
+          size={90}
+          opacity={0.05}
+          duration={29}
+          delay={6}
+          rotation={0}
+        />
+        <WellnessBackgroundSymbols
+          type="spiral"
+          position={{ top: '45%', left: '3%' }}
+          size={80}
+          opacity={0.06}
+          duration={22}
+          delay={3}
+          rotation={50}
+        />
+
         <div className={styles.facilitiesContainer}>
           <AnimatedSection variant="fadeUp" delay={0.1}>
             <div className={styles.sectionHeader}>
@@ -480,6 +634,35 @@ export default function WellnessPage() {
           duration={31}
           delay={3}
           blur={80}
+        />
+
+        {/* Wellness symbols for CTA section */}
+        <WellnessBackgroundSymbols
+          type="flower"
+          position={{ top: '20%', left: '15%' }}
+          size={100}
+          opacity={0.06}
+          duration={18}
+          delay={1}
+          rotation={-30}
+        />
+        <WellnessBackgroundSymbols
+          type="wave"
+          position={{ bottom: '25%', right: '12%' }}
+          size={95}
+          opacity={0.05}
+          duration={14}
+          delay={5}
+          rotation={10}
+        />
+        <WellnessBackgroundSymbols
+          type="mandala"
+          position={{ top: '60%', left: '8%' }}
+          size={85}
+          opacity={0.06}
+          duration={27}
+          delay={3}
+          rotation={0}
         />
 
         <AnimatedSection variant="fadeUp" delay={0.2}>
