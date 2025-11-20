@@ -217,20 +217,12 @@ export default function RoomCard({
             </div>
           )}
 
-          {/* Social Proof */}
-          {(viewingCount || lastBookedMinutes) && (
+          {/* Social Proof - Simplified */}
+          {viewingCount && viewingCount > 0 && (
             <div className={styles.socialProof}>
-              {viewingCount && viewingCount > 0 && (
-                <div className={styles.liveBooking}>
-                  <span className={styles.pulse} />
-                  <span>{viewingCount} {viewingCount === 1 ? 'person' : 'people'} viewing</span>
-                </div>
-              )}
-              {lastBookedMinutes && (
-                <div className={styles.recentBooking}>
-                  ⚡ Last booked {lastBookedMinutes} minutes ago
-                </div>
-              )}
+              <div className={styles.viewingInfo}>
+                <span>{viewingCount} {viewingCount === 1 ? 'guest' : 'guests'} viewing now</span>
+              </div>
             </div>
           )}
 
