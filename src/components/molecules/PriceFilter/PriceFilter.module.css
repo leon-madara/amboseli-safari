@@ -1,14 +1,16 @@
 /* Price Filter Container */
 .priceFilter {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-lg);
+  background: #FBF4E8;
+  /* Light cream from theme */
+  border: 1px solid rgba(200, 111, 77, 0.15);
+  border-radius: 16px;
   overflow: hidden;
   transition: all 0.2s ease;
 }
 
 .priceFilter:hover {
-  border-color: var(--color-primary-terracotta);
+  border-color: rgba(200, 111, 77, 0.3);
+  box-shadow: 0 2px 8px rgba(200, 111, 77, 0.08);
 }
 
 /* Filter Button */
@@ -17,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4);
+  padding: 1rem 1.25rem;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -25,200 +27,456 @@
 }
 
 .filterButton:hover {
-  background: rgba(255, 107, 53, 0.05);
+  background: rgba(200, 111, 77, 0.05);
 }
 
 .filterLabel {
   font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2C2416;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.icon {
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 .activeIndicator {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary-terracotta);
-  background: rgba(255, 107, 53, 0.1);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #C86F4D;
+  background: rgba(200, 111, 77, 0.1);
+  padding: 0.25rem 0.625rem;
+  border-radius: 12px;
+  margin-left: 0.25rem;
 }
 
 .chevron {
   width: 20px;
   height: 20px;
-  color: var(--color-text-secondary);
-  transition: transform 0.2s ease;
-}
-
-.chevronUp {
-  transform: rotate(180deg);
+  color: rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
 }
 
 /* Filter Content */
 .filterContent {
-  padding: 0 var(--space-4) var(--space-4);
+  padding: 0 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 1.25rem;
+  overflow: hidden;
 }
 
-.rangeContainer {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+/* Current Price Display */
+.currentPrice {
+  font-family: var(--font-family-body);
+  font-size: 0.9375rem;
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(200, 111, 77, 0.05);
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
 }
 
-.rangeInputs {
+.currentPrice strong {
+  font-weight: 700;
+  color: #2C2416;
+  font-family: var(--font-family-display);
+}
+
+/* Slider Wrapper */
+.sliderWrapper {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 0.75rem;
 }
 
-.inputGroup {
+.sliderLabel {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  min-width: 28px;
+}
+
+/* Slider Track with Safari Gradient */
+.sliderTrack {
+  position: relative;
   flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.sliderGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      #C86F4D 0%,
+      /* Terracotta */
+      #E88D5A 50%,
+      /* Sunset amber */
+      #D4A373 100%
+      /* Golden sand */
+    );
+  opacity: 0.3;
+  border-radius: 4px;
+}
+
+.sliderRange {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg,
+      #C86F4D 0%,
+      #E88D5A 100%);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Dual Range Inputs (Overlay) */
+.sliderInput {
+  position: absolute;
+  width: 100%;
+  height: 8px;
+  top: 0;
+  left: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  margin: 0;
+}
+
+.sliderInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #C86F4D;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+
+.sliderInput::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  border-color: #E88D5A;
+  box-shadow: 0 4px 12px rgba(200, 111, 77, 0.3);
+}
+
+.sliderInput::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+.sliderInput::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #C86F4D;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+
+.sliderInput::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  border-color: #E88D5A;
+  box-shadow: 0 4px 12px rgba(200, 111, 77, 0.3);
+}
+
+.sliderInput::-moz-range-thumb:active {
+  transform: scale(1.1);
+}
+
+/* Price Inputs Row */
+.priceInputsRow {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+/* Input Container */
+.inputContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .inputLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2C2416;
   font-family: var(--font-family-body);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
+}
+
+.priceInput {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.incrementButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid rgba(200, 111, 77, 0.2);
+  background: white;
+  color: #C86F4D;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.incrementButton:hover {
+  background: rgba(200, 111, 77, 0.05);
+  border-color: #C86F4D;
+}
+
+.incrementButton:active {
+  background: rgba(200, 111, 77, 0.1);
+}
+
+.incrementButton:focus-visible {
+  outline: 2px solid #C86F4D;
+  outline-offset: 2px;
 }
 
 .input {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-3);
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid rgba(200, 111, 77, 0.15);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-family: var(--font-family-display);
+  color: #2C2416;
+  background: rgba(245, 239, 230, 0.3);
   transition: all 0.2s ease;
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--color-primary-terracotta);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+  border-color: #C86F4D;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(200, 111, 77, 0.1);
 }
 
-.separator {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  color: var(--color-text-tertiary);
-  margin-top: 20px;
-}
-
-/* Slider */
-.sliderContainer {
-  position: relative;
-  padding: var(--space-2) 0;
-}
-
-.slider {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  outline: none;
+/* Hide number input spinner arrows */
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
+  margin: 0;
 }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--color-primary-terracotta);
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
-  transition: all 0.2s ease;
+.input[type='number'] {
+  -moz-appearance: textfield;
 }
 
-.slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-
-.slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--color-primary-terracotta);
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
-  transition: all 0.2s ease;
-}
-
-.slider::-moz-range-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+.unit {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  font-weight: 500;
 }
 
 /* Reset Button */
 .resetButton {
   font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary-terracotta);
-  background: transparent;
-  border: 1px solid var(--color-primary-terracotta);
-  border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-4);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #C86F4D;
+  background: white;
+  border: 2px solid #C86F4D;
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .resetButton:hover {
-  background: var(--color-primary-terracotta);
-  color: var(--color-text-inverse);
+  background: #C86F4D;
+  color: white;
+}
+
+.resetButton:active {
+  transform: scale(0.98);
+}
+
+.resetButton:focus-visible {
+  outline: 2px solid #C86F4D;
+  outline-offset: 2px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .priceFilter {
+    background: rgba(26, 26, 26, 0.95);
+    border-color: rgba(200, 111, 77, 0.3);
+  }
+
+  .filterButton:hover {
+    background: rgba(200, 111, 77, 0.15);
+  }
+
+  .filterLabel {
+    color: #f5f5f5;
+  }
+
+  .chevron {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .currentPrice {
+    background: rgba(200, 111, 77, 0.15);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .currentPrice strong {
+    color: #f5f5f5;
+  }
+
+  .inputLabel {
+    color: #f5f5f5;
+  }
+
+  .input {
+    background: rgba(255, 255, 255, 0.05);
+    color: #f5f5f5;
+    border-color: rgba(200, 111, 77, 0.3);
+  }
+
+  .input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #E88D5A;
+    box-shadow: 0 0 0 4px rgba(232, 141, 90, 0.2);
+  }
+
+  .incrementButton {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(200, 111, 77, 0.3);
+    color: #E88D5A;
+  }
+
+  .incrementButton:hover {
+    background: rgba(200, 111, 77, 0.15);
+    border-color: #E88D5A;
+  }
+
+  .resetButton {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(200, 111, 77, 0.5);
+    color: #E88D5A;
+  }
+
+  .resetButton:hover {
+    background: #E88D5A;
+    color: #1a1a1a;
+  }
 }
 
 /* Mobile Responsive */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .filterButton {
+    padding: 0.875rem 1rem;
+  }
+
   .filterLabel {
-    font-size: var(--font-size-sm);
+    font-size: 0.9375rem;
   }
 
   .activeIndicator {
-    font-size: var(--font-size-xs);
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
   }
 
-  .rangeInputs {
+  .filterContent {
+    padding: 0 1rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .currentPrice {
+    font-size: 0.875rem;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .sliderWrapper {
+    gap: 0.5rem;
+  }
+
+  .sliderLabel {
+    font-size: 0.6875rem;
+    min-width: 24px;
+  }
+
+  .priceInputsRow {
     flex-direction: column;
-    align-items: stretch;
+    gap: 0.75rem;
   }
 
-  .separator {
-    display: none;
+  .incrementButton {
+    width: 32px;
+    height: 32px;
+    font-size: 1.125rem;
   }
 
-  .inputGroup {
-    width: 100%;
+  .input {
+    font-size: 1rem;
+    padding: 0.625rem;
+  }
+
+  .unit {
+    font-size: 0.8125rem;
+  }
+
+  .resetButton {
+    font-size: 0.875rem;
+    padding: 0.625rem 1.25rem;
   }
 }
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   .filterButton,
   .chevron,
   .input,
-  .slider::-webkit-slider-thumb,
-  .slider::-moz-range-thumb,
-  .resetButton {
+  .incrementButton,
+  .resetButton,
+  .sliderInput::-webkit-slider-thumb,
+  .sliderInput::-moz-range-thumb,
+  .sliderRange,
+  .filterContent {
     transition: none;
+    animation: none;
+  }
+
+  .incrementButton:hover,
+  .incrementButton:active,
+  .sliderInput::-webkit-slider-thumb:hover,
+  .sliderInput::-webkit-slider-thumb:active,
+  .sliderInput::-moz-range-thumb:hover,
+  .sliderInput::-moz-range-thumb:active {
+    transform: none;
   }
 }

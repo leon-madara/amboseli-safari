@@ -319,7 +319,7 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
           <div
             style={{
               display: viewMode === 'grid' ? 'grid' : 'flex',
-              gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fit, minmax(340px, 1fr))' : undefined,
+              gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fit, minmax(300px, 1fr))' : undefined,
               flexDirection: viewMode === 'list' ? 'column' : undefined,
               gap: 'var(--space-10)',
             }}

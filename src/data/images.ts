@@ -188,9 +188,9 @@ export const PROPERTY_IMAGES = {
 
 // Room imagery for accommodations listings
 export const ROOM_IMAGES = {
-  premiumRoom: 'https://images.unsplash.com/photo-1616594039964-2059c5f13c91?w=1920&q=80',
-  deluxeSuite: 'https://images.unsplash.com/photo-1600585154340-0ef3c08f11ff?w=1920&q=80',
-  familySuite: 'https://images.unsplash.com/photo-1582719478181-2cf4e7d55cde?w=1920&q=80',
+  premiumRoom: 'https://images.unsplash.com/photo-1719749938395-0fa460e8d3f7?w=1920&q=80',
+  deluxeSuite: 'https://images.unsplash.com/photo-1652400096996-e3670b8c9d6e?w=1920&q=80',
+  familySuite: 'https://images.unsplash.com/photo-1721076748177-50499ff00fac?w=1920&q=80',
 };
 
 /**

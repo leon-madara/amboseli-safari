@@ -33,15 +33,8 @@ export interface RoomCardProps {
   // Comparison props
   isComparing?: boolean;
   onCompareToggle?: (slug: string, isSelected: boolean) => void;
-  // Phase 2: Pricing context & social proof
-  avgPrice?: string;
-  priceSavings?: string;
-  priceTrend?: 'rising' | 'falling' | 'stable';
-  viewingCount?: number;
-  lastBookedMinutes?: number;
   // Phase 3: Advanced features
   tourImages?: string[];
-  offerExpiresAt?: Date;
 }
 
 export default function RoomCard({
@@ -63,13 +56,7 @@ export default function RoomCard({
   includedItems = ['Breakfast', '2 game drives', 'Park fees', 'Airport transfer'],
   isComparing = false,
   onCompareToggle,
-  avgPrice,
-  priceSavings,
-  priceTrend,
-  viewingCount,
-  lastBookedMinutes,
   tourImages,
-  offerExpiresAt,
 }: RoomCardProps) {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isFeaturesExpanded, setIsFeaturesExpanded] = useState(false);
@@ -91,32 +78,23 @@ export default function RoomCard({
             {hasMultipleImages ? (
               <ImageCarousel images={roomImages} alt={title} />
             ) : (
-              <Image
-                src={image}
-                alt={imageAlt}
-                fill
-                className={styles.image}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+              <>
+                <Image
+                  src={image}
+                  alt={imageAlt}
+                  fill
+                  className={styles.image}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className={styles.overlay} />
+              </>
             )}
 
-            {/* Trust & Urgency Badges */}
+            {/* Phase 3: Single Clean Category Badge */}
             <div className={styles.badgeContainer}>
-              {availability === 'limited' && (
-                <span className={`${styles.badge} ${styles.badgeLimited}`}>
-                  ⚠️ Only 2 rooms left
-                </span>
-              )}
-              {recentlyBooked && (
-                <span className={`${styles.badge} ${styles.badgeHot}`}>
-                  🔥 Booked 3 times today
-                </span>
-              )}
-              {specialOffer && (
-                <span className={`${styles.badge} ${styles.badgeOffer}`}>
-                  💰 {specialOffer}
-                </span>
-              )}
+              <span className={styles.badge}>
+                Luxury Collection
+              </span>
             </div>
 
             {/* Compare Checkbox */}
@@ -166,20 +144,17 @@ export default function RoomCard({
               <h3 className={styles.title}>{title}</h3>
               {rating && (
                 <div className={styles.rating}>
-                  <span className={styles.ratingValue}>⭐ {rating}</span>
+                  <svg className={styles.icon} viewBox="0 0 20 20" fill="currentColor" style={{ width: 14, height: 14, color: '#F59E0B' }}>
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span className={styles.ratingValue}>{rating}</span>
                   <span className={styles.reviewCount}>({reviewCount})</span>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Offer Timer */}
-          {offerExpiresAt && (
-            <OfferTimer
-              expiresAt={offerExpiresAt}
-              offerText={specialOffer || 'Special Offer Ends In'}
-            />
-          )}
+
 
           {/* Price moved up for better hierarchy */}
           <div className={styles.pricingTop}>
@@ -189,23 +164,7 @@ export default function RoomCard({
               <span className={styles.pricePeriod}>per night</span>
             </div>
 
-            {/* Pricing Context */}
-            {(priceSavings || avgPrice || priceTrend) && (
-              <div className={styles.pricingContext}>
-                {priceSavings && (
-                  <span className={styles.savings}>💰 Save {priceSavings}</span>
-                )}
-                {avgPrice && (
-                  <span className={styles.avgPrice}>Avg: {avgPrice}</span>
-                )}
-                {priceTrend === 'rising' && (
-                  <span className={styles.trendRising}>📈 Prices rising</span>
-                )}
-                {priceTrend === 'falling' && (
-                  <span className={styles.trendFalling}>📉 Prices falling</span>
-                )}
-              </div>
-            )}
+
 
             {/* Availability Calendar Toggle */}
             <button
@@ -224,22 +183,7 @@ export default function RoomCard({
             </div>
           )}
 
-          {/* Social Proof */}
-          {(viewingCount || lastBookedMinutes) && (
-            <div className={styles.socialProof}>
-              {viewingCount && viewingCount > 0 && (
-                <div className={styles.liveBooking}>
-                  <span className={styles.pulse} />
-                  <span>{viewingCount} {viewingCount === 1 ? 'person' : 'people'} viewing</span>
-                </div>
-              )}
-              {lastBookedMinutes && (
-                <div className={styles.recentBooking}>
-                  ⚡ Last booked {lastBookedMinutes} minutes ago
-                </div>
-              )}
-            </div>
-          )}
+
 
           <p className={styles.description}>{description}</p>
 
@@ -325,9 +269,8 @@ export default function RoomCard({
           <div className={styles.mobileQuickInfo}>
             <span className={styles.mobilePrice}>{price}/night</span>
             <span
-              className={`${styles.mobileAvailability} ${
-                availability === 'limited' ? styles.mobileAvailabilityLimited : ''
-              }`}
+              className={`${styles.mobileAvailability} ${availability === 'limited' ? styles.mobileAvailabilityLimited : ''
+                }`}
             >
               {availability === 'available' && '✓ Available'}
               {availability === 'limited' && '⚠️ Limited'}
