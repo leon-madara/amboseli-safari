@@ -44,7 +44,7 @@ const getChapterHeight = (baseHeight: number): number => {
 const BASE_HEIGHTS = {
   preDawn: 100,
   morningDrive: 120,      // Increased for static content
-  wildlifeEncounters: 180, // Increased for grid layout
+  wildlifeEncounters: 220, // Increased for 2-page split (Title + Grid)
   accommodations: 350,    // Increased for vertical room stack
   dining: 250,            // Increased for full menu/pairings
   experiences: 250,       // Increased for cards + timeline

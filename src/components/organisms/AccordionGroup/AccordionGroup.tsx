@@ -53,9 +53,10 @@ export default function AccordionGroup({
         newSet.delete(itemId);
       } else {
         newSet.add(itemId);
-        // Track view when opening
+        // Track view when opening - call after state update
         if (isOpening && typeof itemId === 'string' && onItemOpen) {
-          onItemOpen(itemId);
+          // Use setTimeout to call after render completes
+          setTimeout(() => onItemOpen(itemId), 0);
         }
       }
       return newSet;
@@ -82,7 +83,7 @@ export default function AccordionGroup({
             <AccordionItem
               title={item.title}
               questionId={item.id}
-              isOpen={expandAll !== undefined ? expandAll : openItems.has(itemId)}
+              isOpen={openItems.has(itemId)}
               onToggle={() => toggleItem(itemId)}
               onNavigateNext={() => {
                 if (index < items.length - 1) {

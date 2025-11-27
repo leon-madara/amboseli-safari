@@ -2,9 +2,7 @@
 
 import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
-import { useParallax } from '@/hooks/useParallax';
 import { useSpecificChapterProgress } from '@/hooks/useChapterProgress';
-import { ParallaxContainer, ParallaxLayer } from '@/components/animations/ParallaxContainer';
 import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import ExperienceCard from '@/components/molecules/ExperienceCard';
 import ActivityTimeline from '@/components/molecules/ActivityTimeline';
@@ -82,91 +80,85 @@ export default function ExperiencesChapter({
     variant: 'primary',
   },
 }: ExperiencesChapterProps) {
-  // Parallax effect for background (0.3x speed)
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const backgroundParallaxOffset = useParallax(backgroundRef, { speed: 0.3, direction: 'down' });
-
   // Track chapter progress
   const chapterRef = useRef<HTMLElement>(null);
   const { progress } = useSpecificChapterProgress('experiences');
 
   return (
-    <ParallaxContainer className={styles.parallaxWrapper}>
-      <section
-        id={id}
-        ref={chapterRef}
-        className={`${styles.experiencesChapter} ${className}`}
-        data-chapter="experiences"
-        aria-labelledby="experiences-heading"
-      >
-        {/* Background with golden hour lighting and parallax */}
-        <div className={styles.backgroundContainer}>
-          <ParallaxLayer speed={0.4} className={styles.backgroundLayer} zIndex={1}>
-            <div className={styles.backgroundImageWrapper}>
-              <OptimizedImage
-                src={backgroundImage}
-                alt="Game drive at golden hour"
-                fill
-                imageType="chapter-background"
-                className={styles.backgroundImage}
-              />
-            </div>
-          </ParallaxLayer>
-
-          {/* Golden hour lighting gradient overlay */}
-          <div className={styles.gradientOverlay} />
+    <section
+      id={id}
+      ref={chapterRef}
+      className={`${styles.experiencesChapter} ${className}`}
+      data-chapter="experiences"
+      aria-labelledby="experiences-heading"
+    >
+      {/* Background with golden hour lighting */}
+      <div className={styles.backgroundContainer}>
+        <div className={styles.backgroundLayer}>
+          <div className={styles.backgroundImageWrapper}>
+            <OptimizedImage
+              src={backgroundImage}
+              alt="Game drive at golden hour"
+              fill
+              imageType="chapter-background"
+              className={styles.backgroundImage}
+            />
+          </div>
         </div>
 
-        {/* Main Content - Foreground Layer */}
-        <ParallaxLayer speed={1.0} className={styles.foregroundLayer} zIndex={5}>
-          <div className={styles.contentWrapper}>
-            <div
-              className={styles.headerSection}
-            >
-              <h2 id="experiences-heading" className={styles.heading}>
-                Safari Experiences
-              </h2>
-              <p className={styles.subtitle}>
-                Every moment is an adventure
-              </p>
-            </div>
+        {/* Golden hour lighting gradient overlay */}
+        <div className={styles.gradientOverlay} />
+      </div>
 
-            {/* Experience Cards */}
-            <div className={styles.experiencesGrid}>
-              {experiences.map((experience, index) => (
-                <div
-                  key={experience.id}
-                  className={styles.experienceCardWrapper}
-                >
-                  <ExperienceCard experience={experience as any} />
-                </div>
-              ))}
-            </div>
-
-            {/* Activity Timeline */}
-            <div
-              className={styles.timelineSection}
-            >
-              <ActivityTimeline {...timeline} />
-            </div>
-
-            {/* CTA */}
-            <div
-              className={styles.ctaSection}
-            >
-              <a
-                href={ctaButton.href}
-                className={`${styles.cta} ${styles[`cta${ctaButton.variant.charAt(0).toUpperCase() + ctaButton.variant.slice(1)}`]
-                  }`}
-                onClick={ctaButton.onClick}
-                aria-label={ctaButton.text}
-              >
-                {ctaButton.text}
-              </a>
-            </div>
+      {/* Main Content - Foreground Layer */}
+      <div className={styles.foregroundLayer}>
+        <div className={styles.contentWrapper}>
+          <div
+            className={styles.headerSection}
+          >
+            <h2 id="experiences-heading" className={styles.heading}>
+              Safari Experiences
+            </h2>
+            <p className={styles.subtitle}>
+              Every moment is an adventure
+            </p>
           </div>
-        </ParallaxLayer>
-      </section>
-    </ParallaxContainer>
+
+          {/* Experience Cards */}
+          <div className={styles.experiencesGrid}>
+            {experiences.map((experience, index) => (
+              <div
+                key={experience.id}
+                className={styles.experienceCardWrapper}
+              >
+                <ExperienceCard experience={experience as any} />
+              </div>
+            ))}
+          </div>
+
+          {/* Activity Timeline */}
+          <div
+            className={styles.timelineSection}
+          >
+            <ActivityTimeline {...timeline} />
+          </div>
+
+          {/* CTA */}
+          <div
+            className={styles.ctaSection}
+          >
+            <a
+              href={ctaButton.href}
+              className={`${styles.cta} ${styles[`cta${ctaButton.variant.charAt(0).toUpperCase() + ctaButton.variant.slice(1)}`]
+                }`}
+              onClick={ctaButton.onClick}
+              aria-label={ctaButton.text}
+            >
+              {ctaButton.text}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -105,11 +105,20 @@ export default function AccordionItem({
         <span>{title}</span>
         <div className={styles.controls}>
           {questionId && isOpen && (
-            <button
+            <span
+              role="button"
+              tabIndex={0}
               className={styles.copyButton}
               onClick={(e) => {
                 e.stopPropagation();
                 handleCopyLink();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleCopyLink();
+                }
               }}
               aria-label="Copy link to this question"
               title="Copy link"
@@ -155,7 +164,7 @@ export default function AccordionItem({
                   <span className={styles.buttonText}>Copy Link</span>
                 </>
               )}
-            </button>
+            </span>
           )}
           <span className={`${styles.icon} ${isOpen ? styles.open : ''}`}>
             {isOpen ? '−' : '+'}
