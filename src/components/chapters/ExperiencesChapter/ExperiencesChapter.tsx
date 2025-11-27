@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
 import { useParallax } from '@/hooks/useParallax';
@@ -118,72 +117,55 @@ export default function ExperiencesChapter({
           <div className={styles.gradientOverlay} />
         </div>
 
-      {/* Main Content - Foreground Layer */}
-      <ParallaxLayer speed={1.0} className={styles.foregroundLayer} zIndex={5}>
-        <div className={styles.contentWrapper}>
-        <motion.div
-          className={styles.headerSection}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 id="experiences-heading" className={styles.heading}>
-            Safari Experiences
-          </h2>
-          <p className={styles.subtitle}>
-            Every moment is an adventure
-          </p>
-        </motion.div>
-
-        {/* Experience Cards */}
-        <div className={styles.experiencesGrid}>
-          {experiences.map((experience, index) => (
-            <motion.div
-              key={experience.id}
-              className={styles.experienceCardWrapper}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: index * 0.15 }}
+        {/* Main Content - Foreground Layer */}
+        <ParallaxLayer speed={1.0} className={styles.foregroundLayer} zIndex={5}>
+          <div className={styles.contentWrapper}>
+            <div
+              className={styles.headerSection}
             >
-              <ExperienceCard experience={experience as any} />
-            </motion.div>
-          ))}
-        </div>
+              <h2 id="experiences-heading" className={styles.heading}>
+                Safari Experiences
+              </h2>
+              <p className={styles.subtitle}>
+                Every moment is an adventure
+              </p>
+            </div>
 
-        {/* Activity Timeline */}
-        <motion.div
-          className={styles.timelineSection}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <ActivityTimeline {...timeline} />
-        </motion.div>
+            {/* Experience Cards */}
+            <div className={styles.experiencesGrid}>
+              {experiences.map((experience, index) => (
+                <div
+                  key={experience.id}
+                  className={styles.experienceCardWrapper}
+                >
+                  <ExperienceCard experience={experience as any} />
+                </div>
+              ))}
+            </div>
 
-        {/* CTA */}
-        <motion.div
-          className={styles.ctaSection}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <a
-            href={ctaButton.href}
-            className={`${styles.cta} ${
-              styles[`cta${ctaButton.variant.charAt(0).toUpperCase() + ctaButton.variant.slice(1)}`]
-            }`}
-            onClick={ctaButton.onClick}
-            aria-label={ctaButton.text}
-          >
-            {ctaButton.text}
-          </a>
-        </motion.div>
-        </div>
-      </ParallaxLayer>
+            {/* Activity Timeline */}
+            <div
+              className={styles.timelineSection}
+            >
+              <ActivityTimeline {...timeline} />
+            </div>
+
+            {/* CTA */}
+            <div
+              className={styles.ctaSection}
+            >
+              <a
+                href={ctaButton.href}
+                className={`${styles.cta} ${styles[`cta${ctaButton.variant.charAt(0).toUpperCase() + ctaButton.variant.slice(1)}`]
+                  }`}
+                onClick={ctaButton.onClick}
+                aria-label={ctaButton.text}
+              >
+                {ctaButton.text}
+              </a>
+            </div>
+          </div>
+        </ParallaxLayer>
       </section>
     </ParallaxContainer>
   );

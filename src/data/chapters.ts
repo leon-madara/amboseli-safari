@@ -39,17 +39,17 @@ const getChapterHeight = (baseHeight: number): number => {
 /**
  * Base chapter heights (desktop)
  * Mobile devices get 20% increase for better content layout
- * Reduced heights for shorter scroll journey
+ * Updated for static layout content requirements
  */
 const BASE_HEIGHTS = {
   preDawn: 100,
-  morningDrive: 100,
-  wildlifeEncounters: 100,
-  accommodations: 100,
-  dining: 80,
-  experiences: 80,
-  location: 80,
-  contact: 80,
+  morningDrive: 120,      // Increased for static content
+  wildlifeEncounters: 180, // Increased for grid layout
+  accommodations: 350,    // Increased for vertical room stack
+  dining: 250,            // Increased for full menu/pairings
+  experiences: 250,       // Increased for cards + timeline
+  location: 200,          // Increased for transport/info grids
+  contact: 200,           // Increased for packages + form
 };
 
 /**
