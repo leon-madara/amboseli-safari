@@ -2,11 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import AccordionGroup from '@/components/organisms/AccordionGroup';
-import JumpToSection from '@/components/molecules/JumpToSection';
-import PopularQuestions from '@/components/molecules/PopularQuestions';
 import ExpandCollapseControls from '@/components/molecules/ExpandCollapseControls';
-import CategoryFilters from '@/components/molecules/CategoryFilters';
-import RecentlyViewed, { trackFaqView } from '@/components/molecules/RecentlyViewed';
 import { FAQ } from '@/types/faq';
 import styles from './FAQSearchAndContent.module.css';
 
@@ -21,49 +17,12 @@ export default function FAQSearchAndContent({
 }: FAQSearchAndContentProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandAll, setExpandAll] = useState<boolean>(false);
-  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
-  const [highlightedFaqId, setHighlightedFaqId] = useState<string | null>(null);
-  const [recentlyViewedKey, setRecentlyViewedKey] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  // Handle deep linking to specific FAQs via URL hash
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1); // Remove '#'
-      if (hash) {
-        // Check if it's a FAQ ID
-        const faqExists = faqs.some((faq) => faq.id === hash);
-        if (faqExists) {
-          setHighlightedFaqId(hash);
-          // Wait for render, then scroll to element
-          setTimeout(() => {
-            const element = document.getElementById(`faq-${hash}`);
-            if (element) {
-              const offset = 100;
-              const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-              const offsetPosition = elementPosition - offset;
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth',
-              });
-            }
-          }, 300);
-        }
-      }
-    };
-
-    // Handle on mount
-    handleHashChange();
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [faqs]);
-
-  // Filter FAQs based on search query and selected categories
+  // -- Search Logic --
   const filteredFaqs = useMemo(() => {
     let filtered = faqs;
 
-    // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -73,16 +32,9 @@ export default function FAQSearchAndContent({
           (faq.category?.toLowerCase().includes(query) ?? false)
       );
     }
-
-    // Filter by selected categories
-    if (selectedCategories.size > 0) {
-      filtered = filtered.filter((faq) => selectedCategories.has(faq.category ?? 'General'));
-    }
-
     return filtered;
-  }, [faqs, searchQuery, selectedCategories]);
+  }, [faqs, searchQuery]);
 
-  // Group filtered FAQs by category
   const faqsByCategory = useMemo(() => {
     return filteredFaqs.reduce((acc, faq) => {
       const category = faq.category ?? 'General';
@@ -96,263 +48,225 @@ export default function FAQSearchAndContent({
 
   const categories = Object.keys(faqsByCategory);
   const hasResults = filteredFaqs.length > 0;
-  const isSearching = searchQuery.trim().length > 0;
 
-  // Prepare categories for JumpToSection
-  const jumpCategories = categories.map((category) => ({
-    name: category,
-    icon: categoryConfig[category]?.icon || '❓',
-    id: category.toLowerCase().replace(/\s+/g, '-'),
-  }));
+  // -- Scroll Spy & Navigation Logic --
+  const scrollToCategory = (category: string) => {
+    const element = document.getElementById(`category-${category.replace(/\s+/g, '-')}`);
+    if (element) {
+      // Offset for sticky header/nav
+      const offset = 100; 
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+      setActiveCategory(category);
+    }
+  };
 
-  // Popular questions - highlight important FAQs
-  const popularQuestions = [
-    {
-      id: 'booking-1',
-      question: 'How do I make a reservation?',
-      categoryId: 'booking-&-reservations',
-      icon: '📅',
-    },
-    {
-      id: 'safari-2',
-      question: 'When is the best time to visit?',
-      categoryId: 'safari-experiences',
-      icon: '🦁',
-    },
-    {
-      id: 'booking-2',
-      question: 'What is your cancellation policy?',
-      categoryId: 'booking-&-reservations',
-      icon: '📋',
-    },
-    {
-      id: 'safari-3',
-      question: 'Will I see elephants and other wildlife?',
-      categoryId: 'safari-experiences',
-      icon: '🐘',
-    },
-    {
-      id: 'location-1',
-      question: 'How do I get to Amboseli Safari Club?',
-      categoryId: 'travel-&-location',
-      icon: '✈️',
-    },
-  ];
-
-  // All available categories with counts
-  const allCategories = useMemo(() => {
-    const categoryCounts = faqs.reduce((acc, faq) => {
-      const category = faq.category ?? 'General';
-      acc[category] = (acc[category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    return Object.keys(categoryConfig).map((categoryName) => ({
-      name: categoryName,
-      icon: categoryConfig[categoryName].icon,
-      count: categoryCounts[categoryName] || 0,
-    }));
-  }, [faqs, categoryConfig]);
-
-  // Category filter handlers
-  const handleToggleCategory = (category: string) => {
-    setSelectedCategories((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(category)) {
-        newSet.delete(category);
-      } else {
-        newSet.add(category);
+  // Simple scroll spy to update active category
+  useEffect(() => {
+    const handleScroll = () => {
+      // Find the category section closest to the top
+      let currentCategory = null;
+      
+      for (const category of categories) {
+        const element = document.getElementById(`category-${category.replace(/\s+/g, '-')}`);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // If the section is in the upper part of the viewport
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentCategory = category;
+            break;
+          }
+        }
       }
-      return newSet;
-    });
-  };
+      
+      if (currentCategory) {
+        setActiveCategory(currentCategory);
+      }
+    };
 
-  const handleClearCategories = () => {
-    setSelectedCategories(new Set());
-  };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [categories]);
 
-  // Handle clicking on a recently viewed FAQ
-  const handleRecentFaqClick = (faqId: string) => {
-    // Update URL hash to trigger deep link
-    window.location.hash = faqId;
-  };
+  // Handle URL hash for deep linking
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(`faq-${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 500);
+    }
+  }, []);
 
   return (
-    <>
-      {/* Popular Questions - Only show when not searching */}
-      {!isSearching && <PopularQuestions questions={popularQuestions} />}
-
-      {/* Recently Viewed FAQs - Only show when not searching */}
-      {!isSearching && (
-        <RecentlyViewed
-          key={recentlyViewedKey}
-          faqs={faqs}
-          onFaqClick={handleRecentFaqClick}
-        />
+    <div className={styles.container}>
+      {/* Desktop Sidebar */}
+      {hasResults && (
+        <aside className={styles.sidebar}>
+          <h3 className={styles.sidebarTitle}>Categories</h3>
+          <nav className={styles.categoryNav}>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => scrollToCategory(category)}
+                className={`${styles.categoryLink} ${
+                  activeCategory === category ? styles.active : ''
+                }`}
+                aria-label={`Scroll to ${category}`}
+              >
+                <span className={styles.categoryLinkIcon} aria-hidden="true">
+                  {categoryConfig[category]?.icon || '❓'}
+                </span>
+                {category}
+              </button>
+            ))}
+          </nav>
+        </aside>
       )}
 
-      {/* Category Filters - Only show when not searching */}
-      {!isSearching && (
-        <CategoryFilters
-          categories={allCategories}
-          selectedCategories={selectedCategories}
-          onToggleCategory={handleToggleCategory}
-          onClearAll={handleClearCategories}
-        />
-      )}
-
-      {/* Search Section */}
-      <div className={styles.searchContainer}>
-        <div className={styles.searchWrapper}>
-          <div className={styles.searchIconWrapper}>
-            <svg
-              className={styles.searchIcon}
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <input
-            type="text"
-            placeholder="Search all FAQs..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={styles.searchInput}
-            aria-label="Search FAQs"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className={styles.clearButton}
-              aria-label="Clear search"
-            >
+      {/* Main Content */}
+      <div className={styles.contentArea}>
+        {/* Search Bar */}
+        <div className={styles.searchContainer}>
+          <div className={styles.searchWrapper}>
+            <div className={styles.searchIconWrapper}>
               <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
               >
                 <path
-                  d="M12 4L4 12M4 4l8 8"
+                  d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
-            </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Search specific questions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+              aria-label="Search FAQs"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className={styles.clearButton}
+                aria-label="Clear search"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 4L4 12M4 4l8 8"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <p className={styles.searchResults}>
+              {hasResults
+                ? `Found ${filteredFaqs.length} results`
+                : 'No results found'}
+            </p>
           )}
         </div>
-        {isSearching && (
-          <p className={styles.searchResults}>
-            {hasResults
-              ? `Found ${filteredFaqs.length} result${filteredFaqs.length === 1 ? '' : 's'}`
-              : 'No results found'}
-          </p>
+
+        {/* Mobile Categories (Horizontal Scroll) */}
+        {hasResults && (
+          <div className={styles.mobileCategories}>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => scrollToCategory(category)}
+                className={`${styles.mobileCategoryChip} ${
+                  activeCategory === category ? styles.active : ''
+                }`}
+              >
+                <span>{categoryConfig[category]?.icon || '❓'}</span>
+                {category}
+              </button>
+            ))}
+          </div>
         )}
-      </div>
 
-      {/* Jump to Section Navigation */}
-      {hasResults && jumpCategories.length > 1 && <JumpToSection categories={jumpCategories} />}
+        {/* FAQ Sections */}
+        {hasResults ? (
+          <>
+            <ExpandCollapseControls
+              isExpanded={expandAll}
+              onExpandAll={() => setExpandAll(true)}
+              onCollapseAll={() => setExpandAll(false)}
+              totalQuestions={filteredFaqs.length}
+            />
 
-      {/* Expand/Collapse All Controls */}
-      {hasResults && (
-        <ExpandCollapseControls
-          isExpanded={expandAll}
-          onExpandAll={() => setExpandAll(true)}
-          onCollapseAll={() => setExpandAll(false)}
-          totalQuestions={filteredFaqs.length}
-        />
-      )}
-
-      {/* FAQ Categories */}
-      {hasResults ? (
-        <div className={`${styles.categoriesContainer} ${styles.staggerChildren}`}>
-          {categories.map((category, index) => (
-            <div
-              key={category}
-              id={category.toLowerCase().replace(/\s+/g, '-')}
-              className={styles.categorySection}
-              style={{
-                marginBottom: index < categories.length - 1 ? 'var(--space-20)' : 0,
-                paddingBottom: index < categories.length - 1 ? 'var(--space-12)' : 0,
-                borderBottom:
-                  index < categories.length - 1 ? '1px solid var(--color-border-light)' : 'none',
-              }}
-            >
-              {/* Category Header with Icon */}
-              <div className={styles.categoryHeader}>
-                <h2 className={styles.categoryTitle}>
-                  {/* Icon */}
+            {categories.map((category) => (
+              <section
+                key={category}
+                id={`category-${category.replace(/\s+/g, '-')}`}
+                className={styles.categorySection}
+              >
+                <div className={styles.categoryHeader}>
                   <span className={styles.categoryIcon} aria-hidden="true">
                     {categoryConfig[category]?.icon || '❓'}
                   </span>
-                  {category}
-                  {/* Count badge */}
-                  <span className={styles.countBadge}>{faqsByCategory[category].length}</span>
-                </h2>
+                  <h2 className={styles.categoryTitle}>{category}</h2>
+                  <span className={styles.countBadge}>
+                    {faqsByCategory[category].length} Qs
+                  </span>
+                </div>
 
-                {/* Decorative underline */}
-                <div className={styles.decorativeUnderline} aria-hidden="true" />
-
-                {/* Category description */}
-                <p className={styles.categoryDescription}>
-                  {categoryConfig[category]?.description || ''}
-                </p>
-              </div>
-
-              {/* Accordion Group */}
-              <AccordionGroup
-                items={faqsByCategory[category].map((faq) => ({
-                  id: faq.id,
-                  title: faq.question,
-                  content: faq.answer,
-                }))}
-                expandAll={expandAll}
-                initialOpenIds={
-                  highlightedFaqId &&
-                  faqsByCategory[category].some((faq) => faq.id === highlightedFaqId)
-                    ? [highlightedFaqId]
-                    : undefined
-                }
-                onItemOpen={(itemId) => {
-                  trackFaqView(itemId);
-                  setRecentlyViewedKey((prev) => prev + 1); // Force re-render of RecentlyViewed
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className={styles.noResults}>
-          <div className={styles.noResultsIcon} aria-hidden="true">
-            🔍
+                <AccordionGroup
+                  items={faqsByCategory[category].map((faq) => ({
+                    id: faq.id,
+                    title: faq.question,
+                    content: faq.answer,
+                  }))}
+                  expandAll={expandAll}
+                />
+              </section>
+            ))}
+          </>
+        ) : (
+          /* No Results State */
+          <div className={styles.noResults}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
+            <h3 className={styles.noResultsTitle}>No questions found</h3>
+            <p className={styles.noResultsText}>
+              We couldn&apos;t find any questions matching &quot;{searchQuery}&quot;.
+            </p>
+            <button
+              onClick={() => setSearchQuery('')}
+              className={styles.clearSearchButton}
+            >
+              Clear Search
+            </button>
           </div>
-          <h3 className={styles.noResultsTitle}>No FAQs Found</h3>
-          <p className={styles.noResultsText}>
-            We couldn&apos;t find any questions matching &quot;{searchQuery}&quot;. Try different
-            keywords or{' '}
-            <a href="/contact" className={styles.noResultsLink}>
-              contact us
-            </a>{' '}
-            directly.
-          </p>
-          <button onClick={() => setSearchQuery('')} className={styles.clearSearchButton}>
-            Clear Search
-          </button>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 }

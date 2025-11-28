@@ -1,11 +1,12 @@
 /* Price Filter Container */
 .priceFilter {
-  background: #FBF4E8;
-  /* Light cream from theme */
+  background: #FFFFFF;
+  /* Pure white background for light theme */
   border: 1px solid rgba(200, 111, 77, 0.15);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .priceFilter:hover {
@@ -328,11 +329,12 @@
   outline-offset: 2px;
 }
 
-/* Dark Mode */
+/* Dark Mode - Disabled to force light theme */
 @media (prefers-color-scheme: dark) {
   .priceFilter {
-    background: rgba(26, 26, 26, 0.95);
-    border-color: rgba(200, 111, 77, 0.3);
+    background: #FFFFFF;
+    /* Force light theme even in dark mode */
+    border-color: rgba(200, 111, 77, 0.15);
   }
 
   .filterButton:hover {
@@ -340,58 +342,69 @@
   }
 
   .filterLabel {
-    color: #f5f5f5;
+    color: #2C2416;
+    /* Keep light theme text color */
   }
 
   .chevron {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    /* Keep light theme chevron color */
   }
 
   .currentPrice {
-    background: rgba(200, 111, 77, 0.15);
-    color: rgba(255, 255, 255, 0.6);
+    background: rgba(200, 111, 77, 0.05);
+    color: rgba(0, 0, 0, 0.6);
+    /* Keep light theme colors */
   }
 
   .currentPrice strong {
-    color: #f5f5f5;
+    color: #2C2416;
+    /* Keep light theme text color */
   }
 
   .inputLabel {
-    color: #f5f5f5;
+    color: #2C2416;
+    /* Keep light theme text color */
   }
 
   .input {
-    background: rgba(255, 255, 255, 0.05);
-    color: #f5f5f5;
-    border-color: rgba(200, 111, 77, 0.3);
+    background: rgba(245, 239, 230, 0.3);
+    color: #2C2416;
+    border-color: rgba(200, 111, 77, 0.15);
+    /* Keep light theme colors */
   }
 
   .input:focus {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #E88D5A;
-    box-shadow: 0 0 0 4px rgba(232, 141, 90, 0.2);
+    background: white;
+    border-color: #C86F4D;
+    box-shadow: 0 0 0 4px rgba(200, 111, 77, 0.1);
+    /* Keep light theme focus styles */
   }
 
   .incrementButton {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(200, 111, 77, 0.3);
-    color: #E88D5A;
+    background: white;
+    border-color: rgba(200, 111, 77, 0.2);
+    color: #C86F4D;
+    /* Keep light theme button colors */
   }
 
   .incrementButton:hover {
-    background: rgba(200, 111, 77, 0.15);
-    border-color: #E88D5A;
+    background: rgba(200, 111, 77, 0.05);
+    border-color: #C86F4D;
+    /* Keep light theme hover */
   }
 
   .resetButton {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(200, 111, 77, 0.5);
-    color: #E88D5A;
+    background: white;
+    border-color: #C86F4D;
+    color: #C86F4D;
+    /* Keep light theme button colors */
   }
 
   .resetButton:hover {
-    background: #E88D5A;
-    color: #1a1a1a;
+    background: #C86F4D;
+    color: white;
+    /* Keep light theme hover */
   }
 }
 

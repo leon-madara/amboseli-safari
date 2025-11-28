@@ -45,7 +45,8 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
 
   return (
     <Link href={`/experiences/${experience.slug}`} className={styles.card}>
-      <div className={styles.imageContainer}>
+      {/* Full-bleed image with gradient overlay */}
+      <div className={styles.imageWrapper}>
         <Image
           src={imageSrc}
           alt={`${experience.title} - ${experience.shortDescription}`}
@@ -57,30 +58,35 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
           onError={handleImageError}
         />
         <div className={styles.gradientOverlay} />
-        <div className={styles.badge} aria-label={`Available during ${timeOfDay}`}>
-          <span className={styles.badgeIcon}>{timeIcon}</span>
-          <span className={styles.badgeText}>{timeOfDay}</span>
-        </div>
       </div>
 
-      <div className={styles.content}>
+      {/* Content overlay at bottom */}
+      <div className={styles.contentOverlay}>
         <h3 className={styles.title}>{experience.title}</h3>
+
+        {/* Description */}
         <p className={styles.description}>{experience.shortDescription}</p>
 
-        <div className={styles.meta}>
-          <span className={styles.metaItem}>
-            <span className={styles.metaIcon}>⏱️</span>
+        {/* Pill tags */}
+        <div className={styles.tags}>
+          <span className={styles.tag} aria-label={`Available during ${timeOfDay}`}>
+            <span className={styles.tagIcon}>{timeIcon}</span>
+            {timeOfDay}
+          </span>
+          <span className={styles.tag}>
+            <span className={styles.tagIcon}>⏱️</span>
             {experience.duration}
           </span>
-          <span className={styles.metaItem}>
-            <span className={styles.metaIcon}>📊</span>
+          <span className={styles.tag}>
+            <span className={styles.tagIcon}>📊</span>
             {experience.difficulty}
           </span>
         </div>
-      </div>
 
-      <div className={styles.footer}>
-        <span className={styles.cta}>Explore Experience →</span>
+        {/* CTA Button */}
+        <button className={styles.ctaButton} tabIndex={-1}>
+          Explore
+        </button>
       </div>
     </Link>
   );

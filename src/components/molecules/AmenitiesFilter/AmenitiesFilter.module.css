@@ -1,11 +1,12 @@
 /* Amenities Filter Container - Matching PriceFilter Style */
 .container {
-  background: #FBF4E8;
-  /* Light cream from theme */
+  background: #FFFFFF;
+  /* Pure white background for light theme */
   border: 1px solid rgba(200, 111, 77, 0.15);
   border-radius: 16px;
   padding: 1.25rem;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .container:hover {
@@ -125,49 +126,59 @@
   font-weight: 600;
 }
 
-/* Dark Mode */
+/* Dark Mode - Disabled to force light theme */
 @media (prefers-color-scheme: dark) {
   .container {
-    background: rgba(26, 26, 26, 0.95);
-    border-color: rgba(200, 111, 77, 0.3);
+    background: #FFFFFF;
+    /* Force light theme even in dark mode */
+    border-color: rgba(200, 111, 77, 0.15);
   }
 
   .title {
-    color: #f5f5f5;
+    color: #2C2416;
+    /* Keep light theme text color */
   }
 
   .subtitle {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 0, 0, 0.6);
+    /* Keep light theme text color */
   }
 
   .chip {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(200, 111, 77, 0.3);
-    color: #f5f5f5;
+    background: rgba(245, 239, 230, 0.5);
+    border-color: rgba(200, 111, 77, 0.15);
+    color: #2C2416;
+    /* Keep light theme chip colors */
   }
 
   .chip:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #E88D5A;
+    background: rgba(245, 239, 230, 0.8);
+    border-color: rgba(200, 111, 77, 0.3);
+    /* Keep light theme hover */
   }
 
   .chipSelected {
-    background: linear-gradient(135deg, #E88D5A 0%, #C86F4D 100%);
-    border-color: #E88D5A;
-    color: #1a1a1a;
+    background: linear-gradient(135deg, #C86F4D 0%, #E88D5A 100%);
+    border-color: #C86F4D;
+    color: white;
+    /* Keep light theme selected state */
   }
 
   .chipSelected:hover {
-    background: linear-gradient(135deg, #C86F4D 0%, #E88D5A 100%);
+    background: linear-gradient(135deg, #E88D5A 0%, #C86F4D 100%);
+    /* Keep light theme hover */
   }
 
   .clearButton {
-    background: rgba(200, 111, 77, 0.15);
-    color: #E88D5A;
+    background: rgba(200, 111, 77, 0.1);
+    color: #C86F4D;
+    /* Keep light theme button colors */
   }
 
   .clearButton:hover {
-    background: rgba(200, 111, 77, 0.25);
+    background: rgba(200, 111, 77, 0.2);
+    color: #E88D5A;
+    /* Keep light theme hover */
   }
 }
 

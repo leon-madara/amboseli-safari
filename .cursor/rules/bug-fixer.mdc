@@ -1,0 +1,28 @@
+---
+description: GLOBAL rules for OS, bug fixing, file management, and thinking process. ALWAYS APPLY.
+alwaysApply: false
+---
+# Core Workflow & Environment
+
+- **OS Context**: The user is on Windows. Use Windows-specific terminal commands (PowerShell/CMD) and keyboard shortcuts (Ctrl instead of Cmd).
+- **Cleanup**: Delete any test files created during a task immediately after confirming they are no longer needed.
+
+## Sequential Thinking & Problem Solving
+When faced with complex problems, use systematic step-by-step reasoning:
+1. Break down the problem.
+2. Revise conclusions if necessary.
+3. Explore alternative paths.
+4. Maintain context throughout.
+
+## Critical Bug Fixing Protocol
+1. **Check First**: Always check `docs/BUG_SOLUTIONS.md` for existing patterns.
+2. **Process**: Identify root cause -> Implement fix -> Verify with linting.
+3. **Mandatory Summary**: You MUST end your response with a single sentence summary using exactly 3 alarm emojis.
+   - Example: "Fixed the null pointer exception in the auth handler 🚨🚨🚨."
+
+## Code Quality Standards
+- **Separation of Concerns**: Never lump unrelated logic together.
+- **Refactoring**: Proactively refactor repeated code into shared components.
+- **Reusability**: Always prefer reusing existing shared components over creating new duplicates.---
+alwaysApply: true
+---

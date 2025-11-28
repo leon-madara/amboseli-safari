@@ -100,13 +100,15 @@ export default function PriceFilter({
         </motion.svg>
       </button>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div
+            key="filter-content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            style={{ overflow: 'hidden' }}
             className={styles.filterContent}
           >
             {/* Current Average Price Display */}
@@ -237,6 +239,7 @@ export default function PriceFilter({
             {/* Reset Button */}
             {isFiltered && (
               <motion.button
+                key="reset-button"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}

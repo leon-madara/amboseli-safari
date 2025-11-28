@@ -1,11 +1,5 @@
 /* DiningChapter Styles */
 
-/* Parallax Wrapper */
-.parallaxWrapper {
-  position: relative;
-  width: 100%;
-}
-
 .diningChapter {
   position: relative;
   min-height: 150vh;
@@ -16,7 +10,7 @@
   justify-content: center;
 }
 
-/* Background Container with Parallax */
+/* Background Container */
 .backgroundContainer {
   position: absolute;
   inset: 0;
@@ -35,7 +29,6 @@
 .backgroundImageWrapper {
   position: absolute;
   inset: -10%;
-  will-change: transform;
 }
 
 .backgroundImage {
@@ -537,10 +530,6 @@
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-  .backgroundImageWrapper {
-    transform: none !important;
-  }
-
   .carouselButton,
   .pairingCard,
   .cta {

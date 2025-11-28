@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Hero from '@/components/organisms/Hero';
 import RoomsSection from '@/components/organisms/RoomsSection';
+import AmenityCard from '@/components/molecules/AmenityCard';
 import Link from '@/components/atoms/Link';
 import { PROPERTY_IMAGES, ROOM_IMAGES } from '@/data/images';
 
@@ -18,10 +19,10 @@ const rooms = [
     image: ROOM_IMAGES.premiumRoom,
     imageAlt: 'Premium Room with Mount Kilimanjaro view',
     images: [
-      '/images/rooms/premium-room/room-1.jpg',
-      '/images/rooms/premium-room/room-2.jpg',
-      '/images/rooms/premium-room/room-3.jpg',
-      '/images/rooms/premium-room/room-4.jpg',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80', // Elegant interior
+      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1200&q=80', // Bathroom with view
+      'https://images.unsplash.com/photo-1519095616549-4d47a46f58da?w=1200&q=80', // Deck view
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1200&q=80', // Detail
     ],
     capacity: 2,
     size: '45 m²',
@@ -49,11 +50,10 @@ const rooms = [
     image: ROOM_IMAGES.deluxeSuite,
     imageAlt: 'Deluxe Suite with separate living area',
     images: [
-      '/images/rooms/deluxe-suite/suite-1.jpg',
-      '/images/rooms/deluxe-suite/suite-2.jpg',
-      '/images/rooms/deluxe-suite/suite-3.jpg',
-      '/images/rooms/deluxe-suite/suite-4.jpg',
-      '/images/rooms/deluxe-suite/suite-5.jpg',
+      'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1200&q=80', // Living area
+      'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=1200&q=80', // Bedroom detail
+      'https://images.unsplash.com/photo-1544984243-ec57ea16fe25?w=1200&q=80', // Private deck
+      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80', // Bathroom
     ],
     capacity: 2,
     size: '65 m²',
@@ -82,10 +82,10 @@ const rooms = [
     image: ROOM_IMAGES.familySuite,
     imageAlt: 'Family Suite with two bedrooms',
     images: [
-      '/images/rooms/family-suite/family-1.jpg',
-      '/images/rooms/family-suite/family-2.jpg',
-      '/images/rooms/family-suite/family-3.jpg',
-      '/images/rooms/family-suite/family-4.jpg',
+      'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&q=80', // Second bedroom
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80', // Spacious lounge
+      'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200&q=80', // Exterior/Veranda
+      'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1200&q=80', // Family dining area
     ],
     capacity: 4,
     size: '85 m²',
@@ -258,53 +258,18 @@ export default function AccommodationsPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 'var(--space-8)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: 'var(--space-6)',
             }}
           >
             {amenities.map((amenity, index) => (
-              <div
+              <AmenityCard
                 key={index}
-                style={{
-                  padding: 'var(--space-8)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-xl)',
-                  textAlign: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    width: '64px',
-                    height: '64px',
-                    margin: '0 auto var(--space-6)',
-                    color: 'var(--color-primary-terracotta)',
-                  }}
-                >
-                  {amenity.icon}
-                </div>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-lg)',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    color: 'var(--color-text-primary)',
-                    marginBottom: 'var(--space-3)',
-                  }}
-                >
-                  {amenity.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-family-body)',
-                    fontSize: 'var(--font-size-sm)',
-                    lineHeight: 'var(--line-height-relaxed)',
-                    color: 'var(--color-text-secondary)',
-                    margin: 0,
-                  }}
-                >
-                  {amenity.description}
-                </p>
-              </div>
+                icon={amenity.icon}
+                title={amenity.title}
+                description={amenity.description}
+                variant={index === 0 ? 'featured' : 'default'}
+              />
             ))}
           </div>
         </div>

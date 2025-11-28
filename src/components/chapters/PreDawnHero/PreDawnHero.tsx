@@ -1,9 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { BaseChapterProps, CTAButton } from '@/types/chapter';
-import { useParallax } from '@/hooks/useParallax';
 import { OptimizedImage } from '@/components/atoms/OptimizedImage';
 import AtmosphericParticles from '@/components/atoms/AtmosphericParticles/AtmosphericParticles';
 import CountdownTimer from '@/components/molecules/CountdownTimer';
@@ -44,8 +43,6 @@ export default function PreDawnHero({
   // Typing effect state
   const [displayedText, setDisplayedText] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-
-  // Parallax effect removed for clean image display
 
   useEffect(() => {
     let typingInterval: NodeJS.Timeout | null = null;

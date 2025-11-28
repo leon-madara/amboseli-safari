@@ -99,10 +99,11 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
       const savings = avgPrice - basePrice;
 
       // Phase 3: Add virtual tour images to select rooms
-      const tourImages = index % 2 === 0 ? [
-        room.image,
-        ...(room.images || []),
-      ].slice(0, 5) : undefined;
+      // const tourImages = index % 2 === 0 ? [
+      //   room.image,
+      //   ...(room.images || []),
+      // ].slice(0, 5) : undefined;
+      const tourImages = undefined;
 
       // Phase 3: Add offer timer to first few rooms (expires in 2-48 hours)
       const offerExpiresAt = index < 3
@@ -338,6 +339,7 @@ export default function RoomsSection({ rooms }: RoomsSectionProps) {
                     {...room}
                     isComparing={comparedRooms.includes(room.slug)}
                     onCompareToggle={handleCompareToggle}
+                    viewMode={viewMode}
                   />
                 ))}
               </>
